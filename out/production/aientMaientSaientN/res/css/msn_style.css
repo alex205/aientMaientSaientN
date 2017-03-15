@@ -1,0 +1,40 @@
+.image_perso {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-padding: 10;
+    -fx-background-color: linear-gradient(to bottom, rgba(76,248,10,0.08), rgba(76,248,10, 0.7));
+    -fx-background-radius: 20;
+}
+
+#messages_received {
+    -fx-background-color: #fff, #fff;
+    -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, white 0%, gray 50%, white 100%);
+    -fx-border-width: 1 0 0 0;
+}
+
+#menu_bar {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 0);
+}
+
+.theme {
+    -fx-background-color:
+        linear-gradient(from 0px 0px to 0px 100px, white, #40b4eb 50%, white);
+}
+
+.footer {
+    -fx-background-color:
+        linear-gradient(from 0px 0px to 0px 150px, white, white, rgba(203,232,243,0.75) 70%);
+}
+
+#toolbar {
+    -fx-border-radius: 0 0 2 2;
+    -fx-border-color: #bdd5df;
+    -fx-border-width: 0 1 1 1;
+}
+
+#message_write {
+    -fx-focus-color: transparent ;
+    -fx-faint-focus-color: transparent ;
+    -fx-border-radius: 1 1 0 0;
+    -fx-border-color: #bdd5df;
+    -fx-border-width: 1 1 1 1;
+}
