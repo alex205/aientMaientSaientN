@@ -1,7 +1,7 @@
 .image_perso {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
-    -fx-padding: 10;
-    -fx-background-color: linear-gradient(to bottom, rgba(76,248,10,0.08), rgba(76,248,10, 0.7));
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-padding: 12;
+    -fx-background-color: linear-gradient(to bottom, rgba(220,220,220,0.3), rgba(76,248,10, 0.7));
     -fx-background-radius: 20;
 }
 
