@@ -26,6 +26,14 @@ public class Contact {
         return pseudo;
     }
 
+    public String getFullPseudo() {
+        return pseudo + "@" + ip.toString();
+    }
+
+    public InetAddress getIp() {
+        return ip;
+    }
+
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
