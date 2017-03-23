@@ -1,7 +1,8 @@
 package network;
 
-import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -22,9 +23,14 @@ class NetworkListener extends Thread {
             Socket s = server.accept();
             System.out.println("client connecté");
             while(true) {
-                System.out.println("OKAY SOCKET");
+                ObjectInputStream is = new ObjectInputStream(s.getInputStream());
+                Packet p = (Packet) is.readObject();
+                Control c = (Control) p;
+                System.out.println("Le port de l'autre "  + c.getData());
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

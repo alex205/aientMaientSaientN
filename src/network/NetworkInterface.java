@@ -2,9 +2,8 @@ package network;
 
 import model.Contact;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -60,9 +59,10 @@ public class NetworkInterface {
         try {
             anouk = new Socket(dest.getIp(), helloPort);
             System.out.println("anouk ok");
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(anouk.getOutputStream()));
-            writer.write("essai");
-            writer.flush();
+            Control control_packet = new Control(Control.Control_t.HELLO, basePort);
+            ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
+            os.writeObject(control_packet);
+            os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
