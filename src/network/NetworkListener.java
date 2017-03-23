@@ -1,17 +1,16 @@
 package network;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 /**
  * @author alex205
  */
-class NetworkListener extends Thread {
+abstract class NetworkListener extends Thread {
     private ServerSocket server;
+    private Socket s;
 
     public NetworkListener(ServerSocket server) {
         this.server = server;
@@ -19,14 +18,11 @@ class NetworkListener extends Thread {
 
     public void run() {
         try {
-            System.out.println("waiting connection");
-            Socket s = server.accept();
-            System.out.println("client connecté");
             while(true) {
-                ObjectInputStream is = new ObjectInputStream(s.getInputStream());
+            s = server.accept();
+            ObjectInputStream is = new ObjectInputStream(s.getInputStream());
                 Packet p = (Packet) is.readObject();
-                Control c = (Control) p;
-                System.out.println("Le port de l'autre "  + c.getData());
+                managePacket(p);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,4 +30,14 @@ class NetworkListener extends Thread {
             e.printStackTrace();
         }
     }
+
+    protected void closeConnection() {
+        try {
+            s.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected abstract void managePacket(Packet p);
 }

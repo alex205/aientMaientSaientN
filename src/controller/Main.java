@@ -13,7 +13,8 @@ public class Main {
     public static void main(String[] args) {
         NetworkInterface ni = NetworkInterface.getInstance();
         try {
-            Contact c = new Contact("alex", InetAddress.getByName("192.168.2.6"));
+            Contact c = new Contact("alex", InetAddress.getByName("localhost"));
+            ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
             ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
         } catch (UnknownHostException e) {
             e.printStackTrace();

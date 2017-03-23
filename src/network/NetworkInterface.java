@@ -46,7 +46,7 @@ public class NetworkInterface {
         try {
             hello = new ServerSocket(helloPort);
             //Lancement du thread d'écoute pour hello
-            helloListener = new NetworkListener(hello);
+            helloListener = new HelloListener(hello);
             helloListener.start();
         } catch (IOException e) {
             System.out.println("Can't bind hello socket");
@@ -54,25 +54,25 @@ public class NetworkInterface {
         }
     }
 
-    private Socket negotiatePort(Contact dest) {
+    private void negotiatePort(Contact dest) {
         System.out.println("Je vais négotier le port");
         try {
             anouk = new Socket(dest.getIp(), helloPort);
             System.out.println("anouk ok");
-            Control control_packet = new Control(Control.Control_t.HELLO, basePort);
+            Control control_packet = new Control(basePort);
             ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
             os.writeObject(control_packet);
             os.close();
+            basePort++;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     private Socket getSocket(Contact dest) {
         Socket s = socketMap.get(dest);
         if(s == null) {
-            s = negotiatePort(dest);
+            negotiatePort(dest);
         }
 
         return s;
