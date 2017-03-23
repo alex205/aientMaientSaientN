@@ -1,5 +1,7 @@
 package network;
 
+import java.net.InetAddress;
+
 /**
  * @author alex205
  */
@@ -21,6 +23,12 @@ public final class Notification extends Packet {
         this.type = type;
         this.data = data;
     }
+
+    /*public Notification(String pseudoSource, String pseudoDestination, InetAddress addrSource, InetAddress addrDestination, Notification_type type, String data) {
+        super(pseudoSource, pseudoDestination, addrSource, addrDestination);
+        this.type = type;
+        this.data = data;
+    }*/
 
     public Notification_type getType() {
         return type;

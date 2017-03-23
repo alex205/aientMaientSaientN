@@ -55,7 +55,7 @@ public class NetworkInterface {
     }
 
     private void negotiatePort(Contact dest) {
-        System.out.println("Je vais négotier le port");
+        System.out.println("Je vais négocier le port");
         try {
             anouk = new Socket(dest.getIp(), helloPort);
             System.out.println("anouk ok");
@@ -78,8 +78,10 @@ public class NetworkInterface {
         return s;
     }
 
-    public void sendNotification(Contact dest, Notification.Notification_type type, String data) {
+    public void sendNotification( Contact dest, Notification.Notification_type type, String data) {
         Socket s = getSocket(dest);
+        //Packet paquet = new Notification(src.getFullPseudo(), dest.getFullPseudo(), src.getIp(), dest.getIp(), type, data);
+
     }
 
     public void broadcastNotification(Notification.Notification_type type, String data) {

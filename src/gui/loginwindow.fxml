@@ -1,28 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff, #fff;" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField promptText="exemple555@hotmail.fr" />
-            <PasswordField />
-            <Label text="Mot de passe oublié ?" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <TextField promptText="exemple555@hotmail.fr">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin></TextField>
+            <PasswordField accessibleText="Mot de passe" promptText="Mot de passe" text="Mot de passe">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </PasswordField>
+            <Label text="Connexion impossible ?" textFill="#4190ea">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin></Label>
+            <HBox pickOnBounds="false" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Se connecter" />
-                  <Button mnemonicParsing="false" text="Annuler" />
+                  <Label text="Statut de connexion : " />
+                  <ChoiceBox prefWidth="150.0" value="Disponible">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="Disponible" />
+                           <String fx:value="Absent" />
+                           <String fx:value="Occupé" />
+                           <String fx:value="Hors-ligne" />
+                        </FXCollections>
+                     </items>
+                  </ChoiceBox>
                </children>
             </HBox>
+            <CheckBox mnemonicParsing="false" text="Mémoriser mon identifiant et mon mot de passe">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin></CheckBox>
+            <CheckBox disable="true" mnemonicParsing="false" text="Me connecter automatiquement">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin></CheckBox>
+            <HBox prefHeight="24.0" prefWidth="180.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Se connecter">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" text="Annuler" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="Vous n'avez aps d'identifiant AientMaientSaientN ?" />
+            <Label style="-fx-color:red;" text="Inscrivez-vous" textFill="#4190ea" />
          </children>
+         <BorderPane.margin>
+            <Insets right="150.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
+
+   <stylesheets>
+      <URL value="@../res/css/login_style.css" />
+      <URL value="@../res/css/msn_style.css" />
+   </stylesheets>
+   <top>
+      <HBox prefHeight="124.0" prefWidth="600.0" styleClass="themelogin" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="50.0" prefWidth="358.0">
+               <children>
+                  <Label styleClass="msn" text="Se connecter à " />
+                  <Label style="-fx-font-weight:bold;" styleClass="msn" text="AientMaientSaientN " />
+               </children>
+               <HBox.margin>
+                  <Insets left="100.0" top="50.0" />
+               </HBox.margin>
+            </VBox>
+            <ImageView id="help" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" translateX="300.0" BorderPane.alignment="TOP_RIGHT">
+               <image>
+                  <Image url="@../res/img/help.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="50.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <StackPane prefHeight="100.0" prefWidth="100.0" styleClass="image_perso">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" style="-fx-border-radius: 10;">
+               <image>
+                  <Image url="@../../../../fronçois.jpg" />
+               </image>
+               <VBox.margin>
+                  <Insets left="130.0" right="40.0" />
+               </VBox.margin>
+            </ImageView>
+         </children>
+            <HBox.margin>
+               <Insets left="10.0" />
+            </HBox.margin>
+            <VBox.margin>
+               <Insets left="150.0" right="40.0" />
+            </VBox.margin>
+         </StackPane>
+      </VBox>
+   </left>
+   <bottom>
+      <HBox prefHeight="21.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="foot-text" text="Déclaration de confidentialité" textFill="#0000009f">
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </HBox.margin>
+            </Label>
+            <Label styleClass="foot-text" text="Conditions d'utilisation" textFill="#0000009f">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Label>
+            <Label styleClass="foot-text" text="Options" textFill="#0000009f" />
+         </children>
+      </HBox>
+   </bottom>
+   <right>
+
+   </right>
 </fx:root>

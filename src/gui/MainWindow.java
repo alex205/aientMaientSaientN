@@ -13,10 +13,9 @@ public class MainWindow {
         MainWindowController controller = new MainWindowController(this.stage);
         stage.setTitle("MSN Messenger");
         stage.setScene(new Scene(controller));
-        stage.setMinWidth(630);
-        stage.setMinHeight(470);
-        stage.setWidth(640);
-        stage.setHeight(480);
+        stage.setResizable(false);
+        stage.setWidth(800);
+        stage.setHeight(600);
     }
 
     public void show() {
