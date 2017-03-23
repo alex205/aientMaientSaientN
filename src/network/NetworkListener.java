@@ -18,7 +18,9 @@ class NetworkListener extends Thread {
 
     public void run() {
         try {
+            System.out.println("waiting connection");
             Socket s = server.accept();
+            System.out.println("client connecté");
             while(true) {
                 System.out.println("OKAY SOCKET");
             }
