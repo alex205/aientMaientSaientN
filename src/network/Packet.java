@@ -13,12 +13,12 @@ public abstract class Packet implements Serializable {
     protected InetAddress addrSource;
     protected InetAddress addrDestination;
 
-    /*public Packet(String pseudoSource, String pseudoDestination, InetAddress addrSource, InetAddress addrDestination) {
+    public Packet(String pseudoSource, String pseudoDestination, InetAddress addrSource, InetAddress addrDestination) {
         this.pseudoSource = pseudoSource;
         this.pseudoDestination = pseudoDestination;
         this.addrSource = addrSource;
         this.addrDestination = addrDestination;
-    }*/
+    }
 
     public String getPseudoSource() {
         return pseudoSource;

@@ -19,16 +19,11 @@ public final class Notification extends Packet {
     private Notification_type type;
     private String data;
 
-    public Notification(Notification_type type, String data) {
-        this.type = type;
-        this.data = data;
-    }
-
-    /*public Notification(String pseudoSource, String pseudoDestination, InetAddress addrSource, InetAddress addrDestination, Notification_type type, String data) {
+    public Notification(String pseudoSource, String pseudoDestination, InetAddress addrSource, InetAddress addrDestination, Notification_type type, String data) {
         super(pseudoSource, pseudoDestination, addrSource, addrDestination);
         this.type = type;
         this.data = data;
-    }*/
+    }
 
     public Notification_type getType() {
         return type;

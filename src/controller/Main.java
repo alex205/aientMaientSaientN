@@ -14,8 +14,8 @@ public class Main {
         NetworkInterface ni = NetworkInterface.getInstance();
         try {
             Contact c = new Contact("alex", InetAddress.getByName("localhost"));
-            ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
-            ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
+            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
+            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -24,3 +24,4 @@ public class Main {
         //gui.Main.launch(gui.Main.class);
     }
 }
+

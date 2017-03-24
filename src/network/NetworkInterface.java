@@ -16,6 +16,8 @@ public class NetworkInterface {
     private static int helloPort = 20573;
     private static int basePort = 20574;
 
+    private boolean upToDate = true;
+
     //Les sockets de base pour négocier sur quel port se fera la communication
     private Socket anouk; //sert à parler
     private ServerSocket hello; //sert à écouter
@@ -54,7 +56,7 @@ public class NetworkInterface {
         }
     }
 
-    private void negotiatePort(Contact dest) {
+    private Socket negotiatePort(Contact dest) {
         System.out.println("Je vais négocier le port");
         try {
             anouk = new Socket(dest.getIp(), helloPort);
@@ -63,16 +65,21 @@ public class NetworkInterface {
             ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
             os.writeObject(control_packet);
             os.close();
+            upToDate = false;
             basePort++;
+            while(!upToDate) {}
+            return socketMap.get(dest.getFullPseudo());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
     private Socket getSocket(Contact dest) {
         Socket s = socketMap.get(dest);
         if(s == null) {
-            negotiatePort(dest);
+            s = negotiatePort(dest);
         }
 
         return s;
@@ -80,6 +87,7 @@ public class NetworkInterface {
 
     public void sendNotification( Contact dest, Notification.Notification_type type, String data) {
         Socket s = getSocket(dest);
+        System.out.println("OKAY LOL");
         //Packet paquet = new Notification(src.getFullPseudo(), dest.getFullPseudo(), src.getIp(), dest.getIp(), type, data);
 
     }
@@ -94,6 +102,11 @@ public class NetworkInterface {
 
     public void transmitFile(String filename, Contact dest) {
 
+    }
+
+    public void addMap(String fullPseudo, Socket s) {
+        socketMap.put(fullPseudo, s);
+        upToDate = true;
     }
 
 }
