@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public class NetworkInterface {
     private static int helloPort = 20573;
-    private static int basePort = 20574;
+    public static int basePort = 20574;
 
     private boolean upToDate = true;
 
@@ -61,15 +61,12 @@ public class NetworkInterface {
     private Socket negotiatePort(Contact dest) {
         System.out.println("Je vais négocier le port");
         try {
-            anouk = new Socket(dest.getIp(), helloPort);
+
             System.out.println("anouk ok");
             ServerSocket com = new ServerSocket(basePort);
             CommunicationListener listener = new CommunicationListener(com);
             listener.start();
-            Control control_packet = new Control(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), basePort);
-            ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
-            os.writeObject(control_packet);
-            os.close();
+            sendControl(ContactCollection.getMe(), dest, Control.Control_t.HELLO, basePort);
             upToDate = false;
             basePort++;
             while(!upToDate) {}
@@ -107,6 +104,18 @@ public class NetworkInterface {
 
     public void transmitFile(String filename, Contact dest) {
 
+    }
+
+    protected void sendControl(Contact me, Contact dest, Control.Control_t type, int data) {
+        try {
+            anouk = new Socket(dest.getIp(), helloPort);
+            Control control_packet = new Control(me.getPseudo(), dest.getPseudo(), me.getIp(), dest.getIp(), type, data);
+            ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
+            os.writeObject(control_packet);
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addMap(String fullPseudo, Socket s) {
