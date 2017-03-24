@@ -20,7 +20,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 640, 480));
         primaryStage.show();*/
 
-        primaryStage.setTitle("MSN Messenger");
+        /*primaryStage.setTitle("MSN Messenger");
         System.setProperty("gui.Main", "MSN Messenger");
         Button btn = new Button();
         btn.setText("Fronçois");
@@ -39,11 +39,11 @@ public class Main extends Application {
 
         root.getChildren().add(btn);
         primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
-        /*MainWindow mw;
+        primaryStage.show();*/
+        MainWindow mw;
 
         mw = new MainWindow();
-        mw.show();*/
+        mw.show();
     }
 
     /*public static void main(String[] args) {
