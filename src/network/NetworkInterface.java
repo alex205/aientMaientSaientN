@@ -1,6 +1,7 @@
 package network;
 
 import model.Contact;
+import model.ContactCollection;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -65,7 +66,7 @@ public class NetworkInterface {
             ServerSocket com = new ServerSocket(basePort);
             CommunicationListener listener = new CommunicationListener(com);
             listener.start();
-            Control control_packet = new Control("toon", dest.getPseudo(), InetAddress.getByName("10.32.2.53"), dest.getIp(), basePort);
+            Control control_packet = new Control(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), basePort);
             ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
             os.writeObject(control_packet);
             os.close();

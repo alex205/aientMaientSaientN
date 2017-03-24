@@ -1,6 +1,7 @@
 package controller;
 
 import model.Contact;
+import model.ContactCollection;
 import network.NetworkInterface;
 import network.Notification;
 
@@ -11,6 +12,7 @@ import java.net.UnknownHostException;
 public class Main {
 
     public static void main(String[] args) {
+        ContactCollection.createMe("alex205");
         NetworkInterface ni = NetworkInterface.getInstance();
         try {
             Contact c = new Contact("alex", InetAddress.getByName("localhost"));
