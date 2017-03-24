@@ -3,11 +3,8 @@ package controller;
 import model.Contact;
 import model.ContactCollection;
 
-import network.NetworkUtils;
-import network.Notification;
-
 import java.net.*;
-import java.util.Enumeration;
+
 import network.NetworkInterface;
 
 public class Main {
