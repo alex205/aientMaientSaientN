@@ -55,6 +55,13 @@ public class NetworkInterface {
             System.out.println("Can't bind hello socket");
             e.printStackTrace();
         }
+
+        //anouk est un datagram socket
+        try {
+            anouk = new DatagramSocket();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 
     private Socket negotiatePort(Contact dest) {
@@ -95,6 +102,18 @@ public class NetworkInterface {
 
     public void broadcastNotification(Notification.Notification_type type, String data) {
         Notification notification = new Notification(ContactCollection.getMe().getPseudo(), "bcast", ContactCollection.getMe().getIp(), NetworkUtils.getBroadcastAddress(), type, data);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream os = null;
+        try {
+            os = new ObjectOutputStream(outputStream);
+            os.writeObject(notification);
+            byte[] buffer = outputStream.toByteArray();
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, NetworkUtils.getBroadcastAddress(), helloPort);
+            anouk.send(sendPacket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -108,7 +127,6 @@ public class NetworkInterface {
 
     protected void sendControl(Contact me, Contact dest, Control.Control_t type, int data) {
         try {
-            anouk = new DatagramSocket();
             Control control_packet = new Control(me.getPseudo(), dest.getPseudo(), me.getIp(), dest.getIp(), type, data);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ObjectOutputStream os = new ObjectOutputStream(outputStream);

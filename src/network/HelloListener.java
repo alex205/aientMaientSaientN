@@ -67,7 +67,8 @@ public class HelloListener extends Thread {
             }
 
             else if(p instanceof Notification) {
-                System.out.println("MDR g recu une notif");
+                Notification n = (Notification) p;
+                System.out.println("MDR g recu une notif de " + n.getPseudoSource());
             }
         }
 }
