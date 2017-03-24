@@ -4,6 +4,7 @@ import model.Contact;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -61,7 +62,10 @@ public class NetworkInterface {
         try {
             anouk = new Socket(dest.getIp(), helloPort);
             System.out.println("anouk ok");
-            Control control_packet = new Control(basePort);
+            ServerSocket com = new ServerSocket(basePort);
+            CommunicationListener listener = new CommunicationListener(com);
+            listener.start();
+            Control control_packet = new Control("toon", dest.getPseudo(), InetAddress.getByName("10.32.2.53"), dest.getIp(), basePort);
             ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
             os.writeObject(control_packet);
             os.close();
