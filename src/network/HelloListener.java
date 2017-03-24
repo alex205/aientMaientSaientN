@@ -68,7 +68,9 @@ public class HelloListener extends Thread {
 
             else if(p instanceof Notification) {
                 Notification n = (Notification) p;
-                System.out.println("MDR g recu une notif de " + n.getPseudoSource());
+                if(n.getAddrSource() != ContactCollection.getMe().getIp()) {
+                    System.out.println("MDR g recu une notif de " + n.getPseudoSource());
+                }
             }
         }
 }
