@@ -3,11 +3,10 @@ package network;
 import model.Contact;
 import model.ContactCollection;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.HashMap;
 
 
@@ -21,11 +20,11 @@ public class NetworkInterface {
     private boolean upToDate = true;
 
     //Les sockets de base pour négocier sur quel port se fera la communication
-    private Socket anouk; //sert à parler
-    private ServerSocket hello; //sert à écouter
+    private DatagramSocket anouk; //sert à parler
+    private DatagramSocket hello; //sert à écouter
 
     //Listener pour hello
-    private NetworkListener helloListener;
+    private HelloListener helloListener;
 
     //Table de correspondance entre pseudo du contact et socket
     private HashMap<String, Socket> socketMap;
@@ -48,7 +47,7 @@ public class NetworkInterface {
         socketMap = new HashMap<>();
         //On met déjà le socket hello en écoute
         try {
-            hello = new ServerSocket(helloPort);
+            hello = new DatagramSocket(helloPort);
             //Lancement du thread d'écoute pour hello
             helloListener = new HelloListener(hello);
             helloListener.start();
@@ -96,14 +95,7 @@ public class NetworkInterface {
 
     public void broadcastNotification(Notification.Notification_type type, String data) {
         Notification notification = new Notification(ContactCollection.getMe().getPseudo(), "bcast", ContactCollection.getMe().getIp(), NetworkUtils.getBroadcastAddress(), type, data);
-        try {
-            anouk = new Socket(NetworkUtils.getBroadcastAddress(), helloPort);
-            ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
-            os.writeObject(notification);
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void transmitMessage(String message, Contact dest) {
@@ -116,11 +108,14 @@ public class NetworkInterface {
 
     protected void sendControl(Contact me, Contact dest, Control.Control_t type, int data) {
         try {
-            anouk = new Socket(dest.getIp(), helloPort);
+            anouk = new DatagramSocket();
             Control control_packet = new Control(me.getPseudo(), dest.getPseudo(), me.getIp(), dest.getIp(), type, data);
-            ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ObjectOutputStream os = new ObjectOutputStream(outputStream);
             os.writeObject(control_packet);
-            os.close();
+            byte[] buffer = outputStream.toByteArray();
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, dest.getIp(), helloPort);
+            anouk.send(sendPacket);
         } catch (IOException e) {
             e.printStackTrace();
         }
