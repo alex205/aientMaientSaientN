@@ -25,7 +25,7 @@ public class HelloListener extends NetworkListener{
             System.out.println("RECEIVED, le port :" + c.getData());
             NetworkInterface ni = NetworkInterface.getInstance();
             try {
-                    System.out.println("l'ip de jlemme " + c.getAddrSource().toString());
+                    System.out.println("l'ip de " + c.getPseudoSource() + " " + c.getAddrSource().toString());
                     ni.addMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), new Socket(c.getAddrSource(), c.getData()));
                     if(c.getType() == Control.Control_t.HELLO) {
                         ServerSocket com = new ServerSocket(basePort);
@@ -37,7 +37,12 @@ public class HelloListener extends NetworkListener{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             closeConnection();
+            }
+
+            else if(p instanceof Notification) {
+                System.out.println("MDR g recu une notif");
             }
         }
 }

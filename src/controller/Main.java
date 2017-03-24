@@ -3,6 +3,7 @@ package controller;
 import model.Contact;
 import model.ContactCollection;
 
+import network.NetworkUtils;
 import network.Notification;
 
 import java.net.*;
@@ -15,9 +16,9 @@ public class Main {
         ContactCollection.createMe("alex205");
         NetworkInterface ni = NetworkInterface.getInstance();
         try {
-            Contact c = new Contact("alex", InetAddress.getByName("localhost"));
-            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
-            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
+            Contact c = new Contact("alex", InetAddress.getByName("10.32.2.53"));
+            ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
+            ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

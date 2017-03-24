@@ -95,7 +95,15 @@ public class NetworkInterface {
     }
 
     public void broadcastNotification(Notification.Notification_type type, String data) {
-
+        Notification notification = new Notification(ContactCollection.getMe().getPseudo(), "bcast", ContactCollection.getMe().getIp(), NetworkUtils.getBroadcastAddress(), type, data);
+        try {
+            anouk = new Socket(NetworkUtils.getBroadcastAddress(), helloPort);
+            ObjectOutputStream os = new ObjectOutputStream(anouk.getOutputStream());
+            os.writeObject(notification);
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void transmitMessage(String message, Contact dest) {
