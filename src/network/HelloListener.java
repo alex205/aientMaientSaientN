@@ -20,6 +20,7 @@ public class HelloListener extends NetworkListener{
             System.out.println("RECEIVED, le port :" + c.getData());
             NetworkInterface ni = NetworkInterface.getInstance();
             try {
+                System.out.println("l'ip de jlemme " + c.getAddrSource().toString());
                 ni.addMap(c.getPseudoSource()+ "@" + c.getAddrSource().toString(), new Socket(c.getAddrSource(), c.getData()));
             } catch (IOException e) {
                 e.printStackTrace();

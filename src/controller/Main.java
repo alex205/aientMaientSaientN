@@ -2,17 +2,16 @@ package controller;
 
 import model.Contact;
 import model.ContactCollection;
-import network.NetworkInterface;
+
 import network.Notification;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.*;
+import java.util.Enumeration;
 
 public class Main {
 
-    public static void main(String[] args) {
-        ContactCollection.createMe("alex205");
+    public static void main(String[] args) throws UnknownHostException {
+        /*ContactCollection.createMe("alex205");
         NetworkInterface ni = NetworkInterface.getInstance();
         try {
             Contact c = new Contact("alex", InetAddress.getByName("localhost"));
@@ -20,7 +19,8 @@ public class Main {
             //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
         } catch (UnknownHostException e) {
             e.printStackTrace();
-        }
+        }*/
+
 
         //Lancement interface graphique
         //gui.Main.launch(gui.Main.class);

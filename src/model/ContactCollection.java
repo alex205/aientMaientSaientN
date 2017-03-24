@@ -1,5 +1,7 @@
 package model;
 
+import network.NetworkUtils;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -23,11 +25,7 @@ public class ContactCollection {
     }
 
     public static void createMe(String pseudo) {
-        try {
-            me = new Contact(pseudo, InetAddress.getLocalHost());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+            me = new Contact(pseudo, NetworkUtils.getMyIp());
     }
 
     public static Contact getMe() {
