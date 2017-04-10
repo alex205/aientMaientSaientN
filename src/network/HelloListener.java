@@ -47,10 +47,10 @@ public class HelloListener extends Thread {
     }
 
     protected void managePacket(Packet p) {
+        NetworkInterface ni = NetworkInterface.getInstance();
         if(p instanceof Control) {
             Control c = (Control) p;
             System.out.println("RECEIVED, le port :" + c.getData());
-            NetworkInterface ni = NetworkInterface.getInstance();
             try {
                     System.out.println("l'ip de " + c.getPseudoSource() + " " + c.getAddrSource().toString());
                     ni.addMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), new Socket(c.getAddrSource(), c.getData()));
@@ -68,10 +68,16 @@ public class HelloListener extends Thread {
 
             else if(p instanceof Notification) {
                 Notification n = (Notification) p;
+                ContactCollection cc = ContactCollection.getInstance();
                 if(!n.getAddrSource().equals(ContactCollection.getMe().getIp())) {
                     switch (n.getType()) {
                         case CONNECT:
                             System.out.println(n.getPseudoSource() + " vient de se connecter");
+                            Contact c = new Contact(n.getPseudoSource(), n.getAddrSource());
+                            if(!cc.contactExists(c)) {
+                                cc.addContact(c);
+                            }
+                            ni.sendNotification(c, Notification.Notification_type.ACK_CONNECT);
                             break;
                         case DISCONNECT:
                             System.out.println(n.getPseudoSource() + " vient de se déconnecter");

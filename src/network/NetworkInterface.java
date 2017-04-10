@@ -93,11 +93,26 @@ public class NetworkInterface {
         return s;
     }
 
+    //surcharge aussi
+    public void sendNotification( Contact dest, Notification.Notification_type type) {
+        sendNotification(dest, type, "");
+    }
+
     public void sendNotification( Contact dest, Notification.Notification_type type, String data) {
         Socket s = getSocket(dest);
-        System.out.println("OKAY LOL");
-        //Packet paquet = new Notification(src.getFullPseudo(), dest.getFullPseudo(), src.getIp(), dest.getIp(), type, data);
+        Notification notification = new Notification(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), type, data);
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+            os.writeObject(notification);
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    //surcharge s'il n'y a pas de data
+    public void broadcastNotification(Notification.Notification_type type) {
+        broadcastNotification(type, "");
     }
 
     public void broadcastNotification(Notification.Notification_type type, String data) {
