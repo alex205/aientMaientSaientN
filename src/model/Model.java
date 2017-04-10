@@ -4,6 +4,6 @@ public class Model {
     private ContactCollection collection;
 
     public Model() {
-        this.collection = new ContactCollection();
+        //this.collection = new ContactCollection();
     }
 }

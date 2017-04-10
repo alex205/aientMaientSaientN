@@ -1,5 +1,6 @@
 package network;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
@@ -24,9 +25,11 @@ abstract class NetworkListener extends Thread {
                 Packet p = (Packet) is.readObject();
                 managePacket(p);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (EOFException e) {
+            System.out.println("connection ended");
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

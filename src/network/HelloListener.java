@@ -54,6 +54,8 @@ public class HelloListener extends Thread {
             try {
                     System.out.println("l'ip de " + c.getPseudoSource() + " " + c.getAddrSource().toString());
                     ni.addMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), new Socket(c.getAddrSource(), c.getData()));
+                    System.out.println("le pseudo dans la table " + c.getPseudoSource() + "@" + c.getAddrSource().toString());
+                    ni.fireUpdate();
                     if(c.getType() == Control.Control_t.HELLO) {
                         ServerSocket com = new ServerSocket(basePort);
                         CommunicationListener listener = new CommunicationListener(com);

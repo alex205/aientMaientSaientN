@@ -17,8 +17,6 @@ public class NetworkInterface {
     private static int helloPort = 20573;
     public static int basePort = 20574;
 
-    private boolean upToDate = true;
-
     //Les sockets de base pour négocier sur quel port se fera la communication
     private DatagramSocket anouk; //sert à parler
     private DatagramSocket hello; //sert à écouter
@@ -64,20 +62,22 @@ public class NetworkInterface {
         }
     }
 
-    private Socket negotiatePort(Contact dest) {
+    private synchronized Socket negotiatePort(Contact dest) {
         System.out.println("Je vais négocier le port");
         try {
-
             System.out.println("anouk ok");
             ServerSocket com = new ServerSocket(basePort);
             CommunicationListener listener = new CommunicationListener(com);
             listener.start();
             sendControl(ContactCollection.getMe(), dest, Control.Control_t.HELLO, basePort);
-            upToDate = false;
             basePort++;
-            while(!upToDate) {}
+            wait();
+            System.out.println("ok up to date");
+            System.out.println("full pseudo de recherche : " + dest.getFullPseudo());
             return socketMap.get(dest.getFullPseudo());
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -85,11 +85,11 @@ public class NetworkInterface {
     }
 
     private Socket getSocket(Contact dest) {
-        Socket s = socketMap.get(dest);
-        if(s == null) {
+       Socket s; //= socketMap.get(dest);
+        //if(s == null) {
             s = negotiatePort(dest);
-        }
-
+        //}
+        System.out.println("Port négocié, tvb");
         return s;
     }
 
@@ -100,6 +100,7 @@ public class NetworkInterface {
 
     public void sendNotification( Contact dest, Notification.Notification_type type, String data) {
         Socket s = getSocket(dest);
+        System.out.println("Okay j'ai la socket pour balancer la sauce");
         Notification notification = new Notification(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), type, data);
         try {
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
@@ -156,7 +157,10 @@ public class NetworkInterface {
 
     public void addMap(String fullPseudo, Socket s) {
         socketMap.put(fullPseudo, s);
-        upToDate = true;
+    }
+
+    public synchronized void fireUpdate() {
+        notify();
     }
 
 }
