@@ -17,9 +17,9 @@ public class NetworkInterface {
     private static int helloPort = 20573;
     public static int basePort = 20574;
 
-    //Les sockets de base pour négocier sur quel port se fera la communication
-    private DatagramSocket anouk; //sert à parler
-    private DatagramSocket hello; //sert à écouter
+    //Les sockets de base pour négocier sur quel port se fera la communication, sockets de rencontre
+    private DatagramSocket anouk; //socket de rencontre
+    private DatagramSocket hello; //sert à écouter les broadcast
 
     //Listener pour hello
     private HelloListener helloListener;
@@ -44,22 +44,25 @@ public class NetworkInterface {
         //Initialisation de la table vide
         socketMap = new HashMap<>();
         //On met déjà le socket hello en écoute
-        try {
-            hello = new DatagramSocket(helloPort);
+       try {
+           /* hello = new DatagramSocket(helloPort);
             //Lancement du thread d'écoute pour hello
             helloListener = new HelloListener(hello);
-            helloListener.start();
+            helloListener.start();*/
+           anouk = new DatagramSocket(helloPort);
+           helloListener = new HelloListener(anouk);
+           helloListener.start();
         } catch (IOException e) {
             System.out.println("Can't bind hello socket");
             e.printStackTrace();
         }
 
         //anouk est un datagram socket
-        try {
+        /*try {
             anouk = new DatagramSocket();
         } catch (SocketException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private synchronized Socket negotiatePort(Contact dest) {
