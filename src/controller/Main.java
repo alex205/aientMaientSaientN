@@ -15,8 +15,8 @@ public class Main {
         NetworkInterface ni = NetworkInterface.getInstance();
         try {
             Contact c = new Contact("alex205", InetAddress.getByName("192.168.1.91"));
-            ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
-            ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
+            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
+            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

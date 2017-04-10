@@ -67,8 +67,10 @@ public class NetworkInterface {
         try {
             System.out.println("anouk ok");
             ServerSocket com = new ServerSocket(basePort);
+            System.out.println("socket com ok");
             CommunicationListener listener = new CommunicationListener(com);
             listener.start();
+            System.out.println("listener com ok");
             sendControl(ContactCollection.getMe(), dest, Control.Control_t.HELLO, basePort);
             basePort++;
             wait();
@@ -85,10 +87,10 @@ public class NetworkInterface {
     }
 
     private Socket getSocket(Contact dest) {
-       Socket s; //= socketMap.get(dest);
-        //if(s == null) {
+       Socket s = socketMap.get(dest);
+        if(s == null) {
             s = negotiatePort(dest);
-        //}
+        }
         System.out.println("Port négocié, tvb");
         return s;
     }

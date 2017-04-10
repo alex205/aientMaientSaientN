@@ -77,8 +77,10 @@ public class HelloListener extends Thread {
                             System.out.println(n.getPseudoSource() + " vient de se connecter");
                             Contact c = new Contact(n.getPseudoSource(), n.getAddrSource());
                             if(!cc.contactExists(c)) {
+                                System.out.println("contact ajouté dans la table");
                                 cc.addContact(c);
                             }
+                            System.out.println("on répond de notre présence à " + c.getFullPseudo());
                             ni.sendNotification(c, Notification.Notification_type.ACK_CONNECT);
                             break;
                         case DISCONNECT:
