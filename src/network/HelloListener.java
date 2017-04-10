@@ -68,8 +68,24 @@ public class HelloListener extends Thread {
 
             else if(p instanceof Notification) {
                 Notification n = (Notification) p;
-                if(n.getAddrSource() != ContactCollection.getMe().getIp()) {
-                    System.out.println("MDR g recu une notif de " + n.getPseudoSource());
+                if(!n.getAddrSource().equals(ContactCollection.getMe().getIp())) {
+                    switch (n.getType()) {
+                        case CONNECT:
+                            System.out.println(n.getPseudoSource() + " vient de se connecter");
+                            break;
+                        case DISCONNECT:
+                            System.out.println(n.getPseudoSource() + " vient de se déconnecter");
+                            break;
+                        case STATUS_CHANGE:
+                            System.out.println(n.getPseudoSource() + " est maintenant " + n.getData());
+                            break;
+                        case ALIVE:
+                            System.out.println(n.getPseudoSource() + " est en vie !!");
+                            break;
+
+                        default:
+                            System.out.println("Can't read this notification");
+                    }
                 }
             }
         }
