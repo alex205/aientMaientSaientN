@@ -14,15 +14,18 @@ import java.util.HashMap;
  * @author alex205
  */
 public class NetworkInterface {
-    private static int helloPort = 20573;
-    public static int basePort = 20574;
+    private static int anoukPort = 20573;
+    private static int bcastPort = 20574;
+    public static int basePort = 20575;
 
     //Les sockets de base pour négocier sur quel port se fera la communication, sockets de rencontre
     private DatagramSocket anouk; //socket de rencontre
     private DatagramSocket hello; //sert à écouter les broadcast
 
-    //Listener pour hello
+    //Listener pour anouk
     private HelloListener helloListener;
+    //Listener pour le bcast
+    private BroadcastListener bcastListener;
 
     //Table de correspondance entre pseudo du contact et socket
     private HashMap<String, Socket> socketMap;
@@ -45,15 +48,16 @@ public class NetworkInterface {
         socketMap = new HashMap<>();
         //On met déjà le socket hello en écoute
        try {
-           /* hello = new DatagramSocket(helloPort);
-            //Lancement du thread d'écoute pour hello
-            helloListener = new HelloListener(hello);
-            helloListener.start();*/
-           anouk = new DatagramSocket(helloPort);
+            hello = new DatagramSocket(bcastPort);
+            //Lancement du thread d'écoute pour broadcast
+            bcastListener = new BroadcastListener(hello);
+            bcastListener.start();
+            //idem pour Anouk
+           anouk = new DatagramSocket(anoukPort);
            helloListener = new HelloListener(anouk);
            helloListener.start();
         } catch (IOException e) {
-            System.out.println("Can't bind hello socket");
+            System.out.println("Can't bind sockets");
             e.printStackTrace();
         }
 
@@ -129,7 +133,7 @@ public class NetworkInterface {
             os = new ObjectOutputStream(outputStream);
             os.writeObject(notification);
             byte[] buffer = outputStream.toByteArray();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, NetworkUtils.getBroadcastAddress(), helloPort);
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, NetworkUtils.getBroadcastAddress(), anoukPort);
             anouk.send(sendPacket);
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,7 +157,7 @@ public class NetworkInterface {
             ObjectOutputStream os = new ObjectOutputStream(outputStream);
             os.writeObject(control_packet);
             byte[] buffer = outputStream.toByteArray();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, dest.getIp(), helloPort);
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, dest.getIp(), anoukPort);
             anouk.send(sendPacket);
         } catch (IOException e) {
             e.printStackTrace();
