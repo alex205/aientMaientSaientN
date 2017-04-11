@@ -60,13 +60,6 @@ public class NetworkInterface {
             System.out.println("Can't bind sockets");
             e.printStackTrace();
         }
-
-        //anouk est un datagram socket
-        /*try {
-            anouk = new DatagramSocket();
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private synchronized Socket negotiatePort(Contact dest) {
@@ -133,7 +126,7 @@ public class NetworkInterface {
             os = new ObjectOutputStream(outputStream);
             os.writeObject(notification);
             byte[] buffer = outputStream.toByteArray();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, NetworkUtils.getBroadcastAddress(), anoukPort);
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, NetworkUtils.getBroadcastAddress(), bcastPort);
             anouk.send(sendPacket);
         } catch (IOException e) {
             e.printStackTrace();

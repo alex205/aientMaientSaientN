@@ -5,24 +5,16 @@ import model.ContactCollection;
 
 import java.net.*;
 
-import network.NetworkInterface;
-
 public class Main {
 
     public static void main(String[] args) throws UnknownHostException {
-        ContactCollection.createMe("alex205");
-        NetworkInterface ni = NetworkInterface.getInstance();
-        try {
-            Contact c = new Contact("paulineL", InetAddress.getByName("192.168.1.91"));
-            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
-            //ni.sendNotification(c, Notification.Notification_type.ACK, "bite");
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-
+        Controller controller = new Controller();
+        ContactCollection cc = ContactCollection.getInstance();
+        cc.addContact(new Contact("alex205", InetAddress.getByName("127.0.0.1")));
 
         //Lancement interface graphique
-        //gui.Main.launch(gui.Main.class);
+        gui.Main.setController(controller);
+        gui.Main.launch(gui.Main.class);
     }
 }
 

@@ -1,16 +1,17 @@
 package gui;
 
+import controller.Controller;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainWindow {
-    private Stage stage;
+    public static Stage stage;
 
-    public MainWindow() throws IOException {
+    public MainWindow(Controller cont) throws IOException {
         this.stage = new Stage();
-        MainWindowController controller = new MainWindowController(this.stage);
+        LoginWindowController controller = new LoginWindowController(this.stage, cont);
         stage.setTitle("MSN Messenger");
         stage.setScene(new Scene(controller));
         stage.setResizable(false);

@@ -1,18 +1,19 @@
 package controller;
 
-public class Controller {
-    public enum State_t {
-        DISCONNECTED,
-        CONNECTED
-    }
+import model.ContactCollection;
+import network.NetworkInterface;
+import network.Notification;
 
-    private State_t app_state;
+public class Controller {
 
     public Controller() {
-        this.app_state = State_t.DISCONNECTED;
+
     }
 
-    public State_t getAppState() {
-        return app_state;
+    public void connect(String pseudo) {
+        NetworkInterface ni = NetworkInterface.getInstance();
+        ContactCollection.createMe(pseudo);
+
+        ni.broadcastNotification(Notification.Notification_type.CONNECT);
     }
 }

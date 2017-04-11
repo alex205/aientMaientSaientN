@@ -1,17 +1,23 @@
 package gui;
 
+import controller.Controller;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
 public class Main extends Application {
+
+    private static Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -42,8 +48,21 @@ public class Main extends Application {
         primaryStage.show();*/
         MainWindow mw;
 
-        mw = new MainWindow();
+        mw = new MainWindow(controller);
         mw.show();
+
+        //pour quitter proprement
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+    }
+
+    public static void setController(Controller c) {
+        controller = c;
     }
 
     /*public static void main(String[] args) {
