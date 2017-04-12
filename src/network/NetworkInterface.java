@@ -109,7 +109,7 @@ public class NetworkInterface {
         try {
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
             os.writeObject(notification);
-            os.close();
+            //os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,7 +144,7 @@ public class NetworkInterface {
         try {
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
             os.writeObject(textMessage);
-            os.close();
+            //os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
