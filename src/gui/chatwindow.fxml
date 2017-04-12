@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.text.TextFlow?>
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="theme" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <top>
       <ToolBar fx:id="menu_bar" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -117,7 +118,7 @@
                </VBox>
                <VBox fx:id="box_type_message">
                    <children>
-                       <Label text="Dernier message reçu à 10:46 le 01/03/2017" textFill="#000000bf">
+                       <Label fx:id="last_message_date_label" text="Dernier message reçu à 10:46 le 01/03/2017" textFill="#000000bf">
                      <VBox.margin>
                         <Insets bottom="10.0" top="5.0" />
                      </VBox.margin>
@@ -202,7 +203,7 @@
          <children>
             <HBox>
                <children>
-                   <Label text="FRONÇOIS ">
+                   <Label fx:id="pseudo_label" text=" ">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -228,7 +229,7 @@
                   <Font size="11.0" />
                </font>
             </Label>
-             <TextArea fx:id="messages_received" editable="false" text="FRONÇOIS dit :&#10;CC sava ?&#10;qds&#10;&#10;ddd&#10;&#10;&#10;&#10;qfdsqf&#10;&#10;e&#10;f63&#10;d&#10;sz9f3v5&#10;3&#10;96&#10;3&#10;95&#10;&#10;3&#10;53&#10;&#10;98v3&#10;5&#10;3&#10;&#10;5v&#10;35&#10;&#10;s3v5&#10;s3&#10;&#10;d5v3&#10;&#10;5&#10;s3d5v&#10;&#10;3&#10;53d&#10;sf5v&#10;&#10;5dsv&#10;" />
+             <TextFlow fx:id="messages_received" />
          </children>
          <padding>
             <Insets top="20.0" />

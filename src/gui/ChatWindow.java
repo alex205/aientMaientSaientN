@@ -1,21 +1,28 @@
 package gui;
 
+import controller.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Contact;
+import network.Control;
 
 import java.io.IOException;
 
 public class ChatWindow {
 
     private Stage stage;
+    private Controller controller;
+    private Contact contact;
+    private ChatWindowController chatWindowController;
 
-    public ChatWindow() throws IOException {
+    public ChatWindow(Controller ctrl, Contact contact) throws IOException {
         this.stage = new Stage();
-        ChatWindowController controller = new ChatWindowController(this.stage);
-        stage.setTitle("Fronçois - Conversation");
-        stage.setScene(new Scene(controller));
+        this.controller = ctrl;
+        this.contact = contact;
+        chatWindowController = new ChatWindowController(this.stage, this.controller, contact);
+        stage.setScene(new Scene(chatWindowController));
         stage.setMinWidth(630);
         stage.setMinHeight(470);
         stage.setWidth(640);
@@ -25,5 +32,9 @@ public class ChatWindow {
 
     public void show() {
         this.stage.show();
+    }
+
+    public ChatWindowController getChatWindowController() {
+        return chatWindowController;
     }
 }

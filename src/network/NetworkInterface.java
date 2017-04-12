@@ -87,9 +87,11 @@ public class NetworkInterface {
     }
 
     private Socket getSocket(Contact dest) {
-       Socket s = socketMap.get(dest);
+       Socket s = socketMap.get(dest.getFullPseudo());
         if(s == null) {
             s = negotiatePort(dest);
+        } else {
+            System.out.println("pas besoin de négocier, déjà en mémoire"); //FIXME else pour test uniquement
         }
         System.out.println("Port négocié, tvb");
         return s;

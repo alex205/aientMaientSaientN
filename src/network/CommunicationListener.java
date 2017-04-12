@@ -1,5 +1,7 @@
 package network;
 
+import gui.ChatWindow;
+import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
 
@@ -18,10 +20,12 @@ public class CommunicationListener extends NetworkListener{
     protected void managePacket(Packet p) {
         //Réception de message
         if(p instanceof Message) {
+            ViewController viewController = ViewController.getInstance();
             //On regarde si c'est du texte ou un fichier
             if(p instanceof Text) {
                 Text message = (Text) p;
-                System.out.println("Message reçu : " + message.getData());
+                ChatWindow view = viewController.getView(new Contact(message.getPseudoSource(), message.getAddrSource()));
+                viewController.updateView(view, ViewController.Update_type.NEW_MESSAGE, message.getData());
             }
         }
         if(p instanceof Notification) {
