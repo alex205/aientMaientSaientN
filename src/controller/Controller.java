@@ -1,19 +1,29 @@
 package controller;
 
+
+import model.Contact;
 import model.ContactCollection;
 import network.NetworkInterface;
 import network.Notification;
 
+
+
 public class Controller {
 
-    public Controller() {
+    private NetworkInterface ni;
 
+    public Controller() {
+        ni = NetworkInterface.getInstance();
     }
 
     public void connect(String pseudo) {
-        NetworkInterface ni = NetworkInterface.getInstance();
         ContactCollection.createMe(pseudo);
 
         ni.broadcastNotification(Notification.Notification_type.CONNECT);
+    }
+
+    public void sendMessage(Contact dest, String message) {
+        System.out.println("Envoi d'un message");
+        ni.transmitMessage(message, dest);
     }
 }

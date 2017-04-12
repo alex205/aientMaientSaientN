@@ -42,10 +42,10 @@ public class LoginWindowController extends BorderPane {
             controller.connect(pseudo.getText());
             System.out.println("connexion");
             Stage stage = (Stage) connect_btn.getScene().getWindow();
-            ContactWindowController contactController = new ContactWindowController(stage);
+            ContactWindowController contactController = new ContactWindowController(stage, controller);
             stage.setResizable(true);
             stage.setHeight(800);
-            stage.setWidth(400);
+            stage.setWidth(500);
             stage.setScene(new Scene(contactController));
             stage.show();
         }

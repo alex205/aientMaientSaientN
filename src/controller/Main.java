@@ -4,6 +4,7 @@ import model.Contact;
 import model.ContactCollection;
 
 import java.net.*;
+import java.util.ArrayList;
 
 public class Main {
 

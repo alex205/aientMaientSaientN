@@ -136,7 +136,16 @@ public class NetworkInterface {
     }
 
     public void transmitMessage(String message, Contact dest) {
-
+        Socket s = getSocket(dest);
+        System.out.println("prêt à lancer le message");
+        Text textMessage = new Text(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), message);
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+            os.writeObject(textMessage);
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void transmitFile(String filename, Contact dest) {

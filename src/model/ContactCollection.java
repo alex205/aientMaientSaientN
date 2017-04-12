@@ -3,7 +3,6 @@ package model;
 import network.NetworkUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class ContactCollection {
@@ -52,6 +51,16 @@ public class ContactCollection {
             }
         }
         return false;
+    }
+
+    //seulement pour les tests
+    public Contact getContact(String pseudo) {
+        for (Contact object : collection) {
+            if (object.getPseudo().equals(pseudo)) {
+                return object;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Contact> getCollection() {
