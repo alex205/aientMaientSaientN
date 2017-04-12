@@ -28,7 +28,8 @@ public class NetworkInterface {
     private BroadcastListener bcastListener;
 
     //Table de correspondance entre pseudo du contact et socket
-    private HashMap<String, Socket> socketMap;
+    //private HashMap<String, Socket> socketMap;
+    private HashMap<String, Integer> socketMap;
 
     // La network interface est un singleton parce qu'il faut en instancier qu'une seule !
 
@@ -62,7 +63,7 @@ public class NetworkInterface {
         }
     }
 
-    private synchronized Socket negotiatePort(Contact dest) {
+    private synchronized Integer negotiatePort(Contact dest) {
         System.out.println("Je vais négocier le port");
         try {
             System.out.println("anouk ok");
@@ -87,14 +88,19 @@ public class NetworkInterface {
     }
 
     private Socket getSocket(Contact dest) {
-       Socket s = socketMap.get(dest.getFullPseudo());
-        if(s == null) {
-            s = negotiatePort(dest);
+       Integer port = socketMap.get(dest.getFullPseudo());
+        if(port == null) {
+            port = negotiatePort(dest);
         } else {
             System.out.println("pas besoin de négocier, déjà en mémoire"); //FIXME else pour test uniquement
         }
         System.out.println("Port négocié, tvb");
-        return s;
+        try {
+            return new Socket(dest.getIp(), port.intValue());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //surcharge aussi
@@ -109,7 +115,7 @@ public class NetworkInterface {
         try {
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
             os.writeObject(notification);
-            //os.close();
+            os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,7 +150,7 @@ public class NetworkInterface {
         try {
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
             os.writeObject(textMessage);
-            //os.close();
+            os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -168,8 +174,8 @@ public class NetworkInterface {
         }
     }
 
-    public void addMap(String fullPseudo, Socket s) {
-        socketMap.put(fullPseudo, s);
+    public void addMap(String fullPseudo, int port) {
+        socketMap.put(fullPseudo, port);
     }
 
     public synchronized void fireUpdate() {

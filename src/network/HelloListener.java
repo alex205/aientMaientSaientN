@@ -30,7 +30,7 @@ public class HelloListener extends DatagramListener {
             System.out.println("RECEIVED, le port :" + c.getData());
             try {
                     System.out.println("l'ip de " + c.getPseudoSource() + " " + c.getAddrSource().toString());
-                    ni.addMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), new Socket(c.getAddrSource(), c.getData()));
+                    ni.addMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), c.getData());
                     System.out.println("le pseudo dans la table " + c.getPseudoSource() + "@" + c.getAddrSource().toString());
                     ni.fireUpdate();
                     if(c.getType() == Control.Control_t.HELLO) {
