@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,7 +18,14 @@ public class MainWindow {
         stage.setResizable(false);
         stage.setWidth(800);
         stage.setHeight(600);
+
+        //Pour quitter proprement l'application (ie tuer tous les threads)
+        stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
+
 
     public void show() {
         this.stage.show();

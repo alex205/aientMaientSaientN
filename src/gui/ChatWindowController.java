@@ -2,31 +2,35 @@ package gui;
 
 import controller.Controller;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
+import javafx.stage.StageStyle;
 import model.Contact;
 import model.ContactCollection;
 
-import javax.swing.plaf.metal.MetalBorders;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ChatWindowController  extends BorderPane implements Initializable {
@@ -45,9 +49,15 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     @FXML
     protected TextFlow messages_received;
     @FXML
+    protected TextArea message_write;
+    @FXML
+    protected ScrollPane messages_received_pane;
+    @FXML
     protected Label pseudo_label;
     @FXML
     protected Label last_message_date_label;
+    @FXML
+    protected ImageView color_button;
 
 
 
@@ -74,30 +84,63 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         VBox.setVgrow(messages_received, Priority.ALWAYS);
         HBox.setHgrow(box_type_message, Priority.ALWAYS);
 
+        //Pour scroller automatiquement en bas du scrollpane
+        messages_received.getChildren().addListener(
+                (ListChangeListener<Node>) ((change) -> {
+                    messages_received.layout();
+                    messages_received_pane.layout();
+                    messages_received_pane.setVvalue(1.0f);
+                })
+        );
+
         //Gestion de la fermeture de la fenêtre
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                ViewController vc = ViewController.getInstance();
-                vc.delView(contact);
-            }
+        stage.setOnCloseRequest(we -> {
+            ViewController vc = ViewController.getInstance();
+            vc.delView(contact);
         });
 
-        //Actions de la toolbar
-        /*nudge_button.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                nudgeAction();
-                event.consume();
-            }
-        });*/
     }
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         stage.setTitle(contact.getPseudo() + " - Conversation");
         pseudo_label.setText(contact.getPseudo());
+        message_write.setStyle("-fx-text-inner-color: #000000");
+
+        //Envoi de message
+        message_write.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                controller.sendMessage(contact, message_write.getText());
+                addMessage(true, message_write.getText());
+                message_write.setText("");
+                ke.consume();
+            }
+        });
+
+        //Actions de la toolbar
+
+        //Choix de la couleur du texte
+        color_button.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<MouseEvent>) event -> {
+            event.consume();
+            System.out.println("choix couleur");
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            alert.setTitle("Modifier la couleur du texte");
+            alert.setWidth(400);
+            alert.initStyle(StageStyle.UNDECORATED);
+
+            ButtonType valider = new ButtonType("OK");
+            alert.getButtonTypes().setAll(valider);
+
+            String current_color = message_write.getStyle().split(":")[1].substring(1);
+            ColorPicker picker = new ColorPicker(Color.web(current_color));
+            alert.getDialogPane().setContent(picker);
+            Optional<ButtonType> res =  alert.showAndWait();
+            if(res.get() == valider) {
+                message_write.setStyle("-fx-text-inner-color: #" + Integer.toHexString(picker.getValue().hashCode()).substring(0,6).toUpperCase());
+            }
+        });
     }
 
     public void addMessage(boolean me, String message) {
@@ -105,9 +148,10 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         Text msg = new Text();
         Text bullet = new Text();
         bullet.setText("•  ");
+        bullet.setStyle("-fx-fill: #828282;");
         caption.setStyle("-fx-fill: #828282;");
         if(me) {
-            if(!was_me) {
+            if(!was_me || messages_received.getChildren().isEmpty()) {
                 caption.setText(System.lineSeparator() + ContactCollection.getMe().getPseudo() + " dit :" + System.lineSeparator());
                 Platform.runLater(() -> messages_received.getChildren().add(caption));
                 was_me = true;
@@ -121,6 +165,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         }
         msg.setText(message + System.lineSeparator());
         Platform.runLater(() -> messages_received.getChildren().addAll(bullet, msg));
-        Platform.runLater(() -> last_message_date_label.setText("Dernier message reçu à " + heure_format.format(new Date()) + " le " + date_format.format(new Date())));
+        if(!me) {
+            Platform.runLater(() -> last_message_date_label.setText("Dernier message reçu à " + heure_format.format(new Date()) + " le " + date_format.format(new Date())));
+        }
     }
 }

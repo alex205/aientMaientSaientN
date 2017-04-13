@@ -7,7 +7,6 @@ import network.NetworkInterface;
 import network.Notification;
 
 
-
 public class Controller {
 
     private NetworkInterface ni;
@@ -18,7 +17,7 @@ public class Controller {
 
     public void connect(String pseudo) {
         ContactCollection.createMe(pseudo);
-
+        ni.launchNetwork();
         ni.broadcastNotification(Notification.Notification_type.CONNECT);
     }
 

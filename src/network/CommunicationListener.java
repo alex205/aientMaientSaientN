@@ -24,7 +24,7 @@ public class CommunicationListener extends NetworkListener{
             //On regarde si c'est du texte ou un fichier
             if(p instanceof Text) {
                 Text message = (Text) p;
-                ChatWindow view = viewController.getView(new Contact(message.getPseudoSource(), message.getAddrSource()));
+                ChatWindow view = viewController.getView(new Contact(message.getPseudoSource(), message.getAddrSource()), false);
                 viewController.updateView(view, ViewController.Update_type.NEW_MESSAGE, message.getData());
             }
         }

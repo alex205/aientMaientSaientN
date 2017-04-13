@@ -36,27 +36,34 @@ public class ViewController {
         this.controller = controller;
     }
 
-    public ChatWindow getView(Contact c) {
+    public ChatWindow getView(Contact c, boolean graphicThread) {
         /*
          * Pour résoudre le problème concurrent suivant :  il faut attendre que le thread graphique ait crée la fenêtre
          * et qu'il nous renvoie son instance avant de continuer, on utilise le countdownlatch
+         * Si on est dans le thread graphique, inutile, cela crée un interbloquage, d'où le booléen
          */
         final CountDownLatch latch = new CountDownLatch(1);
         if(viewMap.get(c.getFullPseudo()) == null) //si on ne connaît pas encore la vue (ie fenêtre pas ouverte)
         {
+            System.out.println("demande création fenêtre");
             //on demande au thread graphique de la créer
             Platform.runLater(() -> {
                 try {
                     ChatWindow view = new ChatWindow(controller, c);
                     viewMap.put(c.getFullPseudo(), view);
                     view.show();
-                    latch.countDown(); //on notifie que c'est fait
+                    if(!graphicThread) {
+                        latch.countDown(); //on notifie que c'est fait
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
-            try {
-                latch.await(); //attente de la notification du thread graphique
+           try {
+               if(!graphicThread) {
+                   latch.await(); //attente de la notification du thread graphique
+               }
+                System.out.println("okay attente");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -22,7 +23,6 @@ import model.Contact;
 import model.ContactCollection;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
@@ -58,6 +58,14 @@ public class ContactWindowController extends BorderPane implements Initializable
     private void handleButtonAction(ActionEvent event) throws UnknownHostException {
         ContactCollection cc = ContactCollection.getInstance();
         controller.sendMessage(cc.getContact("letesteur"), "coucou");
+    }
+
+    @FXML
+    private void handleListAction(MouseEvent event) {
+        ChatWindow view = ViewController.getInstance().getView((Contact) online_contacts.getSelectionModel().getSelectedItem(), true);
+        try {
+            view.requestFocus();
+        } catch (NullPointerException e) {}
     }
 
     @Override

@@ -5,7 +5,7 @@
     -fx-background-radius: 20;
 }
 
-#messages_received {
+#messages_received_pane {
     -fx-background-color: #fff, #fff;
     -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, white 0%, gray 50%, white 100%);
     -fx-border-width: 1 0 0 0;

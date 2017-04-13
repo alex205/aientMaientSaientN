@@ -34,6 +34,10 @@ public class ChatWindow {
         this.stage.show();
     }
 
+    public void requestFocus() {
+        stage.requestFocus();
+    }
+
     public ChatWindowController getChatWindowController() {
         return chatWindowController;
     }

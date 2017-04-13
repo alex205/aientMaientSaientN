@@ -49,14 +49,12 @@ public class NetworkInterface {
         socketMap = new HashMap<>();
         //On met déjà le socket hello en écoute
        try {
-            hello = new DatagramSocket(bcastPort);
-            //Lancement du thread d'écoute pour broadcast
-            bcastListener = new BroadcastListener(hello);
-            bcastListener.start();
-            //idem pour Anouk
+           hello = new DatagramSocket(bcastPort);
+           //Lancement du thread d'écoute pour broadcast
+           bcastListener = new BroadcastListener(hello);
+           //idem pour Anouk
            anouk = new DatagramSocket(anoukPort);
            helloListener = new HelloListener(anouk);
-           helloListener.start();
         } catch (IOException e) {
             System.out.println("Can't bind sockets");
             e.printStackTrace();
@@ -103,6 +101,10 @@ public class NetworkInterface {
         return null;
     }
 
+    public void launchNetwork() {
+        bcastListener.start();
+        helloListener.start();
+    }
     //surcharge aussi
     public void sendNotification( Contact dest, Notification.Notification_type type) {
         sendNotification(dest, type, "");

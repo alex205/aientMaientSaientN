@@ -50,15 +50,6 @@ public class Main extends Application {
 
         mw = new MainWindow(controller);
         mw.show();
-
-        //pour quitter proprement
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
     }
 
     public static void setController(Controller c) {
