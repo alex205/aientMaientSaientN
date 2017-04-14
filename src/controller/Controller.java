@@ -3,6 +3,7 @@ package controller;
 
 import model.Contact;
 import model.ContactCollection;
+import network.Misc;
 import network.NetworkInterface;
 import network.Notification;
 
@@ -24,5 +25,9 @@ public class Controller {
     public void sendMessage(Contact dest, String message) {
         System.out.println("Envoi d'un message");
         ni.transmitMessage(message, dest);
+    }
+
+    public void changeTextColor(Contact dest, String color) {
+        ni.sendNotification(dest, new Misc(Misc.Misc_type.TEXT_COLOR_CHANGE, color));
     }
 }

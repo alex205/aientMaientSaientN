@@ -5,6 +5,8 @@ import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
 
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 
 /**
@@ -40,6 +42,21 @@ public class CommunicationListener extends NetworkListener{
                         cc.addContact(c);
                     }
                     break;
+
+                case MISC:
+                    //Désérialisation du misc
+                    try {
+                        byte b[] = n.getData().getBytes();
+                        ByteArrayInputStream bi = new ByteArrayInputStream(b);
+                        ObjectInputStream si = new ObjectInputStream(bi);
+                        Misc misc = (Misc) si.readObject();
+                        switch (misc.getType()) {
+                            case TEXT_COLOR_CHANGE:
+                                System.out.println("reçu un changement de couleur de texte --> " + misc.getData());
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
             }
         }
     }

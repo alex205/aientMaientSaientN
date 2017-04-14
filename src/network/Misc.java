@@ -6,13 +6,14 @@ package network;
 public class Misc {
     public enum Misc_type {
         NUDGE,
-        PROFILE_PICTURE
+        PROFILE_PICTURE,
+        TEXT_COLOR_CHANGE
     }
 
     private Misc_type type;
-    private byte[] data;
+    private String data;
 
-    public Misc(Misc_type type, byte[] data) {
+    public Misc(Misc_type type, String data) {
         this.type = type;
         this.data = data;
     }
@@ -21,7 +22,7 @@ public class Misc {
         return type;
     }
 
-    public byte[] getData() {
+    public String getData() {
         return data;
     }
 }

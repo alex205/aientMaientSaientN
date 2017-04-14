@@ -107,7 +107,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         stage.setTitle(contact.getPseudo() + " - Conversation");
         pseudo_label.setText(contact.getPseudo());
-        message_write.setStyle("-fx-text-inner-color: #000000");
+        message_write.setStyle("-fx-text-inner-color: " + ContactCollection.getMe().getTextColor());
 
         //Envoi de message
         message_write.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
@@ -138,7 +138,9 @@ public class ChatWindowController  extends BorderPane implements Initializable {
             alert.getDialogPane().setContent(picker);
             Optional<ButtonType> res =  alert.showAndWait();
             if(res.get() == valider) {
-                message_write.setStyle("-fx-text-inner-color: #" + Integer.toHexString(picker.getValue().hashCode()).substring(0,6).toUpperCase());
+                String color = picker.getValue().toString().substring(2,8).toUpperCase();
+                message_write.setStyle("-fx-text-inner-color: #" + color);
+                ContactCollection.getMe().setTextColor(color);
             }
         });
     }
@@ -151,6 +153,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         bullet.setStyle("-fx-fill: #828282;");
         caption.setStyle("-fx-fill: #828282;");
         if(me) {
+            System.out.println("la couleur : " + ContactCollection.getMe().getTextColor());
+            msg.setStyle("-fx-fill: #" + ContactCollection.getMe().getTextColor());
             if(!was_me || messages_received.getChildren().isEmpty()) {
                 caption.setText(System.lineSeparator() + ContactCollection.getMe().getPseudo() + " dit :" + System.lineSeparator());
                 Platform.runLater(() -> messages_received.getChildren().add(caption));

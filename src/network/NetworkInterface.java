@@ -123,6 +123,29 @@ public class NetworkInterface {
         }
     }
 
+    public void sendNotification(Contact dest, Misc misc) {
+        // Serialisation du misc
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(out);
+            oos.writeObject(misc);
+            oos.flush();
+            String serialized_misc = oos.toString();
+
+            Socket s = getSocket(dest);
+            Notification notification = new Notification(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), Notification.Notification_type.MISC, serialized_misc);
+            try {
+                ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+                os.writeObject(notification);
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //surcharge s'il n'y a pas de data
     public void broadcastNotification(Notification.Notification_type type) {
         broadcastNotification(type, "");
