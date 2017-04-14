@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
@@ -27,9 +28,7 @@ import model.ContactCollection;
 
 import java.io.IOException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ResourceBundle;
-import java.lang.Number;
 
 public class ContactWindowController extends BorderPane implements Initializable {
     private Stage stage;
@@ -43,6 +42,8 @@ public class ContactWindowController extends BorderPane implements Initializable
     protected ListView online_contacts;
     @FXML
     protected ChoiceBox<String> status_change_list;
+    @FXML
+    protected StackPane image_perso_pane;
 
     public ContactWindowController(Stage stage, Controller controller) {
         this.stage = stage;
@@ -77,6 +78,21 @@ public class ContactWindowController extends BorderPane implements Initializable
         status_change_list.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
             String status = status_change_list.getItems().get((Integer) number2);
             status = status.substring(1, status.length()-1);
+            image_perso_pane.getStyleClass().clear();
+            switch (status) {
+                case "Disponible":
+                    image_perso_pane.getStyleClass().add("image_perso");
+                    break;
+                case "Absent":
+                    image_perso_pane.getStyleClass().add("image_perso_away");
+                    break;
+                case "Occupé":
+                    image_perso_pane.getStyleClass().add("image_perso_busy");
+                    break;
+                case "Hors-ligne":
+                    image_perso_pane.getStyleClass().add("image_perso_offline");
+                    break;
+            }
             controller.changeStatus(status);
         });
 

@@ -26,7 +26,7 @@
    <top>
       <HBox fx:id="header" prefHeight="100.0" prefWidth="200.0" styleClass="themecontact" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="80.0" prefWidth="80.0" styleClass="image_perso">
+            <StackPane fx:id="image_perso_pane" prefHeight="80.0" prefWidth="80.0" styleClass="image_perso">
                <children>
                   <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" style="-fx-border-radius: 10;">
                      <image>

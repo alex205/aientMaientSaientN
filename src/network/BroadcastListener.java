@@ -59,7 +59,7 @@ public class BroadcastListener extends DatagramListener{
                             contact.setStatus(status); // changement du statut dans le contact
                             //changement du statut dans la vue si elle est ouverte
                             if(viewController.viewExists(contact)) {
-                                viewController.updateView(viewController.getView(contact, false), ViewController.Update_type.STATUS_CHANGE);
+                                viewController.updateView(viewController.getView(contact, false), ViewController.Update_type.STATUS_CHANGE, "");
                             }
                             break;
                         case ALIVE:

@@ -80,16 +80,15 @@ public class ViewController {
         switch (type) {
             case NEW_MESSAGE:
                 view.getChatWindowController().addMessage(false, toUpdate);
+                break;
             case STATUS_CHANGE:
-                view.getChatWindowController().refreshStatus();
+                System.out.println("changement dans la vue");
+                view.getChatWindowController().refreshStatus(false);
+                break;
         }
     }
 
-    public void updateView(ChatWindow view, Update_type type) {
-        updateView(view, type, "");
-    }
-
     public boolean viewExists(Contact c) {
-        return viewMap.get(c) != null;
+        return viewMap.get(c.getFullPseudo()) != null;
     }
 }

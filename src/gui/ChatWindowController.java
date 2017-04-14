@@ -13,10 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -45,6 +42,10 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
     private boolean was_me; //optimisation graphique, on ne répète pas le nom de la personne si plusieurs message à la suite
 
+    @FXML
+    protected StackPane dest_image_perso_pane;
+    @FXML
+    protected StackPane me_image_perso_pane;
     @FXML
     protected VBox box_type_message;
     @FXML
@@ -110,6 +111,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         stage.setTitle(contact.getPseudo() + " - Conversation");
         pseudo_label.setText(contact.getPseudo());
+        status_label.setText(contact.getStatus().toString());
         message_write.setStyle("-fx-text-inner-color: #" + ContactCollection.getMe().getTextColor());
 
         //Envoi de message
@@ -177,7 +179,25 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         Platform.runLater(() -> messages_received.getChildren().addAll(bullet, msg));
     }
 
-    public void refreshStatus() {
-        Platform.runLater(() -> status_label.setText(contact.getStatus().toString()));
+    public void refreshStatus(boolean me) {
+        StackPane pane = (me ? me_image_perso_pane : dest_image_perso_pane);
+        pane.getStyleClass().clear();
+            switch (contact.getStatus()) {
+                case ONLINE:
+                    pane.getStyleClass().add("image_perso");
+                    break;
+                case AWAY:
+                    pane.getStyleClass().add("image_perso_away");
+                    break;
+                case BUSY:
+                    pane.getStyleClass().add("image_perso_busy");
+                    break;
+                case OFFLINE:
+                    pane.getStyleClass().add("image_perso_offline");
+                    break;
+            }
+            if(!me) {
+                Platform.runLater(() -> status_label.setText("\"" + contact.getStatus().toString() + "\""));
+            }
     }
 }

@@ -54,7 +54,7 @@
                           </ImageView>
                       </children>
                   </VBox>
-                  <StackPane prefHeight="100.0" prefWidth="100.0" styleClass="image_perso">
+                  <StackPane fx:id="dest_image_perso_pane" prefHeight="100.0" prefWidth="100.0" styleClass="image_perso">
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" style="-fx-border-radius: 10;">
                            <image>
@@ -101,7 +101,7 @@
                                </ImageView>
                            </children>
                         </VBox>
-                         <StackPane prefHeight="100.0" prefWidth="100.0" styleClass="image_perso">
+                         <StackPane fx:id="me_image_perso_pane" prefHeight="100.0" prefWidth="100.0" styleClass="image_perso">
                                  <children>
                                      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
                                          <image>

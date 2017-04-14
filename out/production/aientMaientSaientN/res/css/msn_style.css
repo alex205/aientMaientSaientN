@@ -5,6 +5,27 @@
     -fx-background-radius: 20;
 }
 
+.image_perso_away {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-padding: 12;
+    -fx-background-color: linear-gradient(to bottom, rgba(220,220,220,0.3), rgba(225,157,40, 0.7));
+    -fx-background-radius: 20;
+}
+
+.image_perso_busy {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-padding: 12;
+    -fx-background-color: linear-gradient(to bottom, rgba(220,220,220,0.3), rgba(237,39,58, 0.7));
+    -fx-background-radius: 20;
+}
+
+.image_perso_offline {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-padding: 12;
+    -fx-background-color: linear-gradient(to bottom, rgba(220,220,220,0.3), rgba(190,190,190, 0.7));
+    -fx-background-radius: 20;
+}
+
 #messages_received_pane {
     -fx-background-color: #fff, #fff;
     -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, white 0%, gray 50%, white 100%);
