@@ -21,7 +21,7 @@
       <ListView fx:id="online_contacts" onMouseClicked="#handleListAction" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
-      <Button fx:id="test" mnemonicParsing="false" onAction="#handleButtonAction" text="Button" BorderPane.alignment="CENTER" />
+      <Button fx:id="test" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
    </bottom>
    <top>
       <HBox fx:id="header" prefHeight="100.0" prefWidth="200.0" styleClass="themecontact" BorderPane.alignment="CENTER">

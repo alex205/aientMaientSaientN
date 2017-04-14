@@ -55,12 +55,6 @@ public class ContactWindowController extends BorderPane implements Initializable
     }
 
     @FXML
-    private void handleButtonAction(ActionEvent event) throws UnknownHostException {
-        ContactCollection cc = ContactCollection.getInstance();
-        controller.sendMessage(cc.getContact("letesteur"), "coucou");
-    }
-
-    @FXML
     private void handleListAction(MouseEvent event) {
         ChatWindow view = ViewController.getInstance().getView((Contact) online_contacts.getSelectionModel().getSelectedItem(), true);
         try {

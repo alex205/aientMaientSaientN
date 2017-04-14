@@ -13,7 +13,7 @@ public final class Notification extends Packet {
         ACK,
         ACK_CONNECT,
         ALIVE,
-        MISC
+        TEXT_COLOR_CHANGE
     }
 
     private Notification_type type;

@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -126,9 +127,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
             event.consume();
             System.out.println("choix couleur");
             Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle("Modifier la couleur du texte");
-            alert.setWidth(400);
-            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setTitle("Modifier la couleur");
+            alert.initStyle(StageStyle.UTILITY);
 
             ButtonType valider = new ButtonType("OK");
             alert.getButtonTypes().setAll(valider);
@@ -137,11 +137,14 @@ public class ChatWindowController  extends BorderPane implements Initializable {
             ColorPicker picker = new ColorPicker(Color.web(current_color));
             alert.getDialogPane().setContent(picker);
             Optional<ButtonType> res =  alert.showAndWait();
-            if(res.get() == valider) {
-                String color = picker.getValue().toString().substring(2,8).toUpperCase();
-                message_write.setStyle("-fx-text-inner-color: #" + color);
-                ContactCollection.getMe().setTextColor(color);
-            }
+            try {
+                if (res.get() == valider) {
+                    String color = picker.getValue().toString().substring(2, 8).toUpperCase();
+                    message_write.setStyle("-fx-text-inner-color: #" + color);
+                    ContactCollection.getMe().setTextColor(color);
+                    controller.changeTextColor(contact, color);
+                }
+            } catch(NoSuchElementException e) {}
         });
     }
 
@@ -153,7 +156,6 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         bullet.setStyle("-fx-fill: #828282;");
         caption.setStyle("-fx-fill: #828282;");
         if(me) {
-            System.out.println("la couleur : " + ContactCollection.getMe().getTextColor());
             msg.setStyle("-fx-fill: #" + ContactCollection.getMe().getTextColor());
             if(!was_me || messages_received.getChildren().isEmpty()) {
                 caption.setText(System.lineSeparator() + ContactCollection.getMe().getPseudo() + " dit :" + System.lineSeparator());
@@ -161,6 +163,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
                 was_me = true;
             }
         } else {
+            msg.setStyle("-fx-fill: #" + contact.getTextColor());
+            Platform.runLater(() -> last_message_date_label.setText("Dernier message reçu à " + heure_format.format(new Date()) + " le " + date_format.format(new Date())));
             if(was_me) {
                 caption.setText(System.lineSeparator() + contact.getPseudo() + " dit :" + System.lineSeparator());
                 Platform.runLater(() -> messages_received.getChildren().add(caption));
@@ -169,8 +173,5 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         }
         msg.setText(message + System.lineSeparator());
         Platform.runLater(() -> messages_received.getChildren().addAll(bullet, msg));
-        if(!me) {
-            Platform.runLater(() -> last_message_date_label.setText("Dernier message reçu à " + heure_format.format(new Date()) + " le " + date_format.format(new Date())));
-        }
     }
 }

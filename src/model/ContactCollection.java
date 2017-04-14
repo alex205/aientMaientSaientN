@@ -53,10 +53,9 @@ public class ContactCollection {
         return false;
     }
 
-    //seulement pour les tests
-    public Contact getContact(String pseudo) {
+    public Contact getContact(String fullPseudo) {
         for (Contact object : collection) {
-            if (object.getPseudo().equals(pseudo)) {
+            if (object.getFullPseudo().equals(fullPseudo)) {
                 return object;
             }
         }

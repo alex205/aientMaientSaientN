@@ -43,20 +43,9 @@ public class CommunicationListener extends NetworkListener{
                     }
                     break;
 
-                case MISC:
-                    //Désérialisation du misc
-                    try {
-                        byte b[] = n.getData().getBytes();
-                        ByteArrayInputStream bi = new ByteArrayInputStream(b);
-                        ObjectInputStream si = new ObjectInputStream(bi);
-                        Misc misc = (Misc) si.readObject();
-                        switch (misc.getType()) {
-                            case TEXT_COLOR_CHANGE:
-                                System.out.println("reçu un changement de couleur de texte --> " + misc.getData());
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
+                case TEXT_COLOR_CHANGE:
+                    System.out.println("changement de couleur pour le contact");
+                    cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()).setTextColor(n.getData());
             }
         }
     }
