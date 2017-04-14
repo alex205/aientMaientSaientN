@@ -20,18 +20,18 @@ public class CommunicationListener extends NetworkListener{
 
     @Override
     protected void managePacket(Packet p) {
+        ContactCollection cc = ContactCollection.getInstance();
         //Réception de message
         if(p instanceof Message) {
             ViewController viewController = ViewController.getInstance();
             //On regarde si c'est du texte ou un fichier
             if(p instanceof Text) {
                 Text message = (Text) p;
-                ChatWindow view = viewController.getView(new Contact(message.getPseudoSource(), message.getAddrSource()), false);
+                ChatWindow view = viewController.getView(cc.getContact(message.getPseudoSource() + "@" + message.getAddrSource()), false);
                 viewController.updateView(view, ViewController.Update_type.NEW_MESSAGE, message.getData());
             }
         }
         if(p instanceof Notification) {
-            ContactCollection cc = ContactCollection.getInstance();
             Notification n = (Notification) p;
             switch (n.getType()) {
                 case ACK_CONNECT:
@@ -45,6 +45,7 @@ public class CommunicationListener extends NetworkListener{
 
                 case TEXT_COLOR_CHANGE:
                     System.out.println("changement de couleur pour le contact");
+                    System.out.println("nouvelle couleur " + n.getData());
                     cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()).setTextColor(n.getData());
             }
         }
