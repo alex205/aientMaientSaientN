@@ -45,7 +45,6 @@ public class CommunicationListener extends NetworkListener{
 
                 case TEXT_COLOR_CHANGE:
                     System.out.println("changement de couleur pour le contact");
-                    System.out.println("nouvelle couleur " + n.getData());
                     cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()).setTextColor(n.getData());
             }
         }

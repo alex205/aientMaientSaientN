@@ -12,7 +12,8 @@ import java.util.concurrent.CountDownLatch;
 public class ViewController {
 
     public enum Update_type {
-        NEW_MESSAGE
+        NEW_MESSAGE,
+        STATUS_CHANGE
     }
 
     private HashMap<String, ChatWindow> viewMap;
@@ -79,6 +80,16 @@ public class ViewController {
         switch (type) {
             case NEW_MESSAGE:
                 view.getChatWindowController().addMessage(false, toUpdate);
+            case STATUS_CHANGE:
+                view.getChatWindowController().refreshStatus();
         }
+    }
+
+    public void updateView(ChatWindow view, Update_type type) {
+        updateView(view, type, "");
+    }
+
+    public boolean viewExists(Contact c) {
+        return viewMap.get(c) != null;
     }
 }

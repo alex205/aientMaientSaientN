@@ -29,4 +29,8 @@ public class Controller {
     public void changeTextColor(Contact dest, String color) {
         ni.sendNotification(dest, Notification.Notification_type.TEXT_COLOR_CHANGE, color);
     }
+
+    public void changeStatus(String status) {
+        ni.broadcastNotification(Notification.Notification_type.STATUS_CHANGE, status);
+    }
 }

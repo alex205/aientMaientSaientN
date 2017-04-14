@@ -3,12 +3,15 @@ package gui;
 
 import controller.Controller;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -26,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
+import java.lang.Number;
 
 public class ContactWindowController extends BorderPane implements Initializable {
     private Stage stage;
@@ -37,6 +41,8 @@ public class ContactWindowController extends BorderPane implements Initializable
     protected HBox header;
     @FXML
     protected ListView online_contacts;
+    @FXML
+    protected ChoiceBox<String> status_change_list;
 
     public ContactWindowController(Stage stage, Controller controller) {
         this.stage = stage;
@@ -66,6 +72,15 @@ public class ContactWindowController extends BorderPane implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ContactCollection cc = ContactCollection.getInstance();
         pseudo_label.setText(ContactCollection.getMe().getPseudo());
+
+        // Changement de statut
+        status_change_list.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
+            String status = status_change_list.getItems().get((Integer) number2);
+            status = status.substring(1, status.length()-1);
+            controller.changeStatus(status);
+        });
+
+        // Liste des contacts
         ObservableList<Contact> contactObservableList = FXCollections.observableList(cc.getCollection());
         cc.setAddCallback(contact -> Platform.runLater(() -> contactObservableList.add(contact)));
         online_contacts.setItems(contactObservableList);

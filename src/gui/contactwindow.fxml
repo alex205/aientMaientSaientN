@@ -47,7 +47,7 @@
                               <Font size="22.0" />
                            </font>
                         </Label>
-                        <ChoiceBox prefWidth="150.0" value="(Disponible)">
+                        <ChoiceBox fx:id="status_change_list" prefWidth="150.0" value="(Disponible)">
                            <items>
                               <FXCollections fx:factory="observableArrayList">
                                  <String fx:value="(Disponible)" />

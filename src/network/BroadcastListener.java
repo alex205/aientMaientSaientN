@@ -1,5 +1,6 @@
 package network;
 
+import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
 
@@ -17,6 +18,7 @@ public class BroadcastListener extends DatagramListener{
     @Override
     protected void managePacket(Packet p) {
         NetworkInterface ni = NetworkInterface.getInstance();
+        ViewController viewController = ViewController.getInstance();
         if(p instanceof Notification) {
             Notification n = (Notification) p;
                 ContactCollection cc = ContactCollection.getInstance();
@@ -37,6 +39,28 @@ public class BroadcastListener extends DatagramListener{
                             break;
                         case STATUS_CHANGE:
                             System.out.println(n.getPseudoSource() + " est maintenant " + n.getData());
+                            Contact.Status_t status = Contact.Status_t.ONLINE; //valeur par défaut au cas où
+                            //un peu sale mais efficace ! (pour envoyer l'enum dans le paquet en string)
+                            switch (n.getData()) {
+                                case "Disponible":
+                                    status = Contact.Status_t.ONLINE;
+                                    break;
+                                case "Absent":
+                                    status = Contact.Status_t.AWAY;
+                                    break;
+                                case "Occupé":
+                                    status = Contact.Status_t.BUSY;
+                                    break;
+                                case "Hors-ligne":
+                                    status = Contact.Status_t.OFFLINE;
+                                    break;
+                            }
+                            Contact contact = cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString());
+                            contact.setStatus(status); // changement du statut dans le contact
+                            //changement du statut dans la vue si elle est ouverte
+                            if(viewController.viewExists(contact)) {
+                                viewController.updateView(viewController.getView(contact, false), ViewController.Update_type.STATUS_CHANGE);
+                            }
                             break;
                         case ALIVE:
                             System.out.println(n.getPseudoSource() + " est en vie !!");

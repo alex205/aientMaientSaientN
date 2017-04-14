@@ -2,3 +2,7 @@
     -fx-background-color:
         linear-gradient(from 0px 0px to 0px 100px, #40b4eb, white)
 }
+
+#status_change_list {
+    -fx-background-color: null;
+}

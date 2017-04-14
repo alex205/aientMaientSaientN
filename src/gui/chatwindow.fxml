@@ -209,7 +209,7 @@
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <Label text="&quot;Disponible&quot;">
+                  <Label fx:id="status_label">
                      <font>
                         <Font size="10.0" />
                      </font>

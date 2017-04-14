@@ -56,6 +56,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     @FXML
     protected Label pseudo_label;
     @FXML
+    protected Label status_label;
+    @FXML
     protected Label last_message_date_label;
     @FXML
     protected ImageView color_button;
@@ -173,5 +175,9 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         }
         msg.setText(message + System.lineSeparator());
         Platform.runLater(() -> messages_received.getChildren().addAll(bullet, msg));
+    }
+
+    public void refreshStatus() {
+        Platform.runLater(() -> status_label.setText(contact.getStatus().toString()));
     }
 }

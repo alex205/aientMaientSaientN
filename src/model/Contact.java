@@ -5,10 +5,20 @@ import java.net.InetAddress;
 public class Contact {
 
     public enum Status_t {
-        ONLINE,
-        AWAY,
-        BUSY,
-        OFFLINE
+        ONLINE ("Disponible"),
+        AWAY ("Absent"),
+        BUSY ("Occupé"),
+        OFFLINE ("Hors-ligne");
+
+        private String status_name;
+        Status_t(String status_name) {
+            this.status_name = status_name;
+        }
+
+        @Override
+        public String toString() {
+            return status_name;
+        }
     }
 
     private String pseudo;
@@ -40,15 +50,19 @@ public class Contact {
         this.pseudo = pseudo;
     }
 
-    public void changeStatus(Status_t status) {
-        this.status = status;
-    }
-
     public String getTextColor() {
         return text_color;
     }
 
     public void setTextColor(String text_color) {
         this.text_color = text_color;
+    }
+
+    public Status_t getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status_t status) {
+        this.status = status;
     }
 }
