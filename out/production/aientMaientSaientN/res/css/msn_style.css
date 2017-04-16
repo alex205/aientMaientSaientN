@@ -34,6 +34,8 @@
 
 #menu_bar {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 0);
+    -fx-background-color:
+        linear-gradient(from 0px 0px to 0px 80px, white, #40b4eb 10%, #40b4eb );
 }
 
 .theme {
@@ -58,4 +60,8 @@
     -fx-border-radius: 1 1 0 0;
     -fx-border-color: #bdd5df;
     -fx-border-width: 1 1 1 1;
+}
+
+#options {
+    -fx-background-color: null;
 }

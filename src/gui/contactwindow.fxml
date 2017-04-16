@@ -8,6 +8,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -16,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <ListView fx:id="online_contacts" onMouseClicked="#handleListAction" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
@@ -24,56 +26,101 @@
       <Button fx:id="test" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
    </bottom>
    <top>
-      <HBox fx:id="header" prefHeight="100.0" prefWidth="200.0" styleClass="themecontact" BorderPane.alignment="CENTER">
+      <HBox fx:id="header" prefHeight="186.0" prefWidth="602.0" styleClass="themecontact" BorderPane.alignment="CENTER">
          <children>
-            <StackPane fx:id="image_perso_pane" prefHeight="80.0" prefWidth="80.0" styleClass="image_perso">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="602.0">
                <children>
-                  <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" style="-fx-border-radius: 10;">
-                     <image>
-                        <Image url="@../../../../fronçois.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-               <HBox.margin>
-                  <Insets left="20.0" top="15.0" />
-               </HBox.margin>
-            </StackPane>
-            <VBox>
-               <children>
-                  <HBox>
+                  <HBox prefHeight="145.0" prefWidth="184.0">
                      <children>
-                        <Label fx:id="pseudo_label">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Label>
-                        <ChoiceBox fx:id="status_change_list" prefWidth="150.0" value="(Disponible)">
-                           <items>
-                              <FXCollections fx:factory="observableArrayList">
-                                 <String fx:value="(Disponible)" />
-                                 <String fx:value="(Absent)" />
-                                 <String fx:value="(Occupé)" />
-                                 <String fx:value="(Hors-ligne)" />
-                              </FXCollections>
-                           </items>
+                        <StackPane fx:id="image_perso_pane" prefHeight="80.0" prefWidth="80.0" styleClass="image_perso">
+                           <children>
+                              <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" style="-fx-border-radius: 10;">
+                                 <image>
+                                    <Image url="@../../../../fronçois.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
                            <HBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="20.0" top="15.0" />
                            </HBox.margin>
-                        </ChoiceBox>
+                        </StackPane>
+                        <VBox>
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <Label fx:id="pseudo_label">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="status_change_list" prefWidth="150.0" value="(Disponible)">
+                                       <items>
+                                          <FXCollections fx:factory="observableArrayList">
+                                             <String fx:value="(Disponible)" />
+                                             <String fx:value="(Absent)" />
+                                             <String fx:value="(Occupé)" />
+                                             <String fx:value="(Hors-ligne)" />
+                                          </FXCollections>
+                                       </items>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </ChoiceBox>
+                                 </children>
+                              </HBox>
+                              <Label text="Message perso">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="25.0" top="25.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <ImageView fitHeight="36.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="145.0" translateY="90.0">
+                           <image>
+                              <Image url="@../../../../out/production/aientMaientSaientN/res/img/mail.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Separator>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField prefHeight="26.0" prefWidth="320.0" promptText="Rechercher des contacts sur Internet...">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="23.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../out/production/aientMaientSaientN/res/img/add_friend.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../out/production/aientMaientSaientN/res/img/options.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../out/production/aientMaientSaientN/res/img/click.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </HBox>
-                  <Label text="Message perso">
-                     <font>
-                        <Font size="12.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
                </children>
-               <HBox.margin>
-                  <Insets left="25.0" top="25.0" />
-               </HBox.margin>
             </VBox>
          </children>
          <padding>

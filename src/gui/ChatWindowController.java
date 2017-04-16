@@ -111,7 +111,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         stage.setTitle(contact.getPseudo() + " - Conversation");
         pseudo_label.setText(contact.getPseudo());
-        status_label.setText(contact.getStatus().toString());
+        status_label.setText("\"" + contact.getStatus().toString() + "\"");
         message_write.setStyle("-fx-text-inner-color: #" + ContactCollection.getMe().getTextColor());
 
         //Envoi de message
