@@ -17,18 +17,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="theme" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="theme" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <top>
       <ToolBar fx:id="menu_bar" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Photos" textFill="WHITE" />
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Fichiers" textFill="WHITE" />
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Vidéo" textFill="WHITE" />
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Appeler" textFill="WHITE" />
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Jeux" textFill="WHITE" />
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Activités" textFill="WHITE" />
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Inviter" textFill="WHITE" />
-            <Button id="options" focusTraversable="false" mnemonicParsing="false" text="Bloquer" textFill="WHITE" />
+            <Button focusTraversable="false" mnemonicParsing="false" styleClass="options" text="Photos" textFill="WHITE" />
+            <Button fx:id="btn_fichiers" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#handleFileButton" styleClass="options" text="Fichiers" textFill="WHITE" />
+            <Button focusTraversable="false" mnemonicParsing="false" styleClass="options" text="Vidéo" textFill="WHITE" />
+            <Button focusTraversable="false" mnemonicParsing="false" styleClass="options" text="Appeler" textFill="WHITE" />
+            <Button focusTraversable="false" mnemonicParsing="false" styleClass="options" text="Jeux" textFill="WHITE" />
+            <Button focusTraversable="false" mnemonicParsing="false" styleClass="options" text="Activités" textFill="WHITE" />
+            <Button focusTraversable="false" mnemonicParsing="false" styleClass="options" text="Inviter" textFill="WHITE" />
+            <Button focusTraversable="false" mnemonicParsing="false" styleClass="options" text="Bloquer" textFill="WHITE" />
         </items>
       </ToolBar>
    </top>

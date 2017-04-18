@@ -18,4 +18,20 @@ public class File extends Message {
         this.size = size;
         this.content = content;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public byte[] getContent() {
+        return content;
+    }
 }

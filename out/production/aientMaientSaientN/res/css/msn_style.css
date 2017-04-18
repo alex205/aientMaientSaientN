@@ -62,6 +62,12 @@
     -fx-border-width: 1 1 1 1;
 }
 
-#options {
+.options {
     -fx-background-color: null;
 }
+
+.options:hover {
+    -fx-border-color: #3366cc;
+    -fx-border-radius:10%;
+}
+

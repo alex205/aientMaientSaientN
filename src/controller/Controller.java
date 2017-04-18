@@ -8,6 +8,8 @@ import model.ContactCollection;
 import network.NetworkInterface;
 import network.Notification;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +40,11 @@ public class Controller {
         System.out.println("Envoi d'un message");
         ni.transmitMessage(message, dest);
     }
+    public void sendFile(Contact dest, File file) throws IOException {
+        System.out.println("Envoi d'un fichier");
+        ni.transmitFile(file, dest);
+    }
+
 
     public void changeTextColor(Contact dest, String color) {
         ni.sendNotification(dest, Notification.Notification_type.TEXT_COLOR_CHANGE, color);

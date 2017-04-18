@@ -9,6 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -17,12 +21,17 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javafx.stage.StageStyle;
 import model.Contact;
 import model.ContactCollection;
+import network.NetworkInterface;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -62,6 +71,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     protected Label last_message_date_label;
     @FXML
     protected ImageView color_button;
+    @FXML
+    protected Button btn_fichiers;
 
 
 
@@ -200,5 +211,19 @@ public class ChatWindowController  extends BorderPane implements Initializable {
             if(!me) {
                 Platform.runLater(() -> status_label.setText("\"" + contact.getStatus().toString() + "\""));
             }
+    }
+
+
+
+
+    @FXML
+    public void handleFileButton(){
+        System.out.println("FICHIERERERERER");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File file = fileChooser.showOpenDialog(stage);
+
+        controller.sendFile(contact, file);
     }
 }

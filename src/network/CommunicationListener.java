@@ -6,6 +6,8 @@ import model.Contact;
 import model.ContactCollection;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 
@@ -30,6 +32,29 @@ public class CommunicationListener extends NetworkListener{
                 ChatWindow view = viewController.getView(cc.getContact(message.getPseudoSource() + "@" + message.getAddrSource()), false);
                 viewController.updateView(view, ViewController.Update_type.NEW_MESSAGE, message.getData());
             }
+            if(p instanceof File) {
+                File file = (File) p;
+
+                FileOutputStream fileOuputStream = null;
+
+                try {
+                    fileOuputStream = new FileOutputStream(file.getFileName());
+                    fileOuputStream.write(file.getContent());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fileOuputStream != null) {
+                        try {
+                            fileOuputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+
+            }
         }
         if(p instanceof Notification) {
             Notification n = (Notification) p;
@@ -49,4 +74,8 @@ public class CommunicationListener extends NetworkListener{
             }
         }
     }
+
+
+
+
 }
