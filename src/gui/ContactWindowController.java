@@ -99,6 +99,7 @@ public class ContactWindowController extends BorderPane implements Initializable
         // Liste des contacts
         ObservableList<Contact> contactObservableList = FXCollections.observableList(cc.getCollection());
         cc.setAddCallback(contact -> Platform.runLater(() -> contactObservableList.add(contact)));
+        cc.setDelCallback(contact -> Platform.runLater(() -> contactObservableList.remove(contact)));
         online_contacts.setItems(contactObservableList);
         online_contacts.setCellFactory(new Callback<ListView<Contact>, ListCell<Contact>>() {
             @Override

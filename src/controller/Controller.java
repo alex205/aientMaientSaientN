@@ -33,4 +33,8 @@ public class Controller {
     public void changeStatus(String status) {
         ni.broadcastNotification(Notification.Notification_type.STATUS_CHANGE, status);
     }
+
+    public void disconnect() {
+        ni.broadcastNotification(Notification.Notification_type.DISCONNECT);
+    }
 }

@@ -11,6 +11,7 @@ public class ContactCollection {
 
     private ArrayList<Contact> collection;
     private Consumer<Contact> addCallback = contact -> {};
+    private Consumer<Contact> delCallback = contact -> {};
 
     // La contact collection est un singleton parce qu'il faut en instancier qu'une seule !
 
@@ -32,11 +33,22 @@ public class ContactCollection {
         this.addCallback = addCallback ;
     }
 
+    public void setDelCallback(Consumer<Contact> delCallback) {
+        this.delCallback = delCallback ;
+    }
+
     public void addContact(Contact c) {
         if(!contactExists(c)) {
             System.out.println("ajout contact " + c.getPseudo());
             addCallback.accept(c);
             collection.add(c);
+        }
+    }
+
+    public void delContact(Contact c) {
+        if(contactExists(c)) {
+            delCallback.accept(c);
+            collection.remove(c);
         }
     }
 
