@@ -61,9 +61,7 @@ public class ContactWindowController extends BorderPane implements Initializable
 
     @FXML
     private void handleButton() {
-        Contact c = ContactCollection.getInstance().getContact("alex205@/127.0.0.1");
-        c.setStatus(Contact.Status_t.AWAY);
-        System.out.println("statut : " + c.getStatus().toString());
+        MSNFeatures.sound(MSNFeatures.Sound_t.NEW_MESSAGE);
     }
 
     @FXML

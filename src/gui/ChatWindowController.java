@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.stage.StageStyle;
@@ -188,6 +189,12 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         }
         msg.setText(message + System.lineSeparator());
         Platform.runLater(() -> messages_received.getChildren().addAll(bullet, msg));
+
+        //play sounds lel
+        if(!stage.isFocused()) {
+            stage.focusedProperty().addListener(E -> this.stage.toFront());
+            MSNFeatures.sound(MSNFeatures.Sound_t.NEW_MESSAGE);
+        }
     }
 
     public void refreshStatus(boolean me) {
