@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import network.NetworkUtils;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class ContactCollection {
@@ -43,7 +42,6 @@ public class ContactCollection {
     public void addContact(Contact c) {
         if(!contactExists(c)) {
             System.out.println("ajout contact " + c.getPseudo());
-            addCallback.accept(c);
             collection.add(c);
         }
     }
