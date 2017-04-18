@@ -162,7 +162,7 @@ public class NetworkInterface {
         System.out.println("Plus qu'à si'ccuper du fichier !!");
         byte [] content = readBytesFromFile(file);
 
-        File filemessage = new File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getCanonicalPath(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
+        File filemessage = new File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getName(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
         try {
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
             os.writeObject(filemessage);
