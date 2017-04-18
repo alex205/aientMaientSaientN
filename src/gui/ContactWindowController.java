@@ -76,6 +76,27 @@ public class ContactWindowController extends BorderPane implements Initializable
         ContactCollection cc = ContactCollection.getInstance();
         pseudo_label.setText(ContactCollection.getMe().getPseudo());
 
+        // statut initial
+        image_perso_pane.getStyleClass().clear();
+        switch (ContactCollection.getMe().getStatus()) {
+            case ONLINE:
+                image_perso_pane.getStyleClass().add("image_perso");
+                status_change_list.getSelectionModel().select(0);
+                break;
+            case AWAY:
+                image_perso_pane.getStyleClass().add("image_perso_away");
+                status_change_list.getSelectionModel().select(1);
+                break;
+            case BUSY:
+                image_perso_pane.getStyleClass().add("image_perso_busy");
+                status_change_list.getSelectionModel().select(2);
+                break;
+            case OFFLINE:
+                image_perso_pane.getStyleClass().add("image_perso_offline");
+                status_change_list.getSelectionModel().select(3);
+                break;
+        }
+
         // Changement de statut
         status_change_list.getSelectionModel().selectedIndexProperty().addListener((observableValue, number, number2) -> {
             String status = status_change_list.getItems().get((Integer) number2);

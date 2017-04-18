@@ -58,6 +58,7 @@ public class Controller {
 
             view.getChatWindowController().refreshStatus(true);
         }
+        System.out.println("envoi du status change");
         ni.broadcastNotification(Notification.Notification_type.STATUS_CHANGE, status);
     }
 
