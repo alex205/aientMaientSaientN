@@ -25,18 +25,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.Contact;
 import model.ContactCollection;
-import network.NetworkInterface;
 import network.Notification;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -202,7 +198,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
         //play sounds lel
         if(!stage.isFocused()) {
-            MSNFeatures.sound(MSNFeatures.Sound_t.NEW_MESSAGE);
+            Sound.play(Sound.Sound_t.NEW_MESSAGE);
         }
     }
 
@@ -247,7 +243,6 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     @FXML public void handleNudgeButton() throws IOException {
         System.out.println("On demande au controller d'envoyer un wizz !\n");
         controller.sendNudge(contact, Notification.Notification_type.NUDGE);
-        shakeStage();
     }
 
 
@@ -255,12 +250,10 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     //C'est pas très propre mais c'est iun début... patapé
     //pour test unitaire on peut mettre sur le bouton nudge "ShakeStage" a executer.
     //Pour tester avec le réseau il faut mettre handleNudgeButton
-
-    int x = 0;
-    int y = 0;
-
+    private int x = 0;
+    private int y = 0;
     public void shakeStage() {
-        MSNFeatures.sound(MSNFeatures.Sound_t.NUDGE);
+        Sound.play(Sound.Sound_t.NUDGE);
 
         Timeline timelineX = new Timeline(new KeyFrame(Duration.seconds(0.05), new EventHandler<ActionEvent>() {
             @Override

@@ -1,29 +1,18 @@
 package gui;
 
-import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
 
 import java.io.File;
 
-public class MSNFeatures {
+public class Sound {
 
     public enum Sound_t {
         NEW_MESSAGE,
         NUDGE
     }
 
-    public static void nudge(Stage stage) {
-       // Platform.runLater(MSNFeatures);
-        System.out.println("TEST");
-        //for(int i=0; i<7; i++) {
-            stage.setX(stage.getX()+10.0);
-            stage.setY(stage.getY()+5.0);
-        //}
-    }
-
-    public static void sound(Sound_t type) {
+    public static void play(Sound_t type) {
         String musicFile = "";
         switch (type) {
             case NEW_MESSAGE:

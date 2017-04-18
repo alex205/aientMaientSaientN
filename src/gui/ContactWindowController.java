@@ -61,7 +61,6 @@ public class ContactWindowController extends BorderPane implements Initializable
 
     @FXML
     private void handleButton() {
-        MSNFeatures.sound(MSNFeatures.Sound_t.NEW_MESSAGE);
     }
 
     @FXML
