@@ -217,7 +217,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
 
     @FXML
-    public void handleFileButton(){
+    public void handleFileButton() throws IOException {
         System.out.println("FICHIERERERERER");
 
         FileChooser fileChooser = new FileChooser();
