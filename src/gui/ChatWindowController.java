@@ -192,7 +192,6 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
         //play sounds lel
         if(!stage.isFocused()) {
-            stage.focusedProperty().addListener(E -> this.stage.toFront());
             MSNFeatures.sound(MSNFeatures.Sound_t.NEW_MESSAGE);
         }
     }
