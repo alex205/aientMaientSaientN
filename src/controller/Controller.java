@@ -45,6 +45,10 @@ public class Controller {
         ni.transmitFile(file, dest);
     }
 
+    public void sendNudge(Contact dest, Notification.Notification_type notification) throws IOException {
+        System.out.println("Envoi d'un wizz");
+        ni.sendNotification(dest, notification);
+    }
 
     public void changeTextColor(Contact dest, String color) {
         ni.sendNotification(dest, Notification.Notification_type.TEXT_COLOR_CHANGE, color);

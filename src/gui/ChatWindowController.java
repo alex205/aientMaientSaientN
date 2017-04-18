@@ -1,8 +1,11 @@
 package gui;
 
 import controller.Controller;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +29,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import model.Contact;
 import model.ContactCollection;
 import network.NetworkInterface;
+import network.Notification;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,6 +79,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     protected ImageView color_button;
     @FXML
     protected Button btn_fichiers;
+    @FXML
+    protected ImageView nudge_button;
 
 
 
@@ -162,6 +169,9 @@ public class ChatWindowController  extends BorderPane implements Initializable {
                 }
             } catch(NoSuchElementException e) {}
         });
+
+
+
     }
 
     public void addMessage(boolean me, String message) {
@@ -232,4 +242,61 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
         controller.sendFile(contact, file);
     }
+
+
+    @FXML public void handleNudgeButton() throws IOException {
+        System.out.println("On demande au controller d'envoyer un wizz !\n");
+        controller.sendNudge(contact, Notification.Notification_type.NUDGE);
+        shakeStage();
+    }
+
+
+
+    //C'est pas très propre mais c'est iun début... patapé
+    //pour test unitaire on peut mettre sur le bouton nudge "ShakeStage" a executer.
+    //Pour tester avec le réseau il faut mettre handleNudgeButton
+
+    int x = 0;
+    int y = 0;
+
+    public void shakeStage() {
+        MSNFeatures.sound(MSNFeatures.Sound_t.NUDGE);
+
+        Timeline timelineX = new Timeline(new KeyFrame(Duration.seconds(0.05), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                if (x == 0) {
+                    stage.setX(stage.getX() +5);
+                    x = 1;
+                } else {
+                    stage.setX(stage.getX() - 5);
+                    x = 0;
+                }
+            }
+        }));
+
+        timelineX.setCycleCount(12);
+        timelineX.setAutoReverse(false);
+        timelineX.play();
+
+
+        Timeline timelineY = new Timeline(new KeyFrame(Duration.seconds(0.05), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                if (y == 0) {
+                    stage.setY(stage.getY() + 5);
+                    y = 1;
+                } else {
+                    stage.setY(stage.getY() - 5);
+                    y = 0;
+                }
+            }
+        }));
+
+        timelineY.setCycleCount(12);
+        timelineY.setAutoReverse(false);
+        timelineY.play();
+    }
+
+
 }

@@ -10,7 +10,8 @@ import java.io.File;
 public class MSNFeatures {
 
     public enum Sound_t {
-        NEW_MESSAGE
+        NEW_MESSAGE,
+        NUDGE
     }
 
     public static void nudge(Stage stage) {
@@ -26,7 +27,10 @@ public class MSNFeatures {
         String musicFile = "";
         switch (type) {
             case NEW_MESSAGE:
-                musicFile = "src/resources/sound/type.wav";
+                musicFile = "out/production/aientMaientSaientN/res/sound/type.wav";
+                break;
+            case NUDGE:
+                musicFile = "out/production/aientMaientSaientN/res/sound/nudge.wav";
         }
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);

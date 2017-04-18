@@ -139,7 +139,7 @@
                                        <Image url="@../res/img/wink.png" />
                                    </image>
                                </ImageView>
-                               <ImageView fx:id="nudge_button">
+                               <ImageView fx:id="nudge_button" onMouseClicked="#handleNudgeButton">
                                        <image>
                                            <Image url="@../res/img/nudge.png" />
                                        </image>

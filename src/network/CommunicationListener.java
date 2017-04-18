@@ -60,6 +60,12 @@ public class CommunicationListener extends NetworkListener{
                 case TEXT_COLOR_CHANGE:
                     System.out.println("changement de couleur pour le contact");
                     cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()).setTextColor(n.getData());
+                    break;
+                case NUDGE:
+                    ViewController viewController = ViewController.getInstance();
+                    System.out.println("J'ai reçu un wizz !");
+                    ChatWindow view = viewController.getView(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource()), false);
+                    view.getChatWindowController().shakeStage();
             }
         }
     }
