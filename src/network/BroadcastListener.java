@@ -37,6 +37,7 @@ public class BroadcastListener extends DatagramListener{
                         case DISCONNECT:
                             System.out.println(n.getPseudoSource() + " vient de se déconnecter");
                             cc.delContact(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()));
+                            ni.delMap(n.getPseudoSource() + "@" + n.getAddrSource().toString());
                             break;
                         case STATUS_CHANGE:
                             System.out.println(n.getPseudoSource() + " est maintenant " + n.getData());

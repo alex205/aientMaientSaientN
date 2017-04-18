@@ -181,6 +181,10 @@ public class NetworkInterface {
         socketMap.put(fullPseudo, port);
     }
 
+    public void delMap(String fullPseudo) {
+        socketMap.remove(fullPseudo);
+    }
+
     public synchronized void fireUpdate() {
         notify();
     }

@@ -47,6 +47,7 @@ public class ContactCollection {
 
     public void delContact(Contact c) {
         if(contactExists(c)) {
+            System.out.println("suppression de " + c.getPseudo());
             delCallback.accept(c);
             collection.remove(c);
         }
