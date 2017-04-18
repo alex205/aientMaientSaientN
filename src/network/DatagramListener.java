@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.security.spec.ECField;
 
 /**
  * @author alex205
@@ -35,8 +36,11 @@ public abstract class DatagramListener extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    protected abstract void managePacket(Packet p);
+    protected abstract void managePacket(Packet p) throws IOException;
 }

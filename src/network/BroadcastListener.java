@@ -4,6 +4,7 @@ import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
 
+import java.io.IOException;
 import java.net.DatagramSocket;
 
 /**
@@ -16,7 +17,7 @@ public class BroadcastListener extends DatagramListener{
     }
 
     @Override
-    protected void managePacket(Packet p) {
+    protected void managePacket(Packet p) throws IOException {
         NetworkInterface ni = NetworkInterface.getInstance();
         ViewController viewController = ViewController.getInstance();
         if(p instanceof Notification) {
@@ -67,11 +68,15 @@ public class BroadcastListener extends DatagramListener{
                         case ALIVE:
                             System.out.println(n.getPseudoSource() + " est en vie !!");
                             break;
+                        case MESSAGE_PERSO_CHANGE:
+                            System.out.println(n.getPseudoSource() + " a changé son message perso en " + n.getData());
 
                         default:
                             System.out.println("Can't read this notification");
                     }
                 }
+        } else {
+            throw new IOException("Unknown packet");
         }
     }
 }

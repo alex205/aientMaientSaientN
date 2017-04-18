@@ -3,12 +3,7 @@ package gui;
 
 import controller.Controller;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -145,20 +140,20 @@ public class ContactWindowController extends BorderPane implements Initializable
                         if (c != null) {
                             switch(c.getStatus()){
                                 case ONLINE:
-                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/connected.png")));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/connected.png"))));
                                     break;
                                 case AWAY:
-                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/away.png")));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/away.png"))));
                                     break;
                                 case BUSY:
-                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/busy.png")));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/busy.png"))));
                                     break;
                                 case OFFLINE:
-                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/offline.png")));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/offline.png"))));
                                     break;
                             }
 
-                            setText(c.getPseudo());
+                            Platform.runLater(() -> setText(c.getPseudo()));
                         }
                     }
                 };
