@@ -163,7 +163,14 @@ public class NetworkInterface {
         byte [] content = readBytesFromFile(file);
 
         File filemessage = new File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getAbsolutePath(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+            os.writeObject(filemessage);
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
 
+        }
     }
 
     protected void sendControl(Contact me, Contact dest, Control.Control_t type, int data) {
