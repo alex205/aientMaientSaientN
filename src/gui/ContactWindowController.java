@@ -15,6 +15,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -101,16 +103,32 @@ public class ContactWindowController extends BorderPane implements Initializable
         cc.setAddCallback(contact -> Platform.runLater(() -> contactObservableList.add(contact)));
         cc.setDelCallback(contact -> Platform.runLater(() -> contactObservableList.remove(contact)));
         online_contacts.setItems(contactObservableList);
+
         online_contacts.setCellFactory(new Callback<ListView<Contact>, ListCell<Contact>>() {
+
             @Override
             public ListCell<Contact> call(ListView<Contact> p) {
-
                 ListCell<Contact> cell = new ListCell<Contact>() {
 
                     @Override
                     protected void updateItem(Contact c, boolean bln) {
                         super.updateItem(c, bln);
                         if (c != null) {
+                            switch(c.getStatus()){
+                                case ONLINE:
+                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/connected.png")));
+                                    break;
+                                case AWAY:
+                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/away.png")));
+                                    break;
+                                case BUSY:
+                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/busy.png")));
+                                    break;
+                                case OFFLINE:
+                                    setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/offline.png")));
+                                    break;
+                            }
+
                             setText(c.getPseudo());
                         }
                     }
