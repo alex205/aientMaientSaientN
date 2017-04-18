@@ -1,10 +1,15 @@
 package controller;
 
 
+import gui.ChatWindow;
+import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
 import network.NetworkInterface;
 import network.Notification;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Controller {
@@ -31,6 +36,28 @@ public class Controller {
     }
 
     public void changeStatus(String status) {
+        Contact.Status_t st = null;
+        switch (status) {
+            case "Disponible":
+                st = Contact.Status_t.ONLINE;
+                break;
+            case "Absent":
+                st = Contact.Status_t.AWAY;
+                break;
+            case "Occupé":
+                st = Contact.Status_t.BUSY;
+                break;
+            case "Hors-ligne":
+                st = Contact.Status_t.OFFLINE;
+                break;
+        }
+        ContactCollection.getMe().setStatus(st);
+        HashMap<String, ChatWindow> map = ViewController.getInstance().getAllViews();
+        for(Map.Entry<String, ChatWindow> entry : map.entrySet()) {
+            ChatWindow view = entry.getValue();
+
+            view.getChatWindowController().refreshStatus(true);
+        }
         ni.broadcastNotification(Notification.Notification_type.STATUS_CHANGE, status);
     }
 

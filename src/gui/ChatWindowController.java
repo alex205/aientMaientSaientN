@@ -181,8 +181,9 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
     public void refreshStatus(boolean me) {
         StackPane pane = (me ? me_image_perso_pane : dest_image_perso_pane);
+        Contact c = (me ? ContactCollection.getMe() : contact);
         pane.getStyleClass().clear();
-            switch (contact.getStatus()) {
+            switch (c.getStatus()) {
                 case ONLINE:
                     pane.getStyleClass().add("image_perso");
                     break;

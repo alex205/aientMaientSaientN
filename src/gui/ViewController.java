@@ -52,6 +52,9 @@ public class ViewController {
                 try {
                     ChatWindow view = new ChatWindow(controller, c);
                     viewMap.put(c.getFullPseudo(), view);
+                    //on rafraîchit le statut pour nous et le contact distant
+                    view.getChatWindowController().refreshStatus(true);
+                    view.getChatWindowController().refreshStatus(false);
                     view.show();
                     if(!graphicThread) {
                         latch.countDown(); //on notifie que c'est fait
@@ -90,5 +93,9 @@ public class ViewController {
 
     public boolean viewExists(Contact c) {
         return viewMap.get(c.getFullPseudo()) != null;
+    }
+
+    public HashMap<String, ChatWindow> getAllViews() {
+        return viewMap;
     }
 }
