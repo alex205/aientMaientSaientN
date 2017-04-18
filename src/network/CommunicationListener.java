@@ -37,7 +37,7 @@ public class CommunicationListener extends NetworkListener{
 
                 try (FileOutputStream fileOuputStream = new FileOutputStream(file.getFileName())) {
                     fileOuputStream.write(file.getContent());
-                    System.out.println(file.getFileName() + "a bien été reçu !!");
+                    System.out.println(file.getFileName() + " a bien été reçu !!");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

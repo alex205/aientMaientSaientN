@@ -159,7 +159,7 @@ public class NetworkInterface {
 
     public void transmitFile(java.io.File file, Contact dest) throws IOException {
         Socket s = getSocket(dest);
-        System.out.println("Plus qu'à si'ccuper du fichier !!");
+        System.out.println("Plus qu'à s'occuper du fichier !!");
         byte [] content = readBytesFromFile(file);
 
         File filemessage = new File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getName(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
