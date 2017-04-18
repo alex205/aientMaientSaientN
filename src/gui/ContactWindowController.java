@@ -125,7 +125,9 @@ public class ContactWindowController extends BorderPane implements Initializable
         // Liste des contacts
         ObservableList<Contact> contactObservableList = cc.getCollection();
         cc.setAddCallback(contact -> Platform.runLater(() -> contactObservableList.add(contact)));
-        cc.setDelCallback(contact -> Platform.runLater(() -> contactObservableList.remove(contact)));
+        cc.setDelCallback(contact -> Platform.runLater(() -> { contactObservableList.remove(contact);
+            System.out.println("del depuis callback");}
+            ));
         online_contacts.setItems(contactObservableList);
 
         online_contacts.setCellFactory(new Callback<ListView<Contact>, ListCell<Contact>>() {
@@ -152,8 +154,10 @@ public class ContactWindowController extends BorderPane implements Initializable
                                     Platform.runLater(() -> setGraphic(new ImageView(new Image("file:out/production/aientMaientSaientN/res/img/offline.png"))));
                                     break;
                             }
-
                             Platform.runLater(() -> setText(c.getPseudo()));
+                        } else {
+                            Platform.runLater(() -> setText(""));
+                            Platform.runLater(() -> setGraphic(null));
                         }
                     }
                 };

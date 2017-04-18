@@ -51,6 +51,7 @@ public class ContactCollection {
             System.out.println("suppression de " + c.getPseudo());
             delCallback.accept(c);
             collection.remove(c);
+            System.out.println("okay supprimé");
         }
     }
 
