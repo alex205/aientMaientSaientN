@@ -1,5 +1,7 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import network.NetworkUtils;
 
 import java.util.ArrayList;
@@ -9,7 +11,8 @@ public class ContactCollection {
 
     private static Contact me; //représente l'utilisateur courant
 
-    private ArrayList<Contact> collection;
+    //private ArrayList<Contact> collection;
+    private ObservableList<Contact> collection;
     private Consumer<Contact> addCallback = contact -> {};
     private Consumer<Contact> delCallback = contact -> {};
 
@@ -26,7 +29,7 @@ public class ContactCollection {
     }
 
     private ContactCollection() {
-        this.collection = new ArrayList<>();
+        this.collection = FXCollections.observableArrayList(Contact.extractor());
     }
 
     public void setAddCallback(Consumer<Contact> addCallback) {
@@ -75,7 +78,7 @@ public class ContactCollection {
         return null;
     }
 
-    public ArrayList<Contact> getCollection() {
+    public ObservableList<Contact> getCollection() {
         return this.collection;
     }
 

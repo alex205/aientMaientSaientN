@@ -21,9 +21,11 @@ public class MainWindow {
 
         //Pour quitter proprement l'application (ie tuer tous les threads)
         stage.setOnCloseRequest(e -> {
-            cont.disconnect();
-            Platform.exit();
-            System.exit(0);
+            if(cont.getState() == Controller.App_State_t.CONNECTED) {
+                cont.disconnect();
+                Platform.exit();
+                System.exit(0);
+            }
         });
     }
 

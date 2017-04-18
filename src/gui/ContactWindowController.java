@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,6 +62,13 @@ public class ContactWindowController extends BorderPane implements Initializable
         }
 
         HBox.setHgrow(header, Priority.ALWAYS);
+    }
+
+    @FXML
+    private void handleButton() {
+        Contact c = ContactCollection.getInstance().getContact("alex205@/127.0.0.1");
+        c.setStatus(Contact.Status_t.AWAY);
+        System.out.println("statut : " + c.getStatus().toString());
     }
 
     @FXML
@@ -120,7 +128,7 @@ public class ContactWindowController extends BorderPane implements Initializable
         });
 
         // Liste des contacts
-        ObservableList<Contact> contactObservableList = FXCollections.observableList(cc.getCollection());
+        ObservableList<Contact> contactObservableList = cc.getCollection();
         cc.setAddCallback(contact -> Platform.runLater(() -> contactObservableList.add(contact)));
         cc.setDelCallback(contact -> Platform.runLater(() -> contactObservableList.remove(contact)));
         online_contacts.setItems(contactObservableList);

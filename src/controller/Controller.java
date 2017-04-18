@@ -14,13 +14,21 @@ import java.util.Map;
 
 public class Controller {
 
+    public enum App_State_t {
+        CONNECTED,
+        DISCONNECTED
+    }
+
     private NetworkInterface ni;
+    private App_State_t state;
 
     public Controller() {
+        state = App_State_t.DISCONNECTED;
         ni = NetworkInterface.getInstance();
     }
 
     public void connect(String pseudo) {
+        state = App_State_t.CONNECTED;
         ContactCollection.createMe(pseudo);
         ni.launchNetwork();
         ni.broadcastNotification(Notification.Notification_type.CONNECT);
@@ -64,5 +72,9 @@ public class Controller {
 
     public void disconnect() {
         ni.broadcastNotification(Notification.Notification_type.DISCONNECT);
+    }
+
+    public App_State_t getState() {
+        return state;
     }
 }

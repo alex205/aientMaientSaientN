@@ -1,5 +1,10 @@
 package model;
 
+import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.util.Callback;
+
 import java.net.InetAddress;
 
 public class Contact {
@@ -23,15 +28,24 @@ public class Contact {
 
     private String pseudo;
     private InetAddress ip;
-    private Status_t status;
+    private SimpleObjectProperty status;
     private String text_color;
 
 
     public Contact(String pseudo, InetAddress ip) {
         this.pseudo = pseudo;
         this.ip = ip;
-        this.status = Status_t.ONLINE;
+        this.status = new SimpleObjectProperty(Status_t.ONLINE);
         this.text_color = "000000";
+    }
+
+    public static Callback<Contact, Observable[]> extractor() {
+        return new Callback<Contact, Observable[]>() {
+            @Override
+            public Observable[] call(Contact param) {
+                return new Observable[]{param.status};
+            }
+        };
     }
 
     public String getPseudo() {
@@ -59,10 +73,10 @@ public class Contact {
     }
 
     public Status_t getStatus() {
-        return status;
+        return (Status_t) status.get();
     }
 
-    public void setStatus(Status_t status) {
-        this.status = status;
+    public void setStatus(Status_t s) {
+        Platform.runLater(() -> status.set(s));
     }
 }
