@@ -35,22 +35,11 @@ public class CommunicationListener extends NetworkListener{
             if(p instanceof File) {
                 File file = (File) p;
 
-                FileOutputStream fileOuputStream = null;
-
-                try {
-                    fileOuputStream = new FileOutputStream(file.getFileName());
+                try (FileOutputStream fileOuputStream = new FileOutputStream(file.getFileName())) {
                     fileOuputStream.write(file.getContent());
-
+                    System.out.println(file.getFileName() + "a bien été reçu !!");
                 } catch (IOException e) {
                     e.printStackTrace();
-                } finally {
-                    if (fileOuputStream != null) {
-                        try {
-                            fileOuputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
                 }
 
 
