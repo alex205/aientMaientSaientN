@@ -25,7 +25,7 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></TextField>
-            <PasswordField accessibleText="Mot de passe" promptText="Mot de passe" text="Mot de passe">
+            <PasswordField accessibleText="Mot de passe" promptText="Mot de passe">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -37,7 +37,12 @@
             <HBox pickOnBounds="false" prefHeight="30.0" prefWidth="200.0">
                <children>
                   <Label text="Statut de connexion : " />
-                  <ChoiceBox id="status_change_list" prefWidth="150.0" value="Disponible">
+                  <ImageView fx:id="login_status_img" fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../out/production/aientMaientSaientN/res/img/connected.png" />
+                     </image>
+                  </ImageView>
+                  <ChoiceBox fx:id="status_change_list" prefWidth="150.0" translateY="-5.0" value="Disponible">
                      <items>
                         <FXCollections fx:factory="observableArrayList">
                            <String fx:value="Disponible" />
@@ -46,6 +51,9 @@
                            <String fx:value="Hors-ligne" />
                         </FXCollections>
                      </items>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                   </ChoiceBox>
                </children>
             </HBox>
