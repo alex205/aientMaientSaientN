@@ -66,6 +66,7 @@ public class CommunicationListener extends NetworkListener{
                     System.out.println("J'ai reçu un wizz !");
                     ChatWindow view = viewController.getView(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource()), false);
                     view.getChatWindowController().shakeStage();
+                    view.getChatWindowController().addDialogWizz(false);
             }
         }
     }

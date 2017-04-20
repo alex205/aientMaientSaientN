@@ -52,6 +52,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     private SimpleDateFormat heure_format;
 
     private boolean was_me; //optimisation graphique, on ne répète pas le nom de la personne si plusieurs message à la suite
+    private boolean was_dialog;
 
     @FXML
     protected StackPane dest_image_perso_pane;
@@ -88,6 +89,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         date_format = new SimpleDateFormat("dd/MM/yyyy");
         heure_format = new SimpleDateFormat("HH:mm");
         was_me = true;
+        was_dialog = false;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("chatwindow.fxml"));
         loader.setRoot(this);
@@ -171,6 +173,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     }
 
     public void addMessage(boolean me, String message) {
+        was_dialog = false;
         Text caption = new Text();
         Text msg = new Text();
         Text bullet = new Text();
@@ -200,6 +203,36 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         if(!stage.isFocused()) {
             Sound.play(Sound.Sound_t.NEW_MESSAGE);
         }
+    }
+
+
+    public void addDialogWizz(boolean me){
+        was_me = false;
+        Text lineB = new Text();
+        Text caption = new Text();
+        lineB.setText("           " + System.lineSeparator());
+        lineB.setStyle("-fx-strikethrough: true;");
+
+        Text lineT = new Text();
+        lineT.setText("           " + System.lineSeparator());
+        lineT.setStyle("-fx-strikethrough: true;");
+        if(me) {
+            caption.setText("Vous avez envoyé un wizz !" + System.lineSeparator());
+        } else {
+            caption.setText(contact.getPseudo()+" vous a envoyé un wizz." + System.lineSeparator());
+        }
+
+        Platform.runLater(() -> {
+            System.out.println(was_dialog + "kjbcskjcbjfshbjchbjcshb");
+            if(!was_dialog){
+               messages_received.getChildren().add(lineT);
+            }
+            messages_received.getChildren().add(caption);
+            messages_received.getChildren().add(lineB);
+            was_dialog = true;
+        });
+
+
     }
 
     public void refreshStatus(boolean me) {
@@ -242,6 +275,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
     @FXML public void handleNudgeButton() throws IOException {
         System.out.println("On demande au controller d'envoyer un wizz !\n");
+        addDialogWizz(true);
         controller.sendNudge(contact, Notification.Notification_type.NUDGE);
     }
 
