@@ -70,7 +70,7 @@ public class Controller {
             }
         }
         System.out.println("envoi image");
-        ni.broadcastNotification(Notification.Notification_type.IMAGE_PERSO_CHANGED, image);
+        ni.sendNotification(null, Notification.Notification_type.IMAGE_PERSO_CHANGED, image);
     }
 
     public void changeStatus(String status) {
