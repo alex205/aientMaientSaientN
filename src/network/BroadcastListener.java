@@ -68,15 +68,12 @@ public class BroadcastListener extends DatagramListener{
                         case ALIVE:
                             System.out.println(n.getPseudoSource() + " est en vie !!");
                             break;
+                        case TEXT_COLOR_CHANGE:
+                            System.out.println("changement de couleur pour le contact");
+                            cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()).setTextColor(n.getData());
+                            break;
                         case MESSAGE_PERSO_CHANGE:
                             System.out.println(n.getPseudoSource() + " a changé son message perso en " + n.getData());
-                        case IMAGE_PERSO_CHANGED:
-                            System.out.println("changement de l'image perso pour le contact");
-                            Contact contact1 = cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString());
-                            contact1.setImage_perso(n.getData());
-                            if(viewController.viewExists(contact1)) {
-                                viewController.updateView(viewController.getView(contact1, false), ViewController.Update_type.IMAGE_PERSO_CHANGE, "");
-                            }
                             break;
 
                         default:

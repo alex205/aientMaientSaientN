@@ -52,9 +52,8 @@ public class Controller {
         ni.sendNotification(dest, notification);
     }
 
-    public void changeTextColor(Contact dest, String color) {
-
-        ni.sendNotification(dest, Notification.Notification_type.TEXT_COLOR_CHANGE, color);
+    public void changeTextColor(String color) {
+        ni.broadcastNotification(Notification.Notification_type.TEXT_COLOR_CHANGE, color);
     }
 
     public void changeImagePerso(String image){

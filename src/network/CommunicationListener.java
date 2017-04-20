@@ -58,13 +58,19 @@ public class CommunicationListener extends NetworkListener{
                     }
                     break;
 
-                case TEXT_COLOR_CHANGE:
-                    System.out.println("changement de couleur pour le contact");
-                    cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()).setTextColor(n.getData());
-                    break;
                 case NUDGE:
                     System.out.println("J'ai reçu un wizz !");
                     viewController.updateView(viewController.getView(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource()), false), ViewController.Update_type.NEW_NUDGE, "");
+                    break;
+
+                    //devrait être un broadcast mais on utilise tcp pour transmettre le fichier image et on simule le broadcast
+                case IMAGE_PERSO_CHANGED:
+                    System.out.println("changement de l'image perso pour le contact");
+                    Contact contact1 = cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString());
+                    contact1.setImage_perso(n.getData());
+                    if(viewController.viewExists(contact1)) {
+                        viewController.updateView(viewController.getView(contact1, false), ViewController.Update_type.IMAGE_PERSO_CHANGE, "");
+                    }
                     break;
 
             }

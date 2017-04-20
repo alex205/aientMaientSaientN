@@ -174,7 +174,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
                     String color = picker.getValue().toString().substring(2, 8).toUpperCase();
                     message_write.setStyle("-fx-text-inner-color: #" + color);
                     ContactCollection.getMe().setTextColor(color);
-                    controller.changeTextColor(contact, color);
+                    controller.changeTextColor(color);
                 }
             } catch(NoSuchElementException e) {}
         });

@@ -32,6 +32,7 @@ public abstract class DatagramListener extends Thread {
                 ObjectInputStream is = new ObjectInputStream(in);
                 try {
                         Packet p = (Packet) is.readObject();
+                        //pas la peine de lire ce qu'on envoie !
                         //if(!p.getAddrSource().equals(ContactCollection.getMe().getIp())) {
                         managePacket(p);
                         //}

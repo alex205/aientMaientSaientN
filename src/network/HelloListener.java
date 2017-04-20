@@ -25,15 +25,18 @@ public class HelloListener extends DatagramListener {
     @Override
     protected void managePacket(Packet p) {
         NetworkInterface ni = NetworkInterface.getInstance();
+        ContactCollection cc = ContactCollection.getInstance();
         if(p instanceof Control) {
             Control c = (Control) p;
             System.out.println("RECEIVED, le port :" + c.getData());
             try {
+                if(c.getType() == Control.Control_t.HELLO || c.getType() == Control.Control_t.ACK) {
+                    //Gestion du socket de conversation
                     System.out.println("l'ip de " + c.getPseudoSource() + " " + c.getAddrSource().toString());
                     ni.addMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), c.getData());
                     System.out.println("le pseudo dans la table " + c.getPseudoSource() + "@" + c.getAddrSource().toString());
                     ni.fireUpdate();
-                    if(c.getType() == Control.Control_t.HELLO) {
+                    if (c.getType() == Control.Control_t.HELLO) {
                         ServerSocket com = new ServerSocket(basePort);
                         CommunicationListener listener = new CommunicationListener(com);
                         listener.start();
@@ -41,6 +44,19 @@ public class HelloListener extends DatagramListener {
                         ni.sendControl(ContactCollection.getMe(), new Contact(c.getPseudoSource(), c.getAddrSource()), Control.Control_t.ACK, basePort);
                         basePort++;
                     }
+                } else if(c.getType() == Control.Control_t.TMP_SOCKET || c.getType() == Control.Control_t.TMP_SOCKET_ACK) {
+                    //Gestion de la demande de socket temporaire
+                    System.out.println("on demande un socket temporaire");
+                    ni.addTmpMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), c.getData());
+                    ni.fireUpdate();
+                    if(c.getType() == Control.Control_t.TMP_SOCKET_ACK) {
+                        ServerSocket com = new ServerSocket(basePort);
+                        CommunicationListener listener = new CommunicationListener(com);
+                        listener.start();
+                        ni.sendControl(ContactCollection.getMe(), cc.getContact(c.getPseudoSource() + "@" + c.getAddrSource()), Control.Control_t.TMP_SOCKET_ACK, basePort);
+                        basePort++;
+                    }
+                }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

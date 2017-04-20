@@ -9,7 +9,9 @@ public class Control extends Packet {
 
     public enum Control_t {
         HELLO,
-        ACK
+        ACK,
+        TMP_SOCKET,
+        TMP_SOCKET_ACK
     }
 
     private Control_t type;

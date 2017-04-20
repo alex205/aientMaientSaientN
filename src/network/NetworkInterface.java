@@ -1,5 +1,6 @@
 package network;
 
+import javafx.collections.ObservableList;
 import model.Contact;
 import model.ContactCollection;
 
@@ -31,6 +32,9 @@ public class NetworkInterface {
     //private HashMap<String, Socket> socketMap;
     private HashMap<String, Integer> socketMap;
 
+    //Table des sockets temporaires (utilisés pour le transfert d'image perso ou de fichier par exemple)
+    private HashMap<String, Integer> tmpSocketMap;
+
     // La network interface est un singleton parce qu'il faut en instancier qu'une seule !
 
     //Le holder
@@ -45,8 +49,9 @@ public class NetworkInterface {
 
     // Constructeur privé pour le singleton
     private NetworkInterface() {
-        //Initialisation de la table vide
+        //Initialisation des tables vides
         socketMap = new HashMap<>();
+        tmpSocketMap = new HashMap<>();
         //On met déjà le socket hello en écoute
        try {
            hello = new DatagramSocket(bcastPort);
@@ -61,8 +66,8 @@ public class NetworkInterface {
         }
     }
 
-    private synchronized Integer negotiatePort(Contact dest) {
-        System.out.println("Je vais négocier le port");
+    private synchronized Integer negotiatePort(Contact dest, boolean tmp) {
+        System.out.println("Je vais négocier le port (temporaire -> " + tmp + ")");
         try {
             System.out.println("anouk ok");
             ServerSocket com = new ServerSocket(basePort);
@@ -70,12 +75,16 @@ public class NetworkInterface {
             CommunicationListener listener = new CommunicationListener(com);
             listener.start();
             System.out.println("listener com ok");
-            sendControl(ContactCollection.getMe(), dest, Control.Control_t.HELLO, basePort);
+            if(tmp) {
+                sendControl(ContactCollection.getMe(), dest, Control.Control_t.TMP_SOCKET, basePort);
+            } else {
+                sendControl(ContactCollection.getMe(), dest, Control.Control_t.HELLO, basePort);
+            }
             basePort++;
             wait();
             System.out.println("ok up to date");
             System.out.println("full pseudo de recherche : " + dest.getFullPseudo());
-            return socketMap.get(dest.getFullPseudo());
+            return (tmp ? tmpSocketMap.get(dest.getFullPseudo()) : socketMap.get(dest.getFullPseudo()));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -85,10 +94,10 @@ public class NetworkInterface {
         return null;
     }
 
-    private Socket getSocket(Contact dest) {
-       Integer port = socketMap.get(dest.getFullPseudo());
+    private Socket getSocket(Contact dest, boolean tmp) {
+       Integer port = (tmp ? tmpSocketMap.get(dest.getFullPseudo()) : socketMap.get(dest.getFullPseudo()));
         if(port == null) {
-            port = negotiatePort(dest);
+            port = negotiatePort(dest, tmp);
         } else {
             System.out.println("pas besoin de négocier, déjà en mémoire"); //FIXME else pour test uniquement
         }
@@ -111,15 +120,42 @@ public class NetworkInterface {
     }
 
     public void sendNotification( Contact dest, Notification.Notification_type type, String data) {
-        Socket s = getSocket(dest);
-        System.out.println("Okay j'ai la socket pour balancer la sauce");
-        Notification notification = new Notification(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), type, data);
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
-            os.writeObject(notification);
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        //On traite les notifications particulières
+        if(type == Notification.Notification_type.IMAGE_PERSO_CHANGED) {
+            //Image perso particulière car on simule un broadcast en tcp et on utilise un socket temporaire
+            ContactCollection cc = ContactCollection.getInstance();
+            //On récupère la liste de tous les contacts et on leur envoie la nouvelle image perso
+            //On réalise l'opération sur un thread séparé pour éviter de bloquer le réseau
+            ((Runnable) () -> {
+                ObservableList<Contact> collection = cc.getCollection();
+                Socket s = null;
+                for(Contact c : collection) {
+                    s = getSocket(c, true);
+                    Notification n = new Notification(ContactCollection.getMe().getPseudo(), c.getPseudo(), ContactCollection.getMe().getIp(), c.getIp(), type, data);
+                    try {
+                        ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+                        os.writeObject(n);
+                        os.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Thread.currentThread().interrupt();
+            }).run();
+
+
+        } else {
+            Socket s = getSocket(dest, false);
+            System.out.println("Okay j'ai la socket pour balancer la sauce");
+            Notification notification = new Notification(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), type, data);
+
+            try {
+                ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+                os.writeObject(notification);
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -146,7 +182,7 @@ public class NetworkInterface {
     }
 
     public void transmitMessage(String message, Contact dest) {
-        Socket s = getSocket(dest);
+        Socket s = getSocket(dest, false);
         System.out.println("prêt à lancer le message");
         Text textMessage = new Text(ContactCollection.getMe().getPseudo(), dest.getPseudo(), ContactCollection.getMe().getIp(), dest.getIp(), message);
         try {
@@ -160,7 +196,7 @@ public class NetworkInterface {
     }
 
     public void transmitFile(java.io.File file, Contact dest) throws IOException {
-        Socket s = getSocket(dest);
+        Socket s = getSocket(dest, false);
         System.out.println("Plus qu'à s'occuper du fichier !!");
         byte [] content = readBytesFromFile(file);
 
@@ -176,7 +212,7 @@ public class NetworkInterface {
     }
 
     public void transmitImagePerso(java.io.File file, Contact dest) throws IOException {
-        Socket s = getSocket(dest);
+        Socket s = getSocket(dest, false);
         System.out.println("On s'occupe d'envoyer l'image perso !!");
         byte [] content = readBytesFromFile(file);
 
@@ -212,6 +248,14 @@ public class NetworkInterface {
 
     public void delMap(String fullPseudo) {
         socketMap.remove(fullPseudo);
+    }
+
+    public void addTmpMap(String fullPseudo, int port) {
+        tmpSocketMap.put(fullPseudo, port);
+    }
+
+    public void delTmpMap(String fullPseudo) {
+        tmpSocketMap.remove(fullPseudo);
     }
 
     public synchronized void fireUpdate() {
