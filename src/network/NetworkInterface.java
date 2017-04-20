@@ -35,6 +35,9 @@ public class NetworkInterface {
     //Table des sockets temporaires (utilisés pour le transfert d'image perso ou de fichier par exemple)
     private HashMap<String, Integer> tmpSocketMap;
 
+    //pour savoir quels sont les listeners actifs
+    private HashMap<Integer, CommunicationListener> listenersMap;
+
     // La network interface est un singleton parce qu'il faut en instancier qu'une seule !
 
     //Le holder
@@ -52,6 +55,7 @@ public class NetworkInterface {
         //Initialisation des tables vides
         socketMap = new HashMap<>();
         tmpSocketMap = new HashMap<>();
+        listenersMap = new HashMap<>();
         //On met déjà le socket hello en écoute
        try {
            hello = new DatagramSocket(bcastPort);
@@ -74,6 +78,7 @@ public class NetworkInterface {
             System.out.println("socket com ok");
             CommunicationListener listener = new CommunicationListener(com);
             listener.start();
+            listenersMap.put(basePort, listener);
             System.out.println("listener com ok");
             if(tmp) {
                 sendControl(ContactCollection.getMe(), dest, Control.Control_t.TMP_SOCKET, basePort);
@@ -139,6 +144,11 @@ public class NetworkInterface {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                    //plus besoin du socket temporaire
+                    //delTmpMap(c.getFullPseudo());
+                   // delListener(getListener(s.getLocalPort()));
+                    System.out.println("local port -> " + s.getLocalPort() + " port -> " + s.getPort());
                 }
                 Thread.currentThread().interrupt();
             }).run();
@@ -211,23 +221,6 @@ public class NetworkInterface {
         }
     }
 
-    public void transmitImagePerso(java.io.File file, Contact dest) throws IOException {
-        Socket s = getSocket(dest, false);
-        System.out.println("On s'occupe d'envoyer l'image perso !!");
-        byte [] content = readBytesFromFile(file);
-
-        File filemessage = new File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getName(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
-            os.writeObject(filemessage);
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-
     protected void sendControl(Contact me, Contact dest, Control.Control_t type, int data) {
         try {
             Control control_packet = new Control(me.getPseudo(), dest.getPseudo(), me.getIp(), dest.getIp(), type, data);
@@ -256,6 +249,19 @@ public class NetworkInterface {
 
     public void delTmpMap(String fullPseudo) {
         tmpSocketMap.remove(fullPseudo);
+    }
+
+    public void addListener(int port, CommunicationListener listener) {
+        listenersMap.put(port, listener);
+    }
+
+    public CommunicationListener getListener(int port) {
+        return listenersMap.get(port);
+    }
+
+    public void delListener(CommunicationListener listener) {
+        listenersMap.remove(listener);
+        listener.interrupt();
     }
 
     public synchronized void fireUpdate() {

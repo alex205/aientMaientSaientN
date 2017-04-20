@@ -10,7 +10,7 @@ import java.net.Socket;
  * @author alex205
  */
 abstract class NetworkListener extends Thread {
-    private ServerSocket server;
+    protected ServerSocket server;
     private Socket s;
 
     public NetworkListener(ServerSocket server) {

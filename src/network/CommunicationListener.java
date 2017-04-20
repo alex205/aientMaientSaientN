@@ -23,6 +23,7 @@ public class CommunicationListener extends NetworkListener{
     @Override
     protected void managePacket(Packet p) {
         ContactCollection cc = ContactCollection.getInstance();
+        NetworkInterface ni = NetworkInterface.getInstance();
         //Réception de message
         if(p instanceof Message) {
             ViewController viewController = ViewController.getInstance();
@@ -71,6 +72,10 @@ public class CommunicationListener extends NetworkListener{
                     if(viewController.viewExists(contact1)) {
                         viewController.updateView(viewController.getView(contact1, false), ViewController.Update_type.IMAGE_PERSO_CHANGE, "");
                     }
+
+                    //fin d'utilisation du socket temporaire
+                    ni.delTmpMap(n.getPseudoSource() + "@" + n.getAddrSource().toString());
+                    ni.delListener(ni.getListener(server.getLocalPort()));
                     break;
 
             }

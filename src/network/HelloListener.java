@@ -40,6 +40,7 @@ public class HelloListener extends DatagramListener {
                         ServerSocket com = new ServerSocket(basePort);
                         CommunicationListener listener = new CommunicationListener(com);
                         listener.start();
+                        ni.addListener(basePort, listener);
                         System.out.println("listener lancé");
                         ni.sendControl(ContactCollection.getMe(), new Contact(c.getPseudoSource(), c.getAddrSource()), Control.Control_t.ACK, basePort);
                         basePort++;
@@ -49,10 +50,12 @@ public class HelloListener extends DatagramListener {
                     System.out.println("on demande un socket temporaire");
                     ni.addTmpMap(c.getPseudoSource() + "@" + c.getAddrSource().toString(), c.getData());
                     ni.fireUpdate();
-                    if(c.getType() == Control.Control_t.TMP_SOCKET_ACK) {
+                    System.out.println("c'est à jour");
+                    if(c.getType() == Control.Control_t.TMP_SOCKET) {
                         ServerSocket com = new ServerSocket(basePort);
                         CommunicationListener listener = new CommunicationListener(com);
                         listener.start();
+                        ni.addListener(basePort, listener);
                         ni.sendControl(ContactCollection.getMe(), cc.getContact(c.getPseudoSource() + "@" + c.getAddrSource()), Control.Control_t.TMP_SOCKET_ACK, basePort);
                         basePort++;
                     }
