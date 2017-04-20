@@ -1,6 +1,9 @@
 package network;
 
+import model.ContactCollection;
+
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
@@ -28,8 +31,16 @@ public abstract class DatagramListener extends Thread {
                 ByteArrayInputStream in = new ByteArrayInputStream(data);
                 ObjectInputStream is = new ObjectInputStream(in);
                 try {
-                    Packet p = (Packet) is.readObject();
-                    managePacket(p);
+                    try {
+                        Packet p = (Packet) is.readObject();
+                        //if(!p.getAddrSource().equals(ContactCollection.getMe().getIp())) {
+                        managePacket(p);
+                        //}
+                    } catch (EOFException e) {
+                        break;
+                    }
+
+
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
