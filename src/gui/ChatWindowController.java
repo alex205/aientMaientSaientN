@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -32,15 +33,14 @@ import javafx.util.Duration;
 import model.Contact;
 import model.ContactCollection;
 import network.Notification;
+import sun.misc.BASE64Decoder;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ChatWindowController  extends BorderPane implements Initializable {
 
@@ -78,6 +78,10 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     protected Button btn_fichiers;
     @FXML
     protected ImageView nudge_button;
+    @FXML
+    protected ImageView contact_image_perso;
+    @FXML
+    protected ImageView me_image_perso;
 
 
 
@@ -131,6 +135,13 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         status_label.setText("\"" + contact.getStatus().toString() + "\"");
         message_write.setStyle("-fx-text-inner-color: #" + ContactCollection.getMe().getTextColor());
 
+        try {
+            changeImagePerso(true);
+            changeImagePerso(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Envoi de message
         message_write.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
@@ -172,6 +183,23 @@ public class ChatWindowController  extends BorderPane implements Initializable {
 
     }
 
+    public void changeImagePerso(boolean me) throws IOException {
+        if(me){
+            String image64 = ContactCollection.getMe().getImage_perso();
+            BASE64Decoder base64Decoder = new BASE64Decoder();
+            ByteArrayInputStream imageInputStream = new ByteArrayInputStream(base64Decoder.decodeBuffer(image64));
+            Image image = new Image(imageInputStream);
+            me_image_perso.setImage(image);
+
+        } else {
+            String image64 = contact.getImage_perso();
+            BASE64Decoder base64Decoder = new BASE64Decoder();
+            ByteArrayInputStream imageInputStream = new ByteArrayInputStream(base64Decoder.decodeBuffer(image64));
+            Image image = new Image(imageInputStream);
+            contact_image_perso.setImage(image);
+        }
+    }
+
     public void addMessage(boolean me, String message) {
         was_dialog = false;
         Text caption = new Text();
@@ -182,7 +210,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         caption.setStyle("-fx-fill: #828282;");
         if(me) {
             msg.setStyle("-fx-fill: #" + ContactCollection.getMe().getTextColor());
-            if(!was_me || messages_received.getChildren().isEmpty()) {
+            if(!was_me || messages_received.getChildren().isEmpty() || was_dialog) {
                 caption.setText(System.lineSeparator() + ContactCollection.getMe().getPseudo() + " dit :" + System.lineSeparator());
                 Platform.runLater(() -> messages_received.getChildren().add(caption));
                 was_me = true;
@@ -223,7 +251,6 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         }
 
         Platform.runLater(() -> {
-            System.out.println(was_dialog + "kjbcskjcbjfshbjchbjcshb");
             if(!was_dialog){
                messages_received.getChildren().add(lineT);
             }

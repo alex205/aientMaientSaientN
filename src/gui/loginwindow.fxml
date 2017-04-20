@@ -123,7 +123,7 @@
          <children>
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" style="-fx-border-radius: 10;">
                <image>
-                  <Image url="@../../../../fronçois.jpg" />
+                  <Image url="@../../../../src/resources/images/default.png" />
                </image>
                <VBox.margin>
                   <Insets left="130.0" right="40.0" />

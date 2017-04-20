@@ -13,7 +13,9 @@ public class ViewController {
 
     public enum Update_type {
         NEW_MESSAGE,
-        STATUS_CHANGE
+        STATUS_CHANGE,
+        NEW_NUDGE,
+        IMAGE_PERSO_CHANGE
     }
 
     private HashMap<String, ChatWindow> viewMap;
@@ -88,6 +90,16 @@ public class ViewController {
                 System.out.println("changement dans la vue");
                 view.getChatWindowController().refreshStatus(false);
                 break;
+            case NEW_NUDGE:
+                view.getChatWindowController().shakeStage();
+                view.getChatWindowController().addDialogWizz(false);
+                break;
+            case IMAGE_PERSO_CHANGE:
+                try {
+                    view.getChatWindowController().changeImagePerso(false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 

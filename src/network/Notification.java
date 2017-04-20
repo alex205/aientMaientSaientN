@@ -15,7 +15,8 @@ public final class Notification extends Packet {
         ALIVE,
         TEXT_COLOR_CHANGE,
         MESSAGE_PERSO_CHANGE,
-        NUDGE
+        NUDGE,
+        IMAGE_PERSO_CHANGED
     }
 
     private Notification_type type;

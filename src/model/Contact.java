@@ -3,9 +3,16 @@ package model;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.image.Image;
 import javafx.util.Callback;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Base64;
+
+import static controller.Controller.readBytesFromFile;
+
 
 public class Contact {
 
@@ -30,6 +37,9 @@ public class Contact {
     private InetAddress ip;
     private SimpleObjectProperty status;
     private String text_color;
+    private String image_perso;
+
+
 
 
     public Contact(String pseudo, InetAddress ip) {
@@ -37,6 +47,14 @@ public class Contact {
         this.ip = ip;
         this.status = new SimpleObjectProperty(Status_t.ONLINE);
         this.text_color = "000000";
+
+        File file = new File("msn.jpeg");
+        try{
+            this.image_perso = Base64.getEncoder().encodeToString(readBytesFromFile(file));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static Callback<Contact, Observable[]> extractor() {
@@ -79,4 +97,8 @@ public class Contact {
     public void setStatus(Status_t s) {
         Platform.runLater(() -> status.set(s));
     }
+
+    public void setImage_perso(String image_perso) { this.image_perso = image_perso; }
+
+    public String getImage_perso() { return image_perso; }
 }

@@ -7,6 +7,8 @@ import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 
+import static controller.Controller.readBytesFromFile;
+
 
 /**
  * @author alex205
@@ -173,6 +175,23 @@ public class NetworkInterface {
         }
     }
 
+    public void transmitImagePerso(java.io.File file, Contact dest) throws IOException {
+        Socket s = getSocket(dest);
+        System.out.println("On s'occupe d'envoyer l'image perso !!");
+        byte [] content = readBytesFromFile(file);
+
+        File filemessage = new File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getName(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+            os.writeObject(filemessage);
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+
     protected void sendControl(Contact me, Contact dest, Control.Control_t type, int data) {
         try {
             Control control_packet = new Control(me.getPseudo(), dest.getPseudo(), me.getIp(), dest.getIp(), type, data);
@@ -201,38 +220,5 @@ public class NetworkInterface {
 
 
 
-    public static byte[] readBytesFromFile(java.io.File file) throws IOException {
-        InputStream is = new FileInputStream(file);
-
-        // Get the size of the file
-        long length = file.length();
-
-        // You cannot create an array using a long type.
-        // It needs to be an int type.
-        // Before converting to an int type, check
-        // to ensure that file is not larger than Integer.MAX_VALUE.
-        if (length > Integer.MAX_VALUE) {
-            throw new IOException("Could not completely read file " + file.getName() + " as it is too long (" + length + " bytes, max supported " + Integer.MAX_VALUE + ")");
-        }
-
-        // Create the byte array to hold the data
-        byte[] bytes = new byte[(int)length];
-
-        // Read in the bytes
-        int offset = 0;
-        int numRead = 0;
-        while (offset < bytes.length && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
-            offset += numRead;
-        }
-
-        // Ensure all the bytes have been read in
-        if (offset < bytes.length) {
-            throw new IOException("Could not completely read file " + file.getName());
-        }
-
-        // Close the input stream and return bytes
-        is.close();
-        return bytes;
-    }
 
 }

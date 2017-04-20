@@ -47,6 +47,7 @@ public class CommunicationListener extends NetworkListener{
         }
         if(p instanceof Notification) {
             Notification n = (Notification) p;
+            ViewController viewController = ViewController.getInstance();
             switch (n.getType()) {
                 case ACK_CONNECT:
                     System.out.println(n.getPseudoSource() + " est également sur le réseau");
@@ -62,11 +63,10 @@ public class CommunicationListener extends NetworkListener{
                     cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()).setTextColor(n.getData());
                     break;
                 case NUDGE:
-                    ViewController viewController = ViewController.getInstance();
                     System.out.println("J'ai reçu un wizz !");
-                    ChatWindow view = viewController.getView(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource()), false);
-                    view.getChatWindowController().shakeStage();
-                    view.getChatWindowController().addDialogWizz(false);
+                    viewController.updateView(viewController.getView(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource()), false), ViewController.Update_type.NEW_NUDGE, "");
+                    break;
+
             }
         }
     }
