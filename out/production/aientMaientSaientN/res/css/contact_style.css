@@ -6,3 +6,11 @@
 #status_change_list {
     -fx-background-color: null;
 }
+
+#msg_perso {
+    -fx-background-color: null;
+}
+
+.msg_perso_edition {
+    -fx-background-color: rgba(255,0,0,1);
+}

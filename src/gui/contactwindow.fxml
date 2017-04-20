@@ -32,9 +32,9 @@
                <children>
                   <HBox prefHeight="145.0" prefWidth="184.0">
                      <children>
-                        <StackPane fx:id="image_perso_pane" prefHeight="80.0" prefWidth="80.0" styleClass="image_perso">
+                        <StackPane fx:id="image_perso_pane" onMouseClicked="#handleImagePersoClick" prefHeight="80.0" prefWidth="80.0" styleClass="image_perso">
                            <children>
-                              <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" style="-fx-border-radius: 10;">
+                              <ImageView fx:id="image_perso_view" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" style="-fx-border-radius: 10;">
                                  <image>
                                     <Image url="@../../../../fronçois.jpg" />
                                  </image>
@@ -60,6 +60,8 @@
                                              <String fx:value="(Absent)" />
                                              <String fx:value="(Occupé)" />
                                              <String fx:value="(Hors-ligne)" />
+                                             <Separator orientation="HORIZONTAL" />
+                                             <String fx:value="Modifier mon image perso..." />
                                           </FXCollections>
                                        </items>
                                        <HBox.margin>
@@ -68,14 +70,7 @@
                                     </ChoiceBox>
                                  </children>
                               </HBox>
-                              <Label text="Message perso">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <TextField fx:id="msg_perso" editable="false" onMouseClicked="#handleMessagePersoEdit" prefHeight="26.0" prefWidth="234.0" styleClass="msg_perso_edition" text="Entrez votre message perso" />
                            </children>
                            <HBox.margin>
                               <Insets left="25.0" top="25.0" />

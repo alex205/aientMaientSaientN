@@ -7,10 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,15 +15,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
 import model.Contact;
 import model.ContactCollection;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.ResourceBundle;
+
+import static controller.Controller.readBytesFromFile;
 
 public class ContactWindowController extends BorderPane implements Initializable {
     private Stage stage;
@@ -42,6 +44,10 @@ public class ContactWindowController extends BorderPane implements Initializable
     protected ChoiceBox<String> status_change_list;
     @FXML
     protected StackPane image_perso_pane;
+    @FXML
+    protected ImageView image_perso_view;
+    @FXML
+    protected TextField msg_perso;
 
     public ContactWindowController(Stage stage, Controller controller) {
         this.stage = stage;
@@ -64,11 +70,43 @@ public class ContactWindowController extends BorderPane implements Initializable
     }
 
     @FXML
+    private void handleMessagePersoEdit() {
+        msg_perso.setEditable(true);
+        msg_perso.getStyleClass().add("msg_perso_edition");
+    }
+
+    @FXML
+    private void handleMessagePersoSend() {
+        msg_perso.setEditable(false);
+    }
+
+    @FXML
     private void handleListAction(MouseEvent event) {
         ChatWindow view = ViewController.getInstance().getView((Contact) online_contacts.getSelectionModel().getSelectedItem(), true);
         try {
             view.requestFocus();
         } catch (NullPointerException e) {}
+    }
+
+    @FXML
+    private void handleImagePersoClick() {
+        System.out.println("Image perso");
+        ViewController viewController = ViewController.getInstance();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Modifier mon image perso");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichiers image (jpg, png, gif, bmp)", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(stage);
+
+        try {
+            String img_encoded = Base64.getEncoder().encodeToString(readBytesFromFile(file));
+            image_perso_view.setImage(new Image("file:" + file.getAbsolutePath()));
+            controller.changeImagePerso(img_encoded);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -115,6 +153,8 @@ public class ContactWindowController extends BorderPane implements Initializable
                 case "Hors-ligne":
                     image_perso_pane.getStyleClass().add("image_perso_offline");
                     break;
+                case "Modifier mon image perso...":
+                    System.out.println("image perso");
             }
             controller.changeStatus(status);
         });

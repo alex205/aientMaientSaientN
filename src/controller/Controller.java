@@ -53,12 +53,25 @@ public class Controller {
     }
 
     public void changeTextColor(Contact dest, String color) {
+
         ni.sendNotification(dest, Notification.Notification_type.TEXT_COLOR_CHANGE, color);
     }
 
-    public void changeImagePerso(Contact dest, String image){
+    public void changeImagePerso(String image){
         System.out.println("Envoi d'un changement d'image");
-        ni.sendNotification(dest, Notification.Notification_type.IMAGE_PERSO_CHANGED, image);
+        ContactCollection.getMe().setImage_perso(image);
+        HashMap<String, ChatWindow> map = ViewController.getInstance().getAllViews();
+        for(Map.Entry<String, ChatWindow> entry : map.entrySet()) {
+            ChatWindow view = entry.getValue();
+
+            try {
+                view.getChatWindowController().changeImagePerso(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("envoi image");
+        ni.broadcastNotification(Notification.Notification_type.IMAGE_PERSO_CHANGED, image);
     }
 
     public void changeStatus(String status) {
