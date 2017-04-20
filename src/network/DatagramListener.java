@@ -31,14 +31,10 @@ public abstract class DatagramListener extends Thread {
                 ByteArrayInputStream in = new ByteArrayInputStream(data);
                 ObjectInputStream is = new ObjectInputStream(in);
                 try {
-                    try {
                         Packet p = (Packet) is.readObject();
                         //if(!p.getAddrSource().equals(ContactCollection.getMe().getIp())) {
                         managePacket(p);
                         //}
-                    } catch (EOFException e) {
-                        break;
-                    }
 
 
                 } catch (ClassNotFoundException e) {
