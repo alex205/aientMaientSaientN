@@ -48,7 +48,7 @@ public class Contact {
         this.status = new SimpleObjectProperty(Status_t.ONLINE);
         this.text_color = "000000";
 
-        File file = new File("msn.jpeg");
+        File file = new File("src/resources/images/default.png");
         try{
             this.image_perso = Base64.getEncoder().encodeToString(readBytesFromFile(file));
         } catch(IOException e) {

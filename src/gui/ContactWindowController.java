@@ -99,20 +99,16 @@ public class ContactWindowController extends BorderPane implements Initializable
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(stage);
 
-        try {
-            String img_encoded = Base64.getEncoder().encodeToString(readBytesFromFile(file));
-            image_perso_view.setImage(new Image("file:" + file.getAbsolutePath()));
-            controller.changeImagePerso(img_encoded);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        changeImagePerso(file);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ContactCollection cc = ContactCollection.getInstance();
         pseudo_label.setText(ContactCollection.getMe().getPseudo());
+
+        File file = new File("src/resources/images/default.png");
+        image_perso_view.setImage(new Image("file:" + file.getAbsolutePath()));
 
         // statut initial
         image_perso_pane.getStyleClass().clear();
@@ -201,5 +197,17 @@ public class ContactWindowController extends BorderPane implements Initializable
                 return cell;
             }
         });
+    }
+
+
+    public void changeImagePerso(File file){
+        try {
+            String img_encoded = Base64.getEncoder().encodeToString(readBytesFromFile(file));
+            image_perso_view.setImage(new Image("file:" + file.getAbsolutePath()));
+            controller.changeImagePerso(img_encoded);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
