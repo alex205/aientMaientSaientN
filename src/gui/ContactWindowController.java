@@ -90,6 +90,7 @@ public class ContactWindowController extends BorderPane implements Initializable
                 me.setMessage_perso(msg_perso.getText());
             } else if(msg_perso.getText().equals("")){
                 msg_perso.setText("Entrez votre message perso");
+                controller.changeMessagePerso(msg_perso.getText());
             }
 
             msg_perso.setEditable(false);
