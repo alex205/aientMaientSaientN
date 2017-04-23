@@ -58,12 +58,7 @@ public class Contact {
     }
 
     public static Callback<Contact, Observable[]> extractor() {
-        return new Callback<Contact, Observable[]>() {
-            @Override
-            public Observable[] call(Contact param) {
-                return new Observable[]{param.status};
-            }
-        };
+        return param -> new Observable[]{param.status};
     }
 
     public String getPseudo() {
@@ -95,7 +90,7 @@ public class Contact {
     }
 
     public void setStatus(Status_t s) {
-        Platform.runLater(() -> status.set(s));
+        status.set(s);
     }
 
     public void setImage_perso(String image_perso) { this.image_perso = image_perso; }

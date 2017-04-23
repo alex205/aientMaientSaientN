@@ -41,12 +41,12 @@
                       <children>
                           <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                  <Image url="@../res/img/arrow.png" />
+                                  <Image url="@../resources/images/arrow.png" />
                               </image>
                           </ImageView>
                           <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                  <Image url="@../res/img/cam.png" />
+                                  <Image url="@../resources/images/cam.png" />
                               </image>
                               <VBox.margin>
                                   <Insets top="2.0" />
@@ -58,7 +58,7 @@
                      <children>
                         <ImageView fx:id="contact_image_perso" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" style="-fx-border-radius: 10;">
                            <image>
-                              <Image url="@../../../../fronçois.jpg" />
+                              <Image url="@../resources/images/default.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -88,12 +88,12 @@
                            <children>
                               <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                    <image>
-                                       <Image url="@../res/img/arrow.png" />
+                                       <Image url="@../resources/images/arrow.png" />
                                   </image>
                               </ImageView>
                                <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                    <image>
-                                       <Image url="@../res/img/cam.png" />
+                                       <Image url="@../resources/images/cam.png" />
                                    </image>
                                  <VBox.margin>
                                     <Insets top="2.0" />
@@ -105,7 +105,7 @@
                                  <children>
                                      <ImageView fx:id="me_image_perso" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
                                          <image>
-                                             <Image url="@../../../../msn.jpeg" />
+                                             <Image url="@../resources/images/default.png" />
                                          </image>
                                      </ImageView>
                                  </children>
@@ -131,49 +131,49 @@
                            <items>
                                <ImageView>
                                    <image>
-                                       <Image url="@../res/img/emoticone.png" />
+                                       <Image url="@../resources/images/emoticone.png" />
                                    </image>
                                </ImageView>
                                <ImageView>
                                    <image>
-                                       <Image url="@../res/img/wink.png" />
+                                       <Image url="@../resources/images/wink.png" />
                                    </image>
                                </ImageView>
                                <ImageView fx:id="nudge_button" onMouseClicked="#handleNudgeButton">
                                        <image>
-                                           <Image url="@../res/img/nudge.png" />
+                                           <Image url="@../resources/images/nudge.png" />
                                        </image>
                                </ImageView>
                                <ImageView fx:id="vocal_button">
                                    <image>
-                                       <Image url="@../res/img/vocal.png" />
+                                       <Image url="@../resources/images/vocal.png" />
                                    </image>
                                </ImageView>
                                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="9.0" />
                                <ImageView fx:id="color_button">
                                    <image>
-                                       <Image url="@../res/img/text_color.png" />
+                                       <Image url="@../resources/images/text_color.png" />
                                    </image>
                                </ImageView>
                                <ImageView>
                                    <image>
-                                       <Image url="@../res/img/sound.png" />
+                                       <Image url="@../resources/images/sound.png" />
                                    </image>
                                </ImageView>
                                <ImageView>
                                    <image>
-                                       <Image url="@../res/img/plugins.png" />
+                                       <Image url="@../resources/images/plugins.png" />
                                    </image>
                                </ImageView>
                                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="9.0" />
                                <ImageView>
                                    <image>
-                                       <Image url="@../res/img/font.png" />
+                                       <Image url="@../resources/images/font.png" />
                                    </image>
                                </ImageView>
                                <ImageView>
                                    <image>
-                                       <Image url="@../res/img/theme.png" />
+                                       <Image url="@../resources/images/theme.png" />
                                    </image>
                                </ImageView>
                            </items>
@@ -246,6 +246,6 @@
       </VBox>
    </center>
     <stylesheets>
-        <URL value="@../res/css/msn_style.css" />
+        <URL value="@../resources/css/msn_style.css" />
     </stylesheets>
 </fx:root>

@@ -16,10 +16,10 @@ public class Sound {
         String musicFile = "";
         switch (type) {
             case NEW_MESSAGE:
-                musicFile = "out/production/aientMaientSaientN/res/sound/type.wav";
+                musicFile = "src/resources/sound/type.wav";
                 break;
             case NUDGE:
-                musicFile = "out/production/aientMaientSaientN/res/sound/nudge.wav";
+                musicFile = "src/resources/sound/nudge.wav";
         }
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);

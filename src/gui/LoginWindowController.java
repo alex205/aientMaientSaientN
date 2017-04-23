@@ -53,16 +53,16 @@ public class LoginWindowController extends BorderPane {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 if(status_change_list.getItems().get((Integer) number2 ).equals("Disponible")){
-                    login_status_img.setImage(new Image("file:out/production/aientMaientSaientN/res/img/connected.png"));
+                    login_status_img.setImage(new Image("file:src/resources/images/connected.png"));
                     myStatus = Contact.Status_t.ONLINE;
                 } else if (status_change_list.getItems().get((Integer) number2 ).equals("Absent")){
-                    login_status_img.setImage(new Image("file:out/production/aientMaientSaientN/res/img/away.png"));
+                    login_status_img.setImage(new Image("file:src/resources/images/away.png"));
                     myStatus = Contact.Status_t.AWAY;
                 } else if (status_change_list.getItems().get((Integer) number2 ).equals("Occupé")){
-                    login_status_img.setImage(new Image("file:out/production/aientMaientSaientN/res/img/busy.png"));
+                    login_status_img.setImage(new Image("file:src/resources/images/busy.png"));
                     myStatus = Contact.Status_t.BUSY;
                 } else if (status_change_list.getItems().get((Integer) number2 ).equals("Hors-ligne")){
-                    login_status_img.setImage(new Image("file:out/production/aientMaientSaientN/res/img/offline.png"));
+                    login_status_img.setImage(new Image("file:src/resources/images/offline.png"));
                     myStatus = Contact.Status_t.OFFLINE;
                 }
             }
