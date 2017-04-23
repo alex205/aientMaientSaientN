@@ -1,5 +1,3 @@
 *.class
-/out/production/aientMaientSaientN/controller
-/out/production/aientMaientSaientN/gui
-/out/production/aientMaientSaientN/model
+/out/*
 /.idea
