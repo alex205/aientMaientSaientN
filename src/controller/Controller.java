@@ -100,6 +100,10 @@ public class Controller {
         ni.broadcastNotification(Notification.Notification_type.STATUS_CHANGE, status);
     }
 
+    public void changeMessagePerso(String message) {
+        ni.broadcastNotification(Notification.Notification_type.MESSAGE_PERSO_CHANGE, message);
+    }
+
     public void disconnect() {
         ni.broadcastNotification(Notification.Notification_type.DISCONNECT);
     }

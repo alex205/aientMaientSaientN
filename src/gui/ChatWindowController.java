@@ -82,6 +82,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     protected ImageView contact_image_perso;
     @FXML
     protected ImageView me_image_perso;
+    @FXML
+    protected Label message_perso_label;
 
 
 
@@ -133,6 +135,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         stage.setTitle(contact.getPseudo() + " - Conversation");
         pseudo_label.setText(contact.getPseudo());
         status_label.setText("\"" + contact.getStatus().toString() + "\"");
+        message_perso_label.setText(contact.getMessage_perso());
         message_write.setStyle("-fx-text-inner-color: #" + ContactCollection.getMe().getTextColor());
 
         try {
@@ -283,6 +286,10 @@ public class ChatWindowController  extends BorderPane implements Initializable {
             if(!me) {
                 Platform.runLater(() -> status_label.setText("\"" + contact.getStatus().toString() + "\""));
             }
+    }
+
+    public void changeMessagePerso() {
+        message_perso_label.setText(contact.getMessage_perso());
     }
 
 

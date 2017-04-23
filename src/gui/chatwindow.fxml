@@ -225,7 +225,7 @@
                   <Insets left="5.0" />
                </padding>
             </HBox>
-            <Label text="Tro b1 jsuis 1 ome komplai">
+            <Label fx:id="message_perso_label">
                <padding>
                   <Insets bottom="15.0" left="5.0" top="2.0" />
                </padding>

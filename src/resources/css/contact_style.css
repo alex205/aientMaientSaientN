@@ -7,10 +7,10 @@
     -fx-background-color: null;
 }
 
-#msg_perso {
+.msg_perso_std {
     -fx-background-color: null;
 }
 
 .msg_perso_edition {
-    -fx-background-color: rgba(255,0,0,1);
+    -fx-background-color: rgba(255,255,255,0.4);
 }

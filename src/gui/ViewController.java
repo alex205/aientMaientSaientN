@@ -15,7 +15,8 @@ public class ViewController {
         NEW_MESSAGE,
         STATUS_CHANGE,
         NEW_NUDGE,
-        IMAGE_PERSO_CHANGE
+        IMAGE_PERSO_CHANGE,
+        MESSAGE_PERSO_CHANGE
     }
 
     private HashMap<String, ChatWindow> viewMap;
@@ -100,6 +101,10 @@ public class ViewController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
+            case MESSAGE_PERSO_CHANGE:
+                view.getChatWindowController().changeMessagePerso();
+                break;
         }
     }
 

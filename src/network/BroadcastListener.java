@@ -1,11 +1,14 @@
 package network;
 
+import gui.ChatWindow;
 import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author alex205
@@ -74,6 +77,12 @@ public class BroadcastListener extends DatagramListener{
                             break;
                         case MESSAGE_PERSO_CHANGE:
                             System.out.println(n.getPseudoSource() + " a changé son message perso en " + n.getData());
+                            Contact contact1 = cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString());
+                            contact1.setMessage_perso(n.getData());
+                            //On met à jour toutes les vues
+                            if(viewController.viewExists(contact1)) {
+                                viewController.updateView(viewController.getView(contact1, false), ViewController.Update_type.MESSAGE_PERSO_CHANGE, "");
+                            }
                             break;
 
                         default:

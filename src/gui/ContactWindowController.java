@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -71,13 +73,29 @@ public class ContactWindowController extends BorderPane implements Initializable
 
     @FXML
     private void handleMessagePersoEdit() {
+        Contact me = ContactCollection.getMe();
         msg_perso.setEditable(true);
+        msg_perso.getStyleClass().clear();
         msg_perso.getStyleClass().add("msg_perso_edition");
+        if(me.getMessage_perso().equals("")) {
+            msg_perso.setText("");
+        }
     }
 
     @FXML
-    private void handleMessagePersoSend() {
-        msg_perso.setEditable(false);
+    private void handleMessagePersoSend(KeyEvent event) {
+        Contact me = ContactCollection.getMe();
+        if (event.getCode() == KeyCode.ENTER) {
+            if(!msg_perso.getText().equals(me.getMessage_perso()) && !msg_perso.getText().equals("")) {
+                me.setMessage_perso(msg_perso.getText());
+            } else if(msg_perso.getText().equals("")){
+                msg_perso.setText("Entrez votre message perso");
+            }
+
+            msg_perso.setEditable(false);
+            msg_perso.getStyleClass().clear();
+            msg_perso.getStyleClass().add("msg_perso_std");
+        }
     }
 
     @FXML

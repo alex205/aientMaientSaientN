@@ -70,7 +70,10 @@
                                     </ChoiceBox>
                                  </children>
                               </HBox>
-                              <TextField fx:id="msg_perso" editable="false" onMouseClicked="#handleMessagePersoEdit" prefHeight="26.0" prefWidth="234.0" styleClass="msg_perso_edition" text="Entrez votre message perso" />
+                              <TextField fx:id="msg_perso" editable="false" onKeyPressed="#handleMessagePersoSend" onMouseClicked="#handleMessagePersoEdit" prefHeight="26.0" prefWidth="234.0" styleClass="msg_perso_std" text="Entrez votre message perso">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin></TextField>
                            </children>
                            <HBox.margin>
                               <Insets left="25.0" top="25.0" />

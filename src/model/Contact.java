@@ -38,6 +38,7 @@ public class Contact {
     private SimpleObjectProperty status;
     private String text_color;
     private String image_perso;
+    private String message_perso;
 
 
 
@@ -47,6 +48,7 @@ public class Contact {
         this.ip = ip;
         this.status = new SimpleObjectProperty(Status_t.ONLINE);
         this.text_color = "000000";
+        this.message_perso = "";
 
         File file = new File("src/resources/images/default.png");
         try{
@@ -96,4 +98,12 @@ public class Contact {
     public void setImage_perso(String image_perso) { this.image_perso = image_perso; }
 
     public String getImage_perso() { return image_perso; }
+
+    public String getMessage_perso() {
+        return message_perso;
+    }
+
+    public void setMessage_perso(String message_perso) {
+        this.message_perso = message_perso;
+    }
 }
