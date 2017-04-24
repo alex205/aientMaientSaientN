@@ -3,7 +3,7 @@ package model;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.image.Image;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Callback;
 
 import java.io.File;
@@ -38,7 +38,7 @@ public class Contact {
     private SimpleObjectProperty status;
     private String text_color;
     private String image_perso;
-    private String message_perso;
+    private SimpleStringProperty message_perso;
 
 
 
@@ -48,7 +48,7 @@ public class Contact {
         this.ip = ip;
         this.status = new SimpleObjectProperty(Status_t.ONLINE);
         this.text_color = "000000";
-        this.message_perso = "";
+        this.message_perso = new SimpleStringProperty("");
 
         File file = new File("src/resources/images/default.png");
         try{
@@ -60,7 +60,7 @@ public class Contact {
     }
 
     public static Callback<Contact, Observable[]> extractor() {
-        return param -> new Observable[]{param.status};
+        return param -> new Observable[]{param.status, param.message_perso};
     }
 
     public String getPseudo() {
@@ -100,10 +100,10 @@ public class Contact {
     public String getImage_perso() { return image_perso; }
 
     public String getMessage_perso() {
-        return message_perso;
+        return message_perso.getValue();
     }
 
     public void setMessage_perso(String message_perso) {
-        this.message_perso = message_perso;
+        this.message_perso.set(message_perso);
     }
 }

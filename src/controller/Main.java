@@ -3,13 +3,15 @@ package controller;
 import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
-
+import network.*;
+import network.NetworkInterface;
 import java.net.*;
 
 public class Main {
 
     public static void main(String[] args) throws UnknownHostException {
         Controller controller = new Controller(); //instantiation du contrôleur
+        NetworkInterface.getInstance().setController(controller);
 
         /*ContactCollection cc = ContactCollection.getInstance();
         cc.addContact(new Contact("alex205", InetAddress.getByName("127.0.0.1")));

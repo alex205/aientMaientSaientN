@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.net.InetAddress;
 
-import static org.junit.Assert.*;
 
 /**
  * Created by toon on 24/04/17.

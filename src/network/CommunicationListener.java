@@ -7,6 +7,7 @@ import model.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 
 /**
  * @author alex205
@@ -16,6 +17,7 @@ public class CommunicationListener extends NetworkListener{
     public CommunicationListener(ServerSocket server) {
         super(server);
     }
+
 
     @Override
     protected void managePacket(Packet p) {
@@ -78,8 +80,4 @@ public class CommunicationListener extends NetworkListener{
             }
         }
     }
-
-
-
-
 }

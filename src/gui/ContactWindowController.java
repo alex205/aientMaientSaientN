@@ -204,7 +204,8 @@ public class ContactWindowController extends BorderPane implements Initializable
                                     Platform.runLater(() -> setGraphic(new ImageView(new Image("file:src/resources/images/offline.png"))));
                                     break;
                             }
-                            Platform.runLater(() -> setText(c.getPseudo()));
+
+                            Platform.runLater(() -> setText(c.getPseudo() + (c.getMessage_perso().equals("") ? "" : " - " + c.getMessage_perso())));
                         } else {
                             Platform.runLater(() -> setText(""));
                             Platform.runLater(() -> setGraphic(null));

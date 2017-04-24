@@ -1,5 +1,6 @@
 package network;
 
+import controller.Controller;
 import javafx.collections.ObservableList;
 import model.*;
 
@@ -17,6 +18,9 @@ public class NetworkInterface {
     private static int anoukPort = 20573;
     private static int bcastPort = 20574;
     public static int basePort = 20575;
+
+    //Le contrôleur : abonne toi !!!
+    private Controller controller;
 
     //Les sockets de base pour négocier sur quel port se fera la communication, sockets de rencontre
     private DatagramSocket anouk; //socket de rencontre
@@ -117,6 +121,7 @@ public class NetworkInterface {
     public void launchNetwork() {
         bcastListener.start();
         helloListener.start();
+        helloListener.addObserver(controller);
     }
     //surcharge aussi
     public void sendNotification( Contact dest, Notification.Notification_type type) {
@@ -265,6 +270,10 @@ public class NetworkInterface {
 
     public synchronized void fireUpdate() {
         notify();
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
 
