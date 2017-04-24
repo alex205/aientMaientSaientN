@@ -289,7 +289,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     }
 
     public void changeMessagePerso() {
-        message_perso_label.setText(contact.getMessage_perso());
+        Platform.runLater(() -> message_perso_label.setText(contact.getMessage_perso()));
     }
 
 
