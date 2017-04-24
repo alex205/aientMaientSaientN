@@ -60,8 +60,6 @@
                                              <String fx:value="(Absent)" />
                                              <String fx:value="(Occupé)" />
                                              <String fx:value="(Hors-ligne)" />
-                                             <Separator orientation="HORIZONTAL" />
-                                             <String fx:value="Modifier mon image perso..." />
                                           </FXCollections>
                                        </items>
                                        <HBox.margin>
