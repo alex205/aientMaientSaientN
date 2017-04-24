@@ -2,14 +2,12 @@ package network;
 
 import model.Contact;
 import model.ContactCollection;
+import model.Control;
+import model.Packet;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 import static network.NetworkInterface.basePort;
 

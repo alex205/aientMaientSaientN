@@ -1,12 +1,9 @@
 package gui;
 
 import controller.Controller;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Contact;
-import network.Control;
 
 import java.io.IOException;
 

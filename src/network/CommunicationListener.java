@@ -2,13 +2,10 @@ package network;
 
 import gui.ChatWindow;
 import gui.ViewController;
-import model.Contact;
-import model.ContactCollection;
+import model.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 
 /**

@@ -1,8 +1,7 @@
 package network;
 
 import javafx.collections.ObservableList;
-import model.Contact;
-import model.ContactCollection;
+import model.*;
 
 import java.io.*;
 import java.net.*;
@@ -210,7 +209,7 @@ public class NetworkInterface {
         System.out.println("Plus qu'à s'occuper du fichier !!");
         byte [] content = readBytesFromFile(file);
 
-        File filemessage = new File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getName(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
+        model.File filemessage = new model.File(ContactCollection.getMe().getPseudo(), dest.getPseudo(),  ContactCollection.getMe().getIp(), dest.getIp(), file.getName(), URLConnection.guessContentTypeFromName(file.getName()), file.length(), content);
         try {
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
             os.writeObject(filemessage);

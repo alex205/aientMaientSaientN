@@ -32,7 +32,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.Contact;
 import model.ContactCollection;
-import network.Notification;
+import model.Notification;
 import sun.misc.BASE64Decoder;
 
 import java.io.ByteArrayInputStream;

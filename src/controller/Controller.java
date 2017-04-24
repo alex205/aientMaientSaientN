@@ -6,7 +6,7 @@ import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
 import network.NetworkInterface;
-import network.Notification;
+import model.Notification;
 
 import java.io.File;
 import java.io.FileInputStream;

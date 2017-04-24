@@ -1,14 +1,12 @@
 package network;
 
-import model.ContactCollection;
+import model.Packet;
 
 import java.io.ByteArrayInputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.security.spec.ECField;
 
 /**
  * @author alex205
