@@ -29,10 +29,32 @@ public final class Notification extends Packet {
     }
 
     public Notification_type getType() {
-        return type;
+        return this.type;
     }
 
     public String getData() {
-        return data;
+        return this.data;
+    }
+
+    public String toString() {
+        switch (this.type) {
+            case CONNECT :
+                return this.getPseudoSource() + " s'est connecté.";
+            case DISCONNECT :
+                return this.getPseudoSource() + " s'est déconnecté.";
+            case STATUS_CHANGE :
+                switch (this.data) {
+                    case "ONLINE" :
+                        return this.getPseudoSource() + " est passé \"en ligne\".";
+                    case "BUSY" :
+                        return this.getPseudoSource() + " est passé \"occupé\".";
+                    case "AWAY" :
+                        return this.getPseudoSource() + " est passé \"absent\".";
+                    case "OFFLINE" :
+                        return this.getPseudoSource() + " est passé \"hors ligne\".";
+                }
+                break;
+        }
+        return "Notification inconnue";
     }
 }
