@@ -88,9 +88,9 @@ public class ContactWindowController extends BorderPane implements Initializable
         if (event.getCode() == KeyCode.ENTER) {
             if(!msg_perso.getText().equals(me.getMessage_perso()) && !msg_perso.getText().equals("")) {
                 me.setMessage_perso(msg_perso.getText());
+                controller.changeMessagePerso(msg_perso.getText());
             } else if(msg_perso.getText().equals("")){
                 msg_perso.setText("Entrez votre message perso");
-                controller.changeMessagePerso(msg_perso.getText());
             }
 
             msg_perso.setEditable(false);

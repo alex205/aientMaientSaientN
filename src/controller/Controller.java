@@ -101,6 +101,7 @@ public class Controller {
     }
 
     public void changeMessagePerso(String message) {
+        System.out.println("envoi changement message perso");
         ni.broadcastNotification(Notification.Notification_type.MESSAGE_PERSO_CHANGE, message);
     }
 
