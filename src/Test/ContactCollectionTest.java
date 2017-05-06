@@ -38,7 +38,7 @@ public class ContactCollectionTest {
         collection.addContact(test);
         collection.delContact(test);
 
-
+        assert(!collection.getCollection().contains(test));
     }
 
     @Test

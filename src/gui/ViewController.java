@@ -13,6 +13,7 @@ public class ViewController {
 
     public enum Update_type {
         NEW_MESSAGE,
+        NEW_MESSAGE_ME,
         STATUS_CHANGE,
         NEW_NUDGE,
         IMAGE_PERSO_CHANGE,
@@ -86,6 +87,9 @@ public class ViewController {
         switch (type) {
             case NEW_MESSAGE:
                 view.getChatWindowController().addMessage(false, toUpdate);
+                break;
+            case NEW_MESSAGE_ME:
+                view.getChatWindowController().addMessage(true, toUpdate);
                 break;
             case STATUS_CHANGE:
                 System.out.println("changement dans la vue");

@@ -5,16 +5,18 @@ import model.Contact;
 import model.ContactCollection;
 import network.*;
 import network.NetworkInterface;
+import networkParrot.NetworkInterfaceParrot;
+
 import java.net.*;
 
 public class Main {
 
     public static void main(String[] args) throws UnknownHostException {
         Controller controller = new Controller(); //instantiation du contrôleur
-        NetworkInterface.getInstance().setController(controller);
+        NetworkInterfaceParrot.getInstance().setController(controller);
 
         /*ContactCollection cc = ContactCollection.getInstance();
-        cc.addContact(new Contact("alex205", InetAddress.getByName("127.0.0.1")));
+        cc.addContact(new Contact("alex205", InetAddress.getByName("192.168.1.14")));
         /*cc.addContact(new Contact("Patrick974", InetAddress.getByName("127.0.0.1")));
         cc.addContact(new Contact("Toonu", InetAddress.getByName("127.0.0.1")));
         cc.addContact(new Contact("Drosik", InetAddress.getByName("127.0.0.1")));*/
