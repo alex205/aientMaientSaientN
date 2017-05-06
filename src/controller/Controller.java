@@ -3,10 +3,8 @@ package controller;
 
 import gui.ChatWindow;
 import gui.ViewController;
-import model.Contact;
-import model.ContactCollection;
+import model.*;
 import network.NetworkInterface;
-import model.Notification;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Controller {
+public class Controller implements Observer {
+
+    @Override
+    public void update(Observable o) {
+        newUserRoutine();
+    }
 
     public enum App_State_t {
         CONNECTED,
@@ -103,6 +106,13 @@ public class Controller {
     public void changeMessagePerso(String message) {
         System.out.println("envoi changement message perso");
         ni.broadcastNotification(Notification.Notification_type.MESSAGE_PERSO_CHANGE, message);
+    }
+
+    public void newUserRoutine() {
+        changeStatus(ContactCollection.getMe().getStatus().toString());
+        changeImagePerso(ContactCollection.getMe().getImage_perso());
+        changeMessagePerso(ContactCollection.getMe().getMessage_perso());
+        changeTextColor(ContactCollection.getMe().getTextColor());
     }
 
     public void disconnect() {

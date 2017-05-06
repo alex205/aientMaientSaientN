@@ -1,23 +1,24 @@
 package network;
 
-import model.Contact;
-import model.ContactCollection;
-import model.Control;
-import model.Packet;
+import model.*;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 
 import static network.NetworkInterface.basePort;
 
 /**
  * @author alex205
  */
-public class HelloListener extends DatagramListener {
+public class HelloListener extends DatagramListener implements Observable {
+
+    private ArrayList<Observer> observers;
 
     public HelloListener(DatagramSocket socket) {
         super(socket);
+        this.observers = new ArrayList<>();
     }
 
     @Override
@@ -42,6 +43,7 @@ public class HelloListener extends DatagramListener {
                         System.out.println("listener lancé");
                         ni.sendControl(ContactCollection.getMe(), new Contact(c.getPseudoSource(), c.getAddrSource()), Control.Control_t.ACK, basePort);
                         basePort++;
+                        notifyObservers();
                     }
                 } else if(c.getType() == Control.Control_t.TMP_SOCKET || c.getType() == Control.Control_t.TMP_SOCKET_ACK) {
                     //Gestion de la demande de socket temporaire
@@ -63,4 +65,23 @@ public class HelloListener extends DatagramListener {
                 }
             }
         }
+
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(int i=0;i<observers.size();i++)
+        {
+            Observer o = (Observer) observers.get(i);
+            o.update(this);// On utilise la méthode "tiré".
+        }
+    }
 }
