@@ -54,7 +54,7 @@ To be sure that users are unic, we created the `fullpseudo` (*username*@*ip_adre
 
 - **public void getFullPseudo()** => This test allow us to get the fullPseudo of a `Contact`. **Success**
 
-#### ContactCollectionTest
+#### ContactCollectionTest.java
 
 - **public void getInstance()** => Test that we can get the instance of the `ContactCollection`. It is a singleton. **Success**
 
