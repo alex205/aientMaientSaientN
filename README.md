@@ -7,7 +7,7 @@ Authors : Guilhem Cichocki "Toon" // Alexis Girardi "alex205"
 
 ## Java Version
 
-Be sure to install `Java 8` to run ths project: https://www.java.com/fr/download/
+Be sure to install `Java 8` to run this project: https://www.java.com/fr/download/
 
 ## Compilation and execution
 
