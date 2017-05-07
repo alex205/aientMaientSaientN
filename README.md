@@ -43,7 +43,7 @@ You just have to compile the whole project and run **controller.main**.
  
 ## Test report 
 
-Authors : Guilhem Cichocki "Toon" // Alexis Girardi "alex205"
+*Authors : Guilhem Cichocki "Toon" // Alexis Girardi "alex205"*
 
 ### Model (JUnit Tests)
 
@@ -72,11 +72,17 @@ We chose to develop a **Parrot** which allows us to test our network. The **parr
 This system showed that our messages, files, status, personnal messages, profile pictures are sent through the network to the **parrot** and come back.
 
 This is the list of those tests :
+
 **message sent to the parrot** => The parrot sent it back. **Success**
+
 **file sent to the parrot** => The parrot sent it back. **Success**
+
 **change your text color** => The parrot change his text color and notify all the other users. **Success**
+
 **change your status** => The parrot change his own status and notify all the other users. **Success**
+
 **change the personnal message** => The parrot change his own and notify all the other users. **Success**
+
 **change your profile picture** => The aprrot change his own but failed to notify the other users. **Fail**
 
  
