@@ -4,26 +4,26 @@ Relive the glorious days of MSN.
 
 Authors : Guilhem Cichocki "Toon" // Alexis Girardi "alex205"
 
-##Java Version
+## Java Version
 
 Be sure to install `Java 8` to run ths project: https://www.java.com/fr/download/
 
-##Compilation and execution
+## Compilation and execution
 
 Clone this repository in any directory of your computer.
 
-###With Intellij
+### With Intellij
 
 Start a *new JavaFX Project* with the existing source files and select the correct JDK (Java 8).
 You just have to compile the whole project and run **controller.main**.
 
-###Another way ?
+### Another way ?
 
   **Comment compiler puis exécuter.(Tous les intervenants ne compileront pas votre code, mais certains souhaitent le faire).**
 
-##Features
+## Features
 
-###What can you do with this software ?
+### What can you do with this software ?
 
 - Choose a nickname
 - Connection/disconnection to the network
@@ -33,27 +33,27 @@ You just have to compile the whole project and run **controller.main**.
 - Choose a personnal message that you want to share
 - Choose your text color
 
-###How can we improve this software ?
+### How can we improve this software ?
 
 - Send an emote to any connected user
 - Video/Sound streaming between users
 - Add games
 - Group conversation
 
-
-##Test report 
+ 
+## Test report 
 
 Authors : Guilhem Cichocki "Toon" // Alexis Girardi "alex205"
 
-###Model (JUnit Tests)
+### Model (JUnit Tests)
 
-####ContactTest.java
+#### ContactTest.java
 
 To be sure that users are unic, we created the `fullpseudo` (*username*@*ip_adress*).
 
 **public void getFullPseudo()** => This test allow us to get the fullPseudo of a `Contact`. **Success**
 
-####ContactCollectionTest
+#### ContactCollectionTest
 
 **public void getInstance()** => Test that we can get the instance of the contact collection. It is a singleton. **Success**
 
@@ -65,7 +65,7 @@ To be sure that users are unic, we created the `fullpseudo` (*username*@*ip_adre
 
 **public void getContact()** => Test if we can get a contact from the collection. **Success**
 
-###Network
+### Network
 
 Because of our singleton patterns in the *package Network*, we encountered some issues with JUnit tests.
 We chose to develop a **Parrot** which allows us to test our network. The **parrot** simply send back everything it receives as it was his action.
@@ -81,7 +81,7 @@ This is the list of those tests :
 
  
  
-###Test with other groups
+### Test with other groups
  
  o Et enfin, un rapport de tests inter-projets : certains tests (pas nécessairement tous) appliqués par vous-même au projet d'un ou deux autres binômes. (Ceux qui travaillent en Java 7 ne pourront pas tester les projets écrits en Java .
 
