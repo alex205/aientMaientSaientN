@@ -14,12 +14,12 @@ Clone this repository in any directory of your computer.
 
 ### With Intellij
 
-Start a *new JavaFX Project* with the existing source files and select the correct JDK (Java 8).
-You just have to compile the whole project and run **controller.main**.
+Start a **new JavaFX Project** with the existing source files and select the correct JDK (Java 8).
+You just have to compile the whole project and run `controller.main`.
 
 ### Another way ?
 
-  **Comment compiler puis exécuter.(Tous les intervenants ne compileront pas votre code, mais certains souhaitent le faire).**
+  **Comment compiler puis exécuter. (Tous les intervenants ne compileront pas votre code, mais certains souhaitent le faire).**
 
 ## Features
 
@@ -55,15 +55,15 @@ To be sure that users are unic, we created the `fullpseudo` (*username*@*ip_adre
 
 #### ContactCollectionTest
 
-**public void getInstance()** => Test that we can get the instance of the contact collection. It is a singleton. **Success**
+**public void getInstance()** => Test that we can get the instance of the `ContactCollection`. It is a singleton. **Success**
 
-**public void addContact()** => Test if we can add a contact in the collection. **Success**
+**public void addContact()** => Test if we can add a `Contact` in the `ContactCollection`. **Success**
 
-**public void delContact()**  => Test if we can remove a contact from the collection. **Success**
+**public void delContact()**  => Test if we can remove a `Contact` from the `ContactCollection`. **Success**
 
-**public void contactExists()** => Test if we can know if a contact exists in the collection. **Success**
+**public void contactExists()** => Test if we can know if a `Contact` exists in the `ContactCollection`. **Success**
 
-**public void getContact()** => Test if we can get a contact from the collection. **Success**
+**public void getContact()** => Test if we can get a `Contact` from the `ContactCollection`. **Success**
 
 ### Network
 
