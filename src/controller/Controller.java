@@ -5,7 +5,6 @@ import gui.ChatWindow;
 import gui.ViewController;
 import model.*;
 import network.NetworkInterface;
-import networkParrot.NetworkInterfaceParrot;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,14 +26,13 @@ public class Controller implements Observer {
         DISCONNECTED
     }
 
-    private NetworkInterfaceParrot ni;
-    //private NetworkInterface ni;
+    //private NetworkInterfaceParrot ni;
+    private NetworkInterface ni;
     private App_State_t state;
 
     public Controller() {
         state = App_State_t.DISCONNECTED;
-        //ni = NetworkInterface.getInstance();
-        ni = NetworkInterfaceParrot.getInstance();
+        ni = NetworkInterface.getInstance();
     }
 
     public void connect(String pseudo) {

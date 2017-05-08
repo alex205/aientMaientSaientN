@@ -1,19 +1,22 @@
 package model;
 
-import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Callback;
+import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.util.Base64;
 
-import static controller.Controller.readBytesFromFile;
 
-
+/**
+ * Represents a contact in the chat system
+ *
+ * @author alex205
+ * @author toon
+ */
 public class Contact {
 
     public enum Status_t {
@@ -50,15 +53,25 @@ public class Contact {
         this.text_color = "000000";
         this.message_perso = new SimpleStringProperty("");
 
-        File file = new File("src/resources/images/default.png");
-        try{
-            this.image_perso = Base64.getEncoder().encodeToString(readBytesFromFile(file));
+        try {
+            InputStream is = getClass().getResourceAsStream("/resources/images/default.png");
+            this.image_perso = Base64.getEncoder().encodeToString(IOUtils.toByteArray(is));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch(IOException e) {
             e.printStackTrace();
         }
 
     }
 
+    /**
+     * Callback for update the ObservableArrayList in the view
+     * Sets the parameters to be observed
+     * @param Callback<Contact, Observable[] >
+     * @return Observable[]
+     *
+     * @see javafx.collections.ObservableList
+     */
     public static Callback<Contact, Observable[]> extractor() {
         return param -> new Observable[]{param.status, param.message_perso};
     }

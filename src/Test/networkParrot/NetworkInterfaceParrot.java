@@ -1,4 +1,4 @@
-package networkParrot;
+package Test.networkParrot;
 
 import controller.Controller;
 import javafx.collections.ObservableList;

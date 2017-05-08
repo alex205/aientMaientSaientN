@@ -101,8 +101,8 @@ public class ContactWindowController extends BorderPane implements Initializable
 
     @FXML
     private void handleListAction(MouseEvent event) {
-        ChatWindow view = ViewController.getInstance().getView((Contact) online_contacts.getSelectionModel().getSelectedItem(), true);
         try {
+        ChatWindow view = ViewController.getInstance().getView((Contact) online_contacts.getSelectionModel().getSelectedItem(), true);
             view.requestFocus();
         } catch (NullPointerException e) {}
     }
@@ -126,8 +126,7 @@ public class ContactWindowController extends BorderPane implements Initializable
         ContactCollection cc = ContactCollection.getInstance();
         pseudo_label.setText(ContactCollection.getMe().getPseudo());
 
-        File file = new File("src/resources/images/default.png");
-        image_perso_view.setImage(new Image("file:" + file.getAbsolutePath()));
+        image_perso_view.setImage(new Image(getClass().getResourceAsStream("/resources/images/default.png")));
 
         // statut initial
         image_perso_pane.getStyleClass().clear();
@@ -168,8 +167,6 @@ public class ContactWindowController extends BorderPane implements Initializable
                 case "Hors-ligne":
                     image_perso_pane.getStyleClass().add("image_perso_offline");
                     break;
-                case "Modifier mon image perso...":
-                    System.out.println("image perso");
             }
             controller.changeStatus(status);
         });
@@ -192,16 +189,16 @@ public class ContactWindowController extends BorderPane implements Initializable
                         if (c != null) {
                             switch(c.getStatus()){
                                 case ONLINE:
-                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:src/resources/images/connected.png"))));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/resources/images/connected.png")))));
                                     break;
                                 case AWAY:
-                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:src/resources/images/away.png"))));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/resources/images/away.png")))));
                                     break;
                                 case BUSY:
-                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:src/resources/images/busy.png"))));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/resources/images/busy.png")))));
                                     break;
                                 case OFFLINE:
-                                    Platform.runLater(() -> setGraphic(new ImageView(new Image("file:src/resources/images/offline.png"))));
+                                    Platform.runLater(() -> setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/resources/images/offline.png")))));
                                     break;
                             }
 

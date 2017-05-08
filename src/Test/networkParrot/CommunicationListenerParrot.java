@@ -1,4 +1,4 @@
-package networkParrot;
+package Test.networkParrot;
 
 import gui.ChatWindow;
 import gui.ViewController;
@@ -7,7 +7,6 @@ import model.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

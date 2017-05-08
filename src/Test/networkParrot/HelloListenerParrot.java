@@ -1,4 +1,4 @@
-package networkParrot;
+package Test.networkParrot;
 
 import model.*;
 import network.DatagramListener;

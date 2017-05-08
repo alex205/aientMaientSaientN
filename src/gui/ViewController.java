@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Manages all views actions
+ * This class is the link between back and front office code
+ *
+ * @author alex205
+ * @author toon
+ */
 public class ViewController {
 
     public enum Update_type {
@@ -41,6 +48,14 @@ public class ViewController {
         this.controller = controller;
     }
 
+    /**
+     * Return the chat window of the contact, if not exists this method will create the
+     * view and register it into the ViewController map
+     *
+     * @param c
+     * @param graphicThread
+     * @return ChatWindow
+     */
     public ChatWindow getView(Contact c, boolean graphicThread) {
         /*
          * Pour résoudre le problème concurrent suivant :  il faut attendre que le thread graphique ait crée la fenêtre
@@ -50,7 +65,6 @@ public class ViewController {
         final CountDownLatch latch = new CountDownLatch(1);
         if(viewMap.get(c.getFullPseudo()) == null) //si on ne connaît pas encore la vue (ie fenêtre pas ouverte)
         {
-            System.out.println("demande création fenêtre");
             //on demande au thread graphique de la créer
             Platform.runLater(() -> {
                 try {
@@ -79,6 +93,11 @@ public class ViewController {
         return viewMap.get(c.getFullPseudo());
     }
 
+    /**
+     * Delete the view, called when a contact gets offline
+     *
+     * @param c
+     */
     public void delView(Contact c) {
         viewMap.remove(c.getFullPseudo());
     }
