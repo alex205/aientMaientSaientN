@@ -1,4 +1,4 @@
-package network;
+package Test.networkParrot;
 
 import gui.ChatWindow;
 import gui.ViewController;
@@ -7,14 +7,15 @@ import model.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author alex205
+ * @author toon
  */
-public class CommunicationListener extends NetworkListener{
+public class CommunicationListenerParrot extends NetworkListenerParrot{
 
-    public CommunicationListener(ServerSocket server) {
+    public CommunicationListenerParrot(ServerSocket server) {
         super(server);
     }
 
@@ -22,7 +23,7 @@ public class CommunicationListener extends NetworkListener{
     @Override
     protected void managePacket(Packet p) {
         ContactCollection cc = ContactCollection.getInstance();
-        NetworkInterface ni = NetworkInterface.getInstance();
+        NetworkInterfaceParrot ni = NetworkInterfaceParrot.getInstance();
         //Réception de message
         if(p instanceof Message) {
             ViewController viewController = ViewController.getInstance();
@@ -31,6 +32,9 @@ public class CommunicationListener extends NetworkListener{
                 Text message = (Text) p;
                 ChatWindow view = viewController.getView(cc.getContact(message.getPseudoSource() + "@" + message.getAddrSource()), false);
                 viewController.updateView(view, ViewController.Update_type.NEW_MESSAGE, message.getData());
+                // RENVOIE !!
+                ni.transmitMessage(message.getData(), cc.getContact(p.getPseudoSource()+"@"+p.getAddrSource()));
+                viewController.updateView(view, ViewController.Update_type.NEW_MESSAGE_ME, message.getData());
             }
             if(p instanceof File) {
                 File file = (File) p;
@@ -41,7 +45,6 @@ public class CommunicationListener extends NetworkListener{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
             }
         }
@@ -61,9 +64,11 @@ public class CommunicationListener extends NetworkListener{
                 case NUDGE:
                     System.out.println("J'ai reçu un wizz !");
                     viewController.updateView(viewController.getView(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource()), false), ViewController.Update_type.NEW_NUDGE, "");
+                    //PERROQUET
+                    ni.sendNotification(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource()), Notification.Notification_type.NUDGE);
                     break;
 
-                    //devrait être un broadcast mais on utilise tcp pour transmettre le fichier image et on simule le broadcast
+                //devrait être un broadcast mais on utilise tcp pour transmettre le fichier image et on simule le broadcast
                 case IMAGE_PERSO_CHANGED:
                     System.out.println("changement de l'image perso pour le contact");
                     Contact contact1 = cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString());
@@ -75,6 +80,22 @@ public class CommunicationListener extends NetworkListener{
                     //fin d'utilisation du socket temporaire
                     ni.delTmpMap(n.getPseudoSource() + "@" + n.getAddrSource().toString());
                     ni.delListener(ni.getListener(server.getLocalPort()));
+
+
+                    //PERROQUET
+                    ContactCollection.getMe().setImage_perso(n.getData());
+                    HashMap<String, ChatWindow> map = ViewController.getInstance().getAllViews();
+                    for(Map.Entry<String, ChatWindow> entry : map.entrySet()) {
+                        ChatWindow view = entry.getValue();
+
+                        try {
+                            view.getChatWindowController().changeImagePerso(true);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println("envoi image");
+                    ni.sendNotification(null, Notification.Notification_type.IMAGE_PERSO_CHANGED, n.getData());
                     break;
 
             }

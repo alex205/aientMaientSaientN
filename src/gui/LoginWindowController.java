@@ -53,16 +53,16 @@ public class LoginWindowController extends BorderPane {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 if(status_change_list.getItems().get((Integer) number2 ).equals("Disponible")){
-                    login_status_img.setImage(new Image("file:src/resources/images/connected.png"));
+                    login_status_img.setImage(new Image(getClass().getResourceAsStream("/resources/images/connected.png")));
                     myStatus = Contact.Status_t.ONLINE;
                 } else if (status_change_list.getItems().get((Integer) number2 ).equals("Absent")){
-                    login_status_img.setImage(new Image("file:src/resources/images/away.png"));
+                    login_status_img.setImage(new Image(getClass().getResourceAsStream("/resources/images/away.png")));
                     myStatus = Contact.Status_t.AWAY;
                 } else if (status_change_list.getItems().get((Integer) number2 ).equals("Occupé")){
-                    login_status_img.setImage(new Image("file:src/resources/images/busy.png"));
+                    login_status_img.setImage(new Image(getClass().getResourceAsStream("/resources/images/busy.png")));
                     myStatus = Contact.Status_t.BUSY;
                 } else if (status_change_list.getItems().get((Integer) number2 ).equals("Hors-ligne")){
-                    login_status_img.setImage(new Image("file:src/resources/images/offline.png"));
+                    login_status_img.setImage(new Image(getClass().getResourceAsStream("/resources/images/offline.png")));
                     myStatus = Contact.Status_t.OFFLINE;
                 }
             }
@@ -77,7 +77,7 @@ public class LoginWindowController extends BorderPane {
             System.out.println("connexion");
             Stage stage = (Stage) connect_btn.getScene().getWindow();
             ContactWindowController contactController = new ContactWindowController(stage, controller);
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.setHeight(800);
             stage.setWidth(500);
             stage.setScene(new Scene(contactController));

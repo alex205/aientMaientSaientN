@@ -1,4 +1,4 @@
-package network;
+package Test.networkParrot;
 
 import controller.Controller;
 import javafx.collections.ObservableList;
@@ -12,9 +12,9 @@ import static controller.Controller.readBytesFromFile;
 
 
 /**
- * @author alex205
+ * @author toon
  */
-public class NetworkInterface {
+public class NetworkInterfaceParrot {
     private static int anoukPort = 20573;
     private static int bcastPort = 20574;
     public static int basePort = 20575;
@@ -27,9 +27,9 @@ public class NetworkInterface {
     private DatagramSocket hello; //sert à écouter les broadcast
 
     //Listener pour anouk
-    private HelloListener helloListener;
+    private HelloListenerParrot helloListener;
     //Listener pour le bcast
-    private BroadcastListener bcastListener;
+    private BroadcastListenerParrot bcastListener;
 
     //Table de correspondance entre pseudo du contact et socket
     //private HashMap<String, Socket> socketMap;
@@ -39,34 +39,34 @@ public class NetworkInterface {
     private HashMap<String, Integer> tmpSocketMap;
 
     //pour savoir quels sont les listeners actifs
-    private HashMap<Integer, CommunicationListener> listenersMap;
+    private HashMap<Integer, CommunicationListenerParrot> listenersMap;
 
     // La network interface est un singleton parce qu'il faut en instancier qu'une seule !
 
     //Le holder
-    private static class NetworkInterfaceHolder {
-        private final static NetworkInterface instance = new NetworkInterface();
+    private static class NetworkInterfaceHolderParrot {
+        private final static NetworkInterfaceParrot instance = new NetworkInterfaceParrot();
     }
 
     //pour récupérer l'instance
-    public static NetworkInterface getInstance() {
-        return NetworkInterfaceHolder.instance;
+    public static NetworkInterfaceParrot getInstance() {
+        return NetworkInterfaceHolderParrot.instance;
     }
 
     // Constructeur privé pour le singleton
-    private NetworkInterface() {
+    private NetworkInterfaceParrot() {
         //Initialisation des tables vides
         socketMap = new HashMap<>();
         tmpSocketMap = new HashMap<>();
         listenersMap = new HashMap<>();
         //On met déjà le socket hello en écoute
-       try {
-           hello = new DatagramSocket(bcastPort);
-           //Lancement du thread d'écoute pour broadcast
-           bcastListener = new BroadcastListener(hello);
-           //idem pour Anouk
-           anouk = new DatagramSocket(anoukPort);
-           helloListener = new HelloListener(anouk);
+        try {
+            hello = new DatagramSocket(bcastPort);
+            //Lancement du thread d'écoute pour broadcast
+            bcastListener = new BroadcastListenerParrot(hello);
+            //idem pour Anouk
+            anouk = new DatagramSocket(anoukPort);
+            helloListener = new HelloListenerParrot(anouk);
         } catch (IOException e) {
             System.out.println("Can't bind sockets");
             e.printStackTrace();
@@ -79,7 +79,7 @@ public class NetworkInterface {
             System.out.println("anouk ok");
             ServerSocket com = new ServerSocket(basePort);
             System.out.println("socket com ok");
-            CommunicationListener listener = new CommunicationListener(com);
+            CommunicationListenerParrot listener = new CommunicationListenerParrot(com);
             listener.start();
             listenersMap.put(basePort, listener);
             System.out.println("listener com ok");
@@ -103,7 +103,7 @@ public class NetworkInterface {
     }
 
     private Socket getSocket(Contact dest, boolean tmp) {
-       Integer port = (tmp ? tmpSocketMap.get(dest.getFullPseudo()) : socketMap.get(dest.getFullPseudo()));
+        Integer port = (tmp ? tmpSocketMap.get(dest.getFullPseudo()) : socketMap.get(dest.getFullPseudo()));
         if(port == null) {
             port = negotiatePort(dest, tmp);
         } else {
@@ -151,7 +151,7 @@ public class NetworkInterface {
 
                     //plus besoin du socket temporaire
                     //delTmpMap(c.getFullPseudo());
-                   // delListener(getListener(s.getLocalPort()));
+                    // delListener(getListener(s.getLocalPort()));
                     System.out.println("local port -> " + s.getLocalPort() + " port -> " + s.getPort());
                 }
                 Thread.currentThread().interrupt();
@@ -179,14 +179,14 @@ public class NetworkInterface {
     }
 
     public void broadcastNotification(Notification.Notification_type type, String data) {
-        Notification notification = new Notification(ContactCollection.getMe().getPseudo(), "bcast", ContactCollection.getMe().getIp(), NetworkUtils.getBroadcastAddress(), type, data);
+        Notification notification = new Notification(ContactCollection.getMe().getPseudo(), "bcast", ContactCollection.getMe().getIp(), NetworkUtilsParrot.getBroadcastAddress(), type, data);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ObjectOutputStream os = null;
         try {
             os = new ObjectOutputStream(outputStream);
             os.writeObject(notification);
             byte[] buffer = outputStream.toByteArray();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, NetworkUtils.getBroadcastAddress(), bcastPort);
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, NetworkUtilsParrot.getBroadcastAddress(), bcastPort);
             anouk.send(sendPacket);
         } catch (IOException e) {
             e.printStackTrace();
@@ -207,6 +207,7 @@ public class NetworkInterface {
             e.printStackTrace();
 
         }
+        System.out.println("Perroquet ?");
     }
 
     public void transmitFile(java.io.File file, Contact dest) throws IOException {
@@ -255,15 +256,15 @@ public class NetworkInterface {
         tmpSocketMap.remove(fullPseudo);
     }
 
-    public void addListener(int port, CommunicationListener listener) {
+    public void addListener(int port, CommunicationListenerParrot listener) {
         listenersMap.put(port, listener);
     }
 
-    public CommunicationListener getListener(int port) {
+    public CommunicationListenerParrot getListener(int port) {
         return listenersMap.get(port);
     }
 
-    public void delListener(CommunicationListener listener) {
+    public void delListener(CommunicationListenerParrot listener) {
         listenersMap.remove(listener);
         listener.interrupt();
     }

@@ -1,4 +1,4 @@
-package network;
+package Test.networkParrot;
 
 import model.Packet;
 
@@ -9,13 +9,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 /**
- * @author alex205
+ * @author toon
  */
-public abstract class DatagramListener extends Thread {
+public abstract class DatagramListenerParrot extends Thread {
 
     private DatagramSocket socket;
 
-    public DatagramListener(DatagramSocket socket) {
+    public DatagramListenerParrot(DatagramSocket socket) {
         this.socket = socket;
     }
 
@@ -29,11 +29,11 @@ public abstract class DatagramListener extends Thread {
                 ByteArrayInputStream in = new ByteArrayInputStream(data);
                 ObjectInputStream is = new ObjectInputStream(in);
                 try {
-                        Packet p = (Packet) is.readObject();
-                        //pas la peine de lire ce qu'on envoie !
-                        //if(!p.getAddrSource().equals(ContactCollection.getMe().getIp())) {
-                        managePacket(p);
-                        //}
+                    Packet p = (Packet) is.readObject();
+                    //pas la peine de lire ce qu'on envoie !
+                    //if(!p.getAddrSource().equals(ContactCollection.getMe().getIp())) {
+                    managePacket(p);
+                    //}
 
 
                 } catch (ClassNotFoundException e) {

@@ -32,7 +32,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.Contact;
 import model.ContactCollection;
-import network.Notification;
+import model.Notification;
 import sun.misc.BASE64Decoder;
 
 import java.io.ByteArrayInputStream;
@@ -289,7 +289,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     }
 
     public void changeMessagePerso() {
-        message_perso_label.setText(contact.getMessage_perso());
+        Platform.runLater(() -> message_perso_label.setText(contact.getMessage_perso()));
     }
 
 

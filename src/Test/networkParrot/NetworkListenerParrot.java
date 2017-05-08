@@ -1,4 +1,4 @@
-package network;
+package Test.networkParrot;
 
 import model.Packet;
 
@@ -9,21 +9,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * @author alex205
+ * @author toon
  */
-abstract class NetworkListener extends Thread {
+abstract class NetworkListenerParrot extends Thread {
     protected ServerSocket server;
     private Socket s;
 
-    public NetworkListener(ServerSocket server) {
+    public NetworkListenerParrot(ServerSocket server) {
         this.server = server;
     }
 
     public void run() {
         try {
             while(true) {
-            s = server.accept();
-            ObjectInputStream is = new ObjectInputStream(s.getInputStream());
+                s = server.accept();
+                ObjectInputStream is = new ObjectInputStream(s.getInputStream());
                 Packet p = (Packet) is.readObject();
                 managePacket(p);
             }

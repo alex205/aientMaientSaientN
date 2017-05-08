@@ -1,3 +1,5 @@
 *.class
 /out/*
 /.idea
+/META-INF
+*.iml

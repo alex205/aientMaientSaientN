@@ -1,14 +1,13 @@
 package network;
 
-import gui.ChatWindow;
 import gui.ViewController;
 import model.Contact;
 import model.ContactCollection;
+import model.Notification;
+import model.Packet;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author alex205

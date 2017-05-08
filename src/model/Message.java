@@ -1,4 +1,4 @@
-package network;
+package model;
 
 import java.net.InetAddress;
 

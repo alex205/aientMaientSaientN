@@ -1,6 +1,7 @@
-package network;
+package Test.networkParrot;
 
 import model.*;
+import network.DatagramListener;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -10,20 +11,20 @@ import java.util.ArrayList;
 import static network.NetworkInterface.basePort;
 
 /**
- * @author alex205
+ * @author toon
  */
-public class HelloListener extends DatagramListener implements Observable {
+public class HelloListenerParrot extends DatagramListener implements Observable {
 
     private ArrayList<Observer> observers;
 
-    public HelloListener(DatagramSocket socket) {
+    public HelloListenerParrot(DatagramSocket socket) {
         super(socket);
         this.observers = new ArrayList<>();
     }
 
     @Override
     protected void managePacket(Packet p) {
-        NetworkInterface ni = NetworkInterface.getInstance();
+        NetworkInterfaceParrot ni = NetworkInterfaceParrot.getInstance();
         ContactCollection cc = ContactCollection.getInstance();
         if(p instanceof Control) {
             Control c = (Control) p;
@@ -37,7 +38,7 @@ public class HelloListener extends DatagramListener implements Observable {
                     ni.fireUpdate();
                     if (c.getType() == Control.Control_t.HELLO) {
                         ServerSocket com = new ServerSocket(basePort);
-                        CommunicationListener listener = new CommunicationListener(com);
+                        CommunicationListenerParrot listener = new CommunicationListenerParrot(com);
                         listener.start();
                         ni.addListener(basePort, listener);
                         System.out.println("listener lancé");
@@ -53,18 +54,18 @@ public class HelloListener extends DatagramListener implements Observable {
                     System.out.println("c'est à jour");
                     if(c.getType() == Control.Control_t.TMP_SOCKET) {
                         ServerSocket com = new ServerSocket(basePort);
-                        CommunicationListener listener = new CommunicationListener(com);
+                        CommunicationListenerParrot listener = new CommunicationListenerParrot(com);
                         listener.start();
                         ni.addListener(basePort, listener);
                         ni.sendControl(ContactCollection.getMe(), cc.getContact(c.getPseudoSource() + "@" + c.getAddrSource()), Control.Control_t.TMP_SOCKET_ACK, basePort);
                         basePort++;
                     }
                 }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+    }
 
     @Override
     public void addObserver(Observer o) {
