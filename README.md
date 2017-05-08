@@ -21,7 +21,7 @@ You just have to compile the whole project and run `controller.main`.
 ### Binary release
 
 You can download a binary release here : http://etud.insa-toulouse.fr/~girardi/aientMaientSaientN/aientMaientSaientN.jar
-Then execute `java -jar aientMaientSaientN.jar
+Then execute `java -jar aientMaientSaientN.jar`
 
 ## Features
 
