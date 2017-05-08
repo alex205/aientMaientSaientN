@@ -11,16 +11,17 @@ Be sure to install `Java 8` to run this project: https://www.java.com/fr/downloa
 
 ## Compilation and execution
 
+### Build from source
 Clone this repository in any directory of your computer.
 
-### With Intellij
 
-Start a **new JavaFX Project** with the existing source files and select the correct JDK (Java 8).
+Start a **new JavaFX Project** with the existing source files in your favorite IDE and select the correct JDK (Java 8).
 You just have to compile the whole project and run `controller.main`.
 
-### Another way ?
+### Binary release
 
-  **Comment compiler puis exécuter. (Tous les intervenants ne compileront pas votre code, mais certains souhaitent le faire).**
+You can download a binary release here : http://etud.insa-toulouse.fr/~girardi/aientMaientSaientN/aientMaientSaientN.jar
+Then execute `java -jar aientMaientSaientN.jar
 
 ## Features
 
@@ -40,6 +41,7 @@ You just have to compile the whole project and run `controller.main`.
 - Video/Sound streaming between users
 - Add games
 - Group conversation
+- Improve file transfert (ask confirmation for example)
 
  
 ## Test report 
@@ -88,13 +90,12 @@ This is the list of those tests :
 
 - **change your profile picture** => The aprrot change his own but failed to notify the other users. **Fail**
 
- 
+The tests aren't designed to be kept in production that's why they are not included in the jar. If you want to test the parrot, build from source and uncomment lines in the controller.
  
 ### Test with other groups
- 
- o Et enfin, un rapport de tests inter-projets : certains tests (pas nécessairement tous) appliqués par vous-même au projet d'un ou deux autres binômes. (Ceux qui travaillent en Java 7 ne pourront pas tester les projets écrits en Java .
 
-   Pour que les tests soient jouables sur les projets des autres binômes, vous aurez besoin de définir collectivement une interface commune et une ou plusieurs classes d'adaptation entre l'interface et votre projet (par exemple, l'envoi de message ne s'appelle pas forcément sendMessage chez tout le monde, et les arguments peuvent varier).
+This software has been tested with the other group.
 
- Notez que l'interface commune ne contient qu'un petit nombre de méthodes, et peut être découpée en plusieurs Interfaces java.
-
+- **Send and receive messages** => **Success**
+- **Change status** => **Success**
+- **Send nudge** => Other implementations ignore this notification **Success**
