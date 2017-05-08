@@ -62,6 +62,10 @@
     -fx-border-width: 1 1 1 1;
 }
 
+.message_write_not_editable {
+    -fx-background-color: #C9C9C9;
+}
+
 .options {
     -fx-background-color: null;
 }

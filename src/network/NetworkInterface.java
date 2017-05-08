@@ -12,6 +12,7 @@ import static controller.Controller.readBytesFromFile;
 
 
 /**
+ * Common interface for all network interaction
  * @author alex205
  */
 public class NetworkInterface {
@@ -76,22 +77,22 @@ public class NetworkInterface {
     private synchronized Integer negotiatePort(Contact dest, boolean tmp) {
         System.out.println("Je vais négocier le port (temporaire -> " + tmp + ")");
         try {
-            System.out.println("anouk ok");
+            //System.out.println("anouk ok");
             ServerSocket com = new ServerSocket(basePort);
-            System.out.println("socket com ok");
+            //System.out.println("socket com ok");
             CommunicationListener listener = new CommunicationListener(com);
             listener.start();
             listenersMap.put(basePort, listener);
-            System.out.println("listener com ok");
+            //System.out.println("listener com ok");
             if(tmp) {
                 sendControl(ContactCollection.getMe(), dest, Control.Control_t.TMP_SOCKET, basePort);
             } else {
                 sendControl(ContactCollection.getMe(), dest, Control.Control_t.HELLO, basePort);
             }
             basePort++;
-            wait();
-            System.out.println("ok up to date");
-            System.out.println("full pseudo de recherche : " + dest.getFullPseudo());
+            wait(); // Attends que le thread qui écoute les messages de contrôle mette à jour la liste de sockets
+            //System.out.println("ok up to date");
+            //System.out.println("full pseudo de recherche : " + dest.getFullPseudo());
             return (tmp ? tmpSocketMap.get(dest.getFullPseudo()) : socketMap.get(dest.getFullPseudo()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,10 +107,10 @@ public class NetworkInterface {
        Integer port = (tmp ? tmpSocketMap.get(dest.getFullPseudo()) : socketMap.get(dest.getFullPseudo()));
         if(port == null) {
             port = negotiatePort(dest, tmp);
-        } else {
+        } /*else {
             System.out.println("pas besoin de négocier, déjà en mémoire"); //FIXME else pour test uniquement
-        }
-        System.out.println("Port négocié, tvb");
+        }*/
+        //System.out.println("Port négocié, tvb");
         try {
             return new Socket(dest.getIp(), port.intValue());
         } catch (IOException e) {

@@ -24,7 +24,8 @@ public class ViewController {
         STATUS_CHANGE,
         NEW_NUDGE,
         IMAGE_PERSO_CHANGE,
-        MESSAGE_PERSO_CHANGE
+        MESSAGE_PERSO_CHANGE,
+        NOT_EDITABLE
     }
 
     private HashMap<String, ChatWindow> viewMap;
@@ -99,7 +100,9 @@ public class ViewController {
      * @param c
      */
     public void delView(Contact c) {
-        viewMap.remove(c.getFullPseudo());
+        if(viewExists(c)) {
+            viewMap.remove(c.getFullPseudo());
+        }
     }
 
     public void updateView(ChatWindow view, Update_type type, String toUpdate) {
@@ -127,6 +130,9 @@ public class ViewController {
                 break;
             case MESSAGE_PERSO_CHANGE:
                 view.getChatWindowController().changeMessagePerso();
+                break;
+            case NOT_EDITABLE:
+                view.getChatWindowController().getOffline();
                 break;
         }
     }

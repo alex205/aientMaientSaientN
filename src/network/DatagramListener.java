@@ -9,6 +9,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 /**
+ * Abstract datagram listener
+ *
  * @author alex205
  */
 public abstract class DatagramListener extends Thread {

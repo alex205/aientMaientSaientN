@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 
 /**
+ * Manage all broadcast packets
+ *
  * @author alex205
  */
 public class BroadcastListener extends DatagramListener{
@@ -39,7 +41,9 @@ public class BroadcastListener extends DatagramListener{
                             break;
                         case DISCONNECT:
                             System.out.println(n.getPseudoSource() + " vient de se déconnecter");
-                            cc.delContact(cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString()));
+                            Contact c1 = cc.getContact(n.getPseudoSource() + "@" + n.getAddrSource().toString());
+                            viewController.updateView(viewController.getView(c1, false), ViewController.Update_type.NOT_EDITABLE, "");
+                            cc.delContact(c1);
                             ni.delMap(n.getPseudoSource() + "@" + n.getAddrSource().toString());
                             break;
                         case STATUS_CHANGE:

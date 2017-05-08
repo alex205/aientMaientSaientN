@@ -10,6 +10,8 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 
 /**
+ * Manage all TCP packets
+ *
  * @author alex205
  */
 public class CommunicationListener extends NetworkListener{

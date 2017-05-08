@@ -54,6 +54,8 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     private boolean was_me; //optimisation graphique, on ne répète pas le nom de la personne si plusieurs message à la suite
     private boolean was_dialog;
 
+    private boolean offline;
+
     @FXML
     protected StackPane dest_image_perso_pane;
     @FXML
@@ -96,6 +98,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         heure_format = new SimpleDateFormat("HH:mm");
         was_me = true;
         was_dialog = false;
+        offline = false;
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("chatwindow.fxml"));
         loader.setRoot(this);
@@ -204,7 +207,6 @@ public class ChatWindowController  extends BorderPane implements Initializable {
     }
 
     public void addMessage(boolean me, String message) {
-        was_dialog = false;
         Text caption = new Text();
         Text msg = new Text();
         Text bullet = new Text();
@@ -221,7 +223,7 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         } else {
             msg.setStyle("-fx-fill: #" + contact.getTextColor());
             Platform.runLater(() -> last_message_date_label.setText("Dernier message reçu à " + heure_format.format(new Date()) + " le " + date_format.format(new Date())));
-            if(was_me) {
+            if(was_me || was_dialog) {
                 caption.setText(System.lineSeparator() + contact.getPseudo() + " dit :" + System.lineSeparator());
                 Platform.runLater(() -> messages_received.getChildren().add(caption));
                 was_me = false;
@@ -234,6 +236,9 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         if(!stage.isFocused()) {
             Sound.play(Sound.Sound_t.NEW_MESSAGE);
         }
+
+        //ce n'était pas un dialog ;)
+        was_dialog = false;
     }
 
 
@@ -253,16 +258,16 @@ public class ChatWindowController  extends BorderPane implements Initializable {
             caption.setText(contact.getPseudo()+" vous a envoyé un wizz." + System.lineSeparator());
         }
 
+
         Platform.runLater(() -> {
             if(!was_dialog){
                messages_received.getChildren().add(lineT);
             }
             messages_received.getChildren().add(caption);
             messages_received.getChildren().add(lineB);
+
             was_dialog = true;
         });
-
-
     }
 
     public void refreshStatus(boolean me) {
@@ -292,25 +297,36 @@ public class ChatWindowController  extends BorderPane implements Initializable {
         Platform.runLater(() -> message_perso_label.setText(contact.getMessage_perso()));
     }
 
+    //À améliorer
+    public void getOffline() {
+        message_write.getStyleClass().add("message_write_not_editable");
+        message_write.setEditable(false);
+        offline = true;
+    }
+
 
 
 
     @FXML
     public void handleFileButton() throws IOException {
-        System.out.println("FICHIERERERERER");
+        if(!offline) {
+            System.out.println("FICHIERERERERER");
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        File file = fileChooser.showOpenDialog(stage);
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File file = fileChooser.showOpenDialog(stage);
 
-        controller.sendFile(contact, file);
+            controller.sendFile(contact, file);
+        }
     }
 
 
     @FXML public void handleNudgeButton() throws IOException {
-        System.out.println("On demande au controller d'envoyer un wizz !\n");
-        addDialogWizz(true);
-        controller.sendNudge(contact, Notification.Notification_type.NUDGE);
+        if(!offline) {
+            System.out.println("On demande au controller d'envoyer un wizz !\n");
+            addDialogWizz(true);
+            controller.sendNudge(contact, Notification.Notification_type.NUDGE);
+        }
     }
 
 

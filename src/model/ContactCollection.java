@@ -6,11 +6,17 @@ import network.NetworkUtils;
 
 import java.util.function.Consumer;
 
+/**
+ * Internal representation of the contacts
+ * The Contact view observes the list to perform updates
+ *
+ * @author alex205
+ * @author toon
+ */
 public class ContactCollection {
 
     private static Contact me; //représente l'utilisateur courant
 
-    //private ArrayList<Contact> collection;
     private ObservableList<Contact> collection;
     private Consumer<Contact> addCallback = contact -> {};
     private Consumer<Contact> delCallback = contact -> {};

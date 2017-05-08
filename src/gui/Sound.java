@@ -4,6 +4,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class Sound {
 
@@ -13,16 +16,21 @@ public class Sound {
     }
 
     public static void play(Sound_t type) {
-        String musicFile = "";
+        URL snd  = null;
         switch (type) {
             case NEW_MESSAGE:
-                musicFile = "src/resources/sound/type.wav";
+                snd = Sound.class.getResource("/resources/sound/type.wav");
                 break;
             case NUDGE:
-                musicFile = "src/resources/sound/nudge.wav";
+                snd = Sound.class.getResource("/resources/sound/nudge.wav");
         }
-        Media sound = new Media(new File(musicFile).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+
+        try {
+            Media sound = new Media(snd.toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 }

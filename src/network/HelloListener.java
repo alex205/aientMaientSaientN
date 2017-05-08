@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import static network.NetworkInterface.basePort;
 
 /**
+ * Manage all control packets
+ *
  * @author alex205
  */
 public class HelloListener extends DatagramListener implements Observable {
